@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -22,11 +21,15 @@ type paramObj = param.APIObject
 
 type SearchPagePagination struct {
 	HasMore    bool  `json:"has_more"`
+	Page       int64 `json:"page"`
+	PageSize   int64 `json:"page_size"`
 	Total      int64 `json:"total"`
 	TotalPages int64 `json:"total_pages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		HasMore     respjson.Field
+		Page        respjson.Field
+		PageSize    respjson.Field
 		Total       respjson.Field
 		TotalPages  respjson.Field
 		ExtraFields map[string]respjson.Field
@@ -64,10 +67,9 @@ func (r *SearchPage[T]) UnmarshalJSON(data []byte) error {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *SearchPage[T]) GetNextPage() (res *SearchPage[T], err error) {
-	u := r.cfg.Request.URL
-	currentPage, err := strconv.ParseInt(u.Query().Get("page"), 10, 64)
-	if err != nil {
-		currentPage = 1
+	currentPage := r.Pagination.Page
+	if currentPage >= r.Pagination.TotalPages {
+		return nil, nil
 	}
 	cfg := r.cfg.Clone(context.Background())
 	query := cfg.Request.URL.Query()
