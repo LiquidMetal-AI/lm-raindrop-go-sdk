@@ -11,6 +11,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiquery"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/pagination"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
 )
@@ -38,11 +39,29 @@ func NewSearchService(opts ...option.RequestOption) (r SearchService) {
 // navigation through large result sets while maintaining search context and result
 // relevance. Retrieving paginated results requires a valid `request_id` from a
 // previously completed search.
-func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) (res *SearchResponse, err error) {
+func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) (res *pagination.SearchPage[TextResult], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/search"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve additional pages from a previous search. This endpoint enables
+// navigation through large result sets while maintaining search context and result
+// relevance. Retrieving paginated results requires a valid `request_id` from a
+// previously completed search.
+func (r *SearchService) GetAutoPaging(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) *pagination.SearchPageAutoPager[TextResult] {
+	return pagination.NewSearchPageAutoPager(r.Get(ctx, query, opts...))
 }
 
 // Primary search endpoint that provides advanced search capabilities across all

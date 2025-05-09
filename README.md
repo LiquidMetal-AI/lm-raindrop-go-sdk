@@ -282,8 +282,41 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
+```go
+iter := client.Search.GetAutoPaging(context.TODO(), raindrop.SearchGetParams{
+	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	Page:      raindrop.Int(1),
+	PageSize:  raindrop.Int(15),
+})
+// Automatically fetches more pages as needed.
+for iter.Next() {
+	textResult := iter.Current()
+	fmt.Printf("%+v\n", textResult)
+}
+if err := iter.Err(); err != nil {
+	panic(err.Error())
+}
+```
+
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
+
+```go
+page, err := client.Search.Get(context.TODO(), raindrop.SearchGetParams{
+	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	Page:      raindrop.Int(1),
+	PageSize:  raindrop.Int(15),
+})
+for page != nil {
+	for _, search := range page.Results {
+		fmt.Printf("%+v\n", search)
+	}
+	page, err = page.GetNextPage()
+}
+if err != nil {
+	panic(err.Error())
+}
+```
 
 ### Errors
 
