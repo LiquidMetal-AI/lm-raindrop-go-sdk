@@ -6,11 +6,11 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/stainless-sdks/raindrop-go/internal/apijson"
+	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
+	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/stainless-sdks/raindrop-go/packages/respjson"
 )
 
 // ChunkSearchService contains methods and other services that help with

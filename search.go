@@ -7,13 +7,13 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiquery"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/pagination"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/stainless-sdks/raindrop-go/internal/apijson"
+	"github.com/stainless-sdks/raindrop-go/internal/apiquery"
+	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
+	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/stainless-sdks/raindrop-go/packages/pagination"
+	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/stainless-sdks/raindrop-go/packages/respjson"
 )
 
 // SearchService contains methods and other services that help with interacting
@@ -39,7 +39,7 @@ func NewSearchService(opts ...option.RequestOption) (r SearchService) {
 // navigation through large result sets while maintaining search context and result
 // relevance. Retrieving paginated results requires a valid `request_id` from a
 // previously completed search.
-func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) (res *pagination.SearchPage[TextResult], err error) {
+func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) (res *pagination.SearchPageQuery[TextResult], err error) {
 	var raw *http.Response
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
@@ -60,8 +60,8 @@ func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...
 // navigation through large result sets while maintaining search context and result
 // relevance. Retrieving paginated results requires a valid `request_id` from a
 // previously completed search.
-func (r *SearchService) GetAutoPaging(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) *pagination.SearchPageAutoPager[TextResult] {
-	return pagination.NewSearchPageAutoPager(r.Get(ctx, query, opts...))
+func (r *SearchService) GetAutoPaging(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) *pagination.SearchPageQueryAutoPager[TextResult] {
+	return pagination.NewSearchPageQueryAutoPager(r.Get(ctx, query, opts...))
 }
 
 // Primary search endpoint that provides advanced search capabilities across all
