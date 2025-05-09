@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.0.1-alpha.0'
+go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.0-alpha.1'
 ```
 
 <!-- x-release-please-end -->
@@ -52,10 +52,10 @@ func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	searchResponse, err := client.Search.New(context.TODO(), raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
 	if err != nil {
 		panic(err.Error())
@@ -266,7 +266,7 @@ client := raindrop.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Search.New(context.TODO(), ...,
+client.Search.Find(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -295,10 +295,10 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Search.New(context.TODO(), raindrop.SearchNewParams{
-	BucketIDs: []string{"string"},
-	Input:     "REPLACE_ME",
-	RequestID: "REPLACE_ME",
+_, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
+	BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+	Input:     "all my pdfs with images of cats that do not talk about dogs",
+	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -324,12 +324,12 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Search.New(
+client.Search.Find(
 	ctx,
-	raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+	raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -364,12 +364,12 @@ client := raindrop.NewClient(
 )
 
 // Override per-request:
-client.Search.New(
+client.Search.Find(
 	context.TODO(),
-	raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+	raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithMaxRetries(5),
 )
@@ -383,12 +383,12 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-searchResponse, err := client.Search.New(
+searchResponse, err := client.Search.Find(
 	context.TODO(),
-	raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+	raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithResponseInto(&response),
 )

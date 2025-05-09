@@ -30,7 +30,7 @@ func TestStorageObjectList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.StorageObject.List(context.TODO(), "bucket")
+	_, err := client.StorageObject.List(context.TODO(), "01jtgtrd37acrqf7k24dggg31s")
 	if err != nil {
 		var apierr *raindrop.Error
 		if errors.As(err, &apierr) {
@@ -55,9 +55,9 @@ func TestStorageObjectDelete(t *testing.T) {
 	)
 	_, err := client.StorageObject.Delete(
 		context.TODO(),
-		"key",
+		"my-key",
 		raindrop.StorageObjectDeleteParams{
-			Bucket: "bucket",
+			Bucket: "01jtgtrd37acrqf7k24dggg31s",
 		},
 	)
 	if err != nil {
@@ -83,9 +83,9 @@ func TestStorageObjectDownload(t *testing.T) {
 	)
 	resp, err := client.StorageObject.Download(
 		context.TODO(),
-		"key",
+		"my-key",
 		raindrop.StorageObjectDownloadParams{
-			Bucket: "bucket",
+			Bucket: "01jtgtrd37acrqf7k24dggg31s",
 		},
 	)
 	if err != nil {
@@ -125,9 +125,9 @@ func TestStorageObjectUpload(t *testing.T) {
 	)
 	_, err := client.StorageObject.Upload(
 		context.TODO(),
-		"key",
+		"my-key",
 		raindrop.StorageObjectUploadParams{
-			Bucket: "bucket",
+			Bucket: "01jtgtrd37acrqf7k24dggg31s",
 			Body:   io.Reader(bytes.NewBuffer([]byte("some file contents"))),
 		},
 	)

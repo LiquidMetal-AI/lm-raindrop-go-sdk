@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestChunkSearchExecute(t *testing.T) {
+func TestChunkSearchFind(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,10 +26,10 @@ func TestChunkSearchExecute(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.ChunkSearch.Execute(context.TODO(), raindrop.ChunkSearchExecuteParams{
-		BucketIDs: []string{"string"},
-		Input:     "input",
-		RequestID: "request_id",
+	_, err := client.ChunkSearch.Find(context.TODO(), raindrop.ChunkSearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"},
+		Input:     "Information on how to raise a dog",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		var apierr *raindrop.Error

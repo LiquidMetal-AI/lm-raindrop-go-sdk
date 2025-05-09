@@ -24,10 +24,10 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	searchResponse, err := client.Search.New(context.TODO(), raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
