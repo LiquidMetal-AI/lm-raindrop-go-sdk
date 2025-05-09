@@ -27,9 +27,9 @@ func TestSummarizePageNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.SummarizePage.New(context.TODO(), raindrop.SummarizePageNewParams{
-		RequestID: "request_id",
-		Page:      raindrop.Int(0),
-		PageSize:  raindrop.Int(0),
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		Page:      raindrop.Int(1),
+		PageSize:  raindrop.Int(10),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
