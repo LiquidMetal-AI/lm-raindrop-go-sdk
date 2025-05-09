@@ -22,15 +22,11 @@ type paramObj = param.APIObject
 
 type SearchPagePagination struct {
 	HasMore    bool  `json:"has_more"`
-	Page       int64 `json:"page"`
-	PageSize   int64 `json:"page_size"`
 	Total      int64 `json:"total"`
 	TotalPages int64 `json:"total_pages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		HasMore     respjson.Field
-		Page        respjson.Field
-		PageSize    respjson.Field
 		Total       respjson.Field
 		TotalPages  respjson.Field
 		ExtraFields map[string]respjson.Field
@@ -45,9 +41,11 @@ func (r *SearchPagePagination) UnmarshalJSON(data []byte) error {
 }
 
 type SearchPage[T any] struct {
+	Results    []T                  `json:"results"`
 	Pagination SearchPagePagination `json:"pagination"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		Results     respjson.Field
 		Pagination  respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
@@ -111,17 +109,17 @@ func NewSearchPageAutoPager[T any](page *SearchPage[T], err error) *SearchPageAu
 }
 
 func (r *SearchPageAutoPager[T]) Next() bool {
-	if r.page == nil || len(r.page.data) == 0 {
+	if r.page == nil || len(r.page.Results) == 0 {
 		return false
 	}
-	if r.idx >= len(r.page.data) {
+	if r.idx >= len(r.page.Results) {
 		r.idx = 0
 		r.page, r.err = r.page.GetNextPage()
-		if r.err != nil || r.page == nil || len(r.page.data) == 0 {
+		if r.err != nil || r.page == nil || len(r.page.Results) == 0 {
 			return false
 		}
 	}
-	r.cur = r.page.data[r.idx]
+	r.cur = r.page.Results[r.idx]
 	r.run += 1
 	r.idx += 1
 	return true
