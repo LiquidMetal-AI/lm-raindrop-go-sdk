@@ -53,9 +53,9 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
 	if err != nil {
 		panic(err.Error())
