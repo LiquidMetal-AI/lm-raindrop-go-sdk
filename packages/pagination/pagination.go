@@ -136,3 +136,98 @@ func (r *SearchPageAutoPager[T]) Err() error {
 func (r *SearchPageAutoPager[T]) Index() int {
 	return r.run
 }
+
+type ChunkSearchResults[T any] struct {
+	Results []T `json:"results"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Results     respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+	cfg *requestconfig.RequestConfig
+	res *http.Response
+}
+
+// Returns the unmodified JSON received from the API
+func (r ChunkSearchResults[T]) RawJSON() string { return r.JSON.raw }
+func (r *ChunkSearchResults[T]) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// GetNextPage returns the next page as defined by this pagination style. When
+// there is no next page, this function will return a 'nil' for the page value, but
+// will not return an error
+func (r *ChunkSearchResults[T]) GetNextPage() (res *ChunkSearchResults[T], err error) {
+	u := r.cfg.Request.URL
+	currentPage, err := strconv.ParseInt(u.Query().Get("dummy_page"), 10, 64)
+	if err != nil {
+		currentPage = 1
+	}
+	cfg := r.cfg.Clone(context.Background())
+	query := cfg.Request.URL.Query()
+	query.Set("dummy_page", fmt.Sprintf("%d", currentPage+1))
+	cfg.Request.URL.RawQuery = query.Encode()
+	var raw *http.Response
+	cfg.ResponseInto = &raw
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+func (r *ChunkSearchResults[T]) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
+	if r == nil {
+		r = &ChunkSearchResults[T]{}
+	}
+	r.cfg = cfg
+	r.res = res
+}
+
+type ChunkSearchResultsAutoPager[T any] struct {
+	page *ChunkSearchResults[T]
+	cur  T
+	idx  int
+	run  int
+	err  error
+	paramObj
+}
+
+func NewChunkSearchResultsAutoPager[T any](page *ChunkSearchResults[T], err error) *ChunkSearchResultsAutoPager[T] {
+	return &ChunkSearchResultsAutoPager[T]{
+		page: page,
+		err:  err,
+	}
+}
+
+func (r *ChunkSearchResultsAutoPager[T]) Next() bool {
+	if r.page == nil || len(r.page.Results) == 0 {
+		return false
+	}
+	if r.idx >= len(r.page.Results) {
+		r.idx = 0
+		r.page, r.err = r.page.GetNextPage()
+		if r.err != nil || r.page == nil || len(r.page.Results) == 0 {
+			return false
+		}
+	}
+	r.cur = r.page.Results[r.idx]
+	r.run += 1
+	r.idx += 1
+	return true
+}
+
+func (r *ChunkSearchResultsAutoPager[T]) Current() T {
+	return r.cur
+}
+
+func (r *ChunkSearchResultsAutoPager[T]) Err() error {
+	return r.err
+}
+
+func (r *ChunkSearchResultsAutoPager[T]) Index() int {
+	return r.run
+}

@@ -286,7 +286,6 @@ You can use `.ListAutoPaging()` methods to iterate through items across all page
 iter := client.Search.GetAutoPaging(context.TODO(), raindrop.SearchGetParams{
 	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	Page:      raindrop.Int(1),
-	PageSize:  raindrop.Int(15),
 })
 // Automatically fetches more pages as needed.
 for iter.Next() {
@@ -305,7 +304,6 @@ with additional helper methods like `.GetNextPage()`, e.g.:
 page, err := client.Search.Get(context.TODO(), raindrop.SearchGetParams{
 	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	Page:      raindrop.Int(1),
-	PageSize:  raindrop.Int(15),
 })
 for page != nil {
 	for _, search := range page.Results {
