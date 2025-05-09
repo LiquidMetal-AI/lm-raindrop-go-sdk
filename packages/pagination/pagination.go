@@ -8,10 +8,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/stainless-sdks/raindrop-go/internal/apijson"
-	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
-	"github.com/stainless-sdks/raindrop-go/packages/param"
-	"github.com/stainless-sdks/raindrop-go/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
 )
 
 // aliased to make [param.APIUnion] private when embedding
@@ -20,11 +20,33 @@ type paramUnion = param.APIUnion
 // aliased to make [param.APIObject] private when embedding
 type paramObj = param.APIObject
 
-type SearchPageQuery[T any] struct {
-	Results []T `json:"results"`
+type SearchPagePagination struct {
+	HasMore    bool  `json:"has_more"`
+	Total      int64 `json:"total"`
+	TotalPages int64 `json:"total_pages"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		HasMore     respjson.Field
+		Total       respjson.Field
+		TotalPages  respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r SearchPagePagination) RawJSON() string { return r.JSON.raw }
+func (r *SearchPagePagination) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type SearchPage[T any] struct {
+	Results    []T                  `json:"results"`
+	Pagination SearchPagePagination `json:"pagination"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Results     respjson.Field
+		Pagination  respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -33,15 +55,15 @@ type SearchPageQuery[T any] struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchPageQuery[T]) RawJSON() string { return r.JSON.raw }
-func (r *SearchPageQuery[T]) UnmarshalJSON(data []byte) error {
+func (r SearchPage[T]) RawJSON() string { return r.JSON.raw }
+func (r *SearchPage[T]) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // GetNextPage returns the next page as defined by this pagination style. When
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
-func (r *SearchPageQuery[T]) GetNextPage() (res *SearchPageQuery[T], err error) {
+func (r *SearchPage[T]) GetNextPage() (res *SearchPage[T], err error) {
 	u := r.cfg.Request.URL
 	currentPage, err := strconv.ParseInt(u.Query().Get("page"), 10, 64)
 	if err != nil {
@@ -62,16 +84,16 @@ func (r *SearchPageQuery[T]) GetNextPage() (res *SearchPageQuery[T], err error) 
 	return res, nil
 }
 
-func (r *SearchPageQuery[T]) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
+func (r *SearchPage[T]) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
 	if r == nil {
-		r = &SearchPageQuery[T]{}
+		r = &SearchPage[T]{}
 	}
 	r.cfg = cfg
 	r.res = res
 }
 
-type SearchPageQueryAutoPager[T any] struct {
-	page *SearchPageQuery[T]
+type SearchPageAutoPager[T any] struct {
+	page *SearchPage[T]
 	cur  T
 	idx  int
 	run  int
@@ -79,14 +101,14 @@ type SearchPageQueryAutoPager[T any] struct {
 	paramObj
 }
 
-func NewSearchPageQueryAutoPager[T any](page *SearchPageQuery[T], err error) *SearchPageQueryAutoPager[T] {
-	return &SearchPageQueryAutoPager[T]{
+func NewSearchPageAutoPager[T any](page *SearchPage[T], err error) *SearchPageAutoPager[T] {
+	return &SearchPageAutoPager[T]{
 		page: page,
 		err:  err,
 	}
 }
 
-func (r *SearchPageQueryAutoPager[T]) Next() bool {
+func (r *SearchPageAutoPager[T]) Next() bool {
 	if r.page == nil || len(r.page.Results) == 0 {
 		return false
 	}
@@ -103,14 +125,14 @@ func (r *SearchPageQueryAutoPager[T]) Next() bool {
 	return true
 }
 
-func (r *SearchPageQueryAutoPager[T]) Current() T {
+func (r *SearchPageAutoPager[T]) Current() T {
 	return r.cur
 }
 
-func (r *SearchPageQueryAutoPager[T]) Err() error {
+func (r *SearchPageAutoPager[T]) Err() error {
 	return r.err
 }
 
-func (r *SearchPageQueryAutoPager[T]) Index() int {
+func (r *SearchPageAutoPager[T]) Index() int {
 	return r.run
 }

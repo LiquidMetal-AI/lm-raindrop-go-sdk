@@ -1,7 +1,7 @@
 package apiform
 
 import (
-	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"mime/multipart"
 	"reflect"
 )

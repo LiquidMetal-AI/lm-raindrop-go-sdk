@@ -1,7 +1,7 @@
 package sentinel_test
 
 import (
-	"github.com/stainless-sdks/raindrop-go/internal/encoding/json/sentinel"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/encoding/json/sentinel"
 	"reflect"
 	"slices"
 	"testing"

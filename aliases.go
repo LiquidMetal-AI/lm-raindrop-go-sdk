@@ -3,8 +3,8 @@
 package raindrop
 
 import (
-	"github.com/stainless-sdks/raindrop-go/internal/apierror"
-	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apierror"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 )
 
 // aliased to make [param.APIUnion] private when embedding

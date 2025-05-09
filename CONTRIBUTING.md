@@ -41,7 +41,7 @@ To use a local version of this library from source in another project, edit the 
 directive. This can be done through the CLI with the following:
 
 ```sh
-$ go mod edit -replace github.com/stainless-sdks/raindrop-go=/path/to/raindrop-go
+$ go mod edit -replace github.com/LiquidMetal-AI/lm-raindrop-go-sdk=/path/to/lm-raindrop-go-sdk
 ```
 
 ## Running tests

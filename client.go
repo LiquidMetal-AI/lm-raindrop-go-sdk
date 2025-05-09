@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
-	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
 // Client creates a struct with services and top level methods that help with
