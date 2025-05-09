@@ -3,7 +3,7 @@ package param
 import (
 	"encoding/json"
 	"fmt"
-	shimjson "github.com/stainless-sdks/raindrop-go/internal/encoding/json"
+	shimjson "github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/encoding/json"
 	"time"
 )
 

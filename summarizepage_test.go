@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/raindrop-go"
-	"github.com/stainless-sdks/raindrop-go/internal/testutil"
-	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
 func TestSummarizePageNewWithOptionalParams(t *testing.T) {

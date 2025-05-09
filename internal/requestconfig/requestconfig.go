@@ -18,10 +18,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/raindrop-go/internal"
-	"github.com/stainless-sdks/raindrop-go/internal/apierror"
-	"github.com/stainless-sdks/raindrop-go/internal/apiform"
-	"github.com/stainless-sdks/raindrop-go/internal/apiquery"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apierror"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiform"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {

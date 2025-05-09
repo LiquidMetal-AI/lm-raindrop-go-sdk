@@ -1,6 +1,6 @@
 # Raindrop Go API Library
 
-<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/raindrop-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk"><img src="https://pkg.go.dev/badge/github.com/LiquidMetal-AI/lm-raindrop-go-sdk.svg" alt="Go Reference"></a>
 
 The Raindrop Go library provides convenient access to the [Raindrop REST API](docs.liquidmetal.ai)
 from applications written in Go.
@@ -9,17 +9,25 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```go
 import (
-	"github.com/stainless-sdks/raindrop-go" // imported as raindrop
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk" // imported as raindrop
 )
 ```
 
+<!-- x-release-please-end -->
+
 Or to pin the version:
 
+<!-- x-release-please-start-version -->
+
 ```sh
-go get -u 'github.com/stainless-sdks/raindrop-go@v0.1.0-alpha.6'
+go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.0-alpha.6'
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
@@ -36,8 +44,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/stainless-sdks/raindrop-go"
-	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
 func main() {
@@ -266,7 +274,7 @@ client.Search.Find(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/stainless-sdks/raindrop-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option).
 
 ### Pagination
 
@@ -519,7 +527,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/raindrop-go/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/LiquidMetal-AI/lm-raindrop-go-sdk/issues) with questions, bugs, or suggestions.
 
 ## Contributing
 

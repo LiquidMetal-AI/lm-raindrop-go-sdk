@@ -1,7 +1,7 @@
 package apijson
 
 import (
-	"github.com/stainless-sdks/raindrop-go/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
 	"reflect"
 )
 

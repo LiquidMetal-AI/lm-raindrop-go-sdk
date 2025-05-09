@@ -14,7 +14,7 @@ import (
 	"encoding"
 	"encoding/base64"
 	"fmt"
-	"github.com/stainless-sdks/raindrop-go/internal/encoding/json/shims"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/encoding/json/shims"
 	"reflect"
 	"strconv"
 	"strings"
