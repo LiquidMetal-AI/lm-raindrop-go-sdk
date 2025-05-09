@@ -297,8 +297,8 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 ```go
 _, err := client.Search.New(context.TODO(), raindrop.SearchNewParams{
 	BucketIDs: []string{"string"},
-	Input:     "REPLACE_ME",
-	RequestID: "REPLACE_ME",
+	Input:     "all my pdfs with images of cats that do not talk about dogs",
+	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -328,8 +328,8 @@ client.Search.New(
 	ctx,
 	raindrop.SearchNewParams{
 		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -368,8 +368,8 @@ client.Search.New(
 	context.TODO(),
 	raindrop.SearchNewParams{
 		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithMaxRetries(5),
 )
@@ -387,8 +387,8 @@ searchResponse, err := client.Search.New(
 	context.TODO(),
 	raindrop.SearchNewParams{
 		BucketIDs: []string{"string"},
-		Input:     "REPLACE_ME",
-		RequestID: "REPLACE_ME",
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithResponseInto(&response),
 )
