@@ -38,8 +38,8 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Search.New(context.Background(), raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
+	client.Search.Find(context.Background(), raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -66,8 +66,8 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Search.New(context.Background(), raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
+	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -105,8 +105,8 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Search.New(context.Background(), raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
+	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -139,8 +139,8 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Search.New(context.Background(), raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
+	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -172,8 +172,8 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Search.New(context.Background(), raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
+	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -199,8 +199,8 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Search.New(cancelCtx, raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
+	_, err := client.Search.Find(cancelCtx, raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -223,8 +223,8 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Search.New(cancelCtx, raindrop.SearchNewParams{
-		BucketIDs: []string{"string"},
+	_, err := client.Search.Find(cancelCtx, raindrop.SearchFindParams{
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -253,8 +253,8 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Search.New(deadlineCtx, raindrop.SearchNewParams{
-			BucketIDs: []string{"string"},
+		_, err := client.Search.Find(deadlineCtx, raindrop.SearchFindParams{
+			BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 			Input:     "all my pdfs with images of cats that do not talk about dogs",
 			RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 		})

@@ -51,14 +51,14 @@ func NewDocumentQueryService(opts ...option.RequestOption) (r DocumentQueryServi
 //
 // Document query is supported for all file types, including PDFs, images, and
 // audio files.
-func (r *DocumentQueryService) New(ctx context.Context, body DocumentQueryNewParams, opts ...option.RequestOption) (res *DocumentQueryNewResponse, err error) {
+func (r *DocumentQueryService) Ask(ctx context.Context, body DocumentQueryAskParams, opts ...option.RequestOption) (res *DocumentQueryAskResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/document_query"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type DocumentQueryNewResponse struct {
+type DocumentQueryAskResponse struct {
 	// AI-generated response that may include direct document quotes, content
 	// summaries, contextual explanations, references to specific sections, and related
 	// content suggestions
@@ -72,12 +72,12 @@ type DocumentQueryNewResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r DocumentQueryNewResponse) RawJSON() string { return r.JSON.raw }
-func (r *DocumentQueryNewResponse) UnmarshalJSON(data []byte) error {
+func (r DocumentQueryAskResponse) RawJSON() string { return r.JSON.raw }
+func (r *DocumentQueryAskResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type DocumentQueryNewParams struct {
+type DocumentQueryAskParams struct {
 	// The storage bucket ID containing the target document. Must be an accessible
 	// Smart Bucket
 	Bucket string `json:"bucket,required"`
@@ -93,10 +93,10 @@ type DocumentQueryNewParams struct {
 	paramObj
 }
 
-func (r DocumentQueryNewParams) MarshalJSON() (data []byte, err error) {
-	type shadow DocumentQueryNewParams
+func (r DocumentQueryAskParams) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DocumentQueryNewParams) UnmarshalJSON(data []byte) error {
+func (r *DocumentQueryAskParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
