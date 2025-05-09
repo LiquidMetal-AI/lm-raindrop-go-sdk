@@ -27,7 +27,6 @@ func TestManualPagination(t *testing.T) {
 	page, err := client.Search.Get(context.TODO(), raindrop.SearchGetParams{
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 		Page:      raindrop.Int(1),
-		PageSize:  raindrop.Int(15),
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
