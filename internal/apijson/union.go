@@ -2,7 +2,7 @@ package apijson
 
 import (
 	"errors"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
+	"github.com/stainless-sdks/raindrop-go/packages/param"
 	"reflect"
 
 	"github.com/tidwall/gjson"

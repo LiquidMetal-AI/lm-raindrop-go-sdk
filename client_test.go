@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go"
+	"github.com/stainless-sdks/raindrop-go/internal"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
 type closureTransport struct {

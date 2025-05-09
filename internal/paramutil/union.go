@@ -2,7 +2,7 @@ package paramutil
 
 import (
 	"fmt"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
+	"github.com/stainless-sdks/raindrop-go/packages/param"
 	"reflect"
 )
 
