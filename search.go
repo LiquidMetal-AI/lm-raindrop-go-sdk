@@ -34,6 +34,17 @@ func NewSearchService(opts ...option.RequestOption) (r SearchService) {
 	return
 }
 
+// Retrieve additional pages from a previous search. This endpoint enables
+// navigation through large result sets while maintaining search context and result
+// relevance. Retrieving paginated results requires a valid `request_id` from a
+// previously completed search.
+func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) (res *SearchResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "v1/search"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return
+}
+
 // Primary search endpoint that provides advanced search capabilities across all
 // document types stored in SmartBuckets.
 //
@@ -56,21 +67,10 @@ func NewSearchService(opts ...option.RequestOption) (r SearchService) {
 // - Content-based search across text, images, and audio
 // - Automatic PII detection
 // - Multi-modal search (text, images, audio)
-func (r *SearchService) New(ctx context.Context, body SearchNewParams, opts ...option.RequestOption) (res *SearchResponse, err error) {
+func (r *SearchService) Find(ctx context.Context, body SearchFindParams, opts ...option.RequestOption) (res *SearchResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
-}
-
-// Retrieve additional pages from a previous search. This endpoint enables
-// navigation through large result sets while maintaining search context and result
-// relevance. Retrieving paginated results requires a valid `request_id` from a
-// previously completed search.
-func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) (res *SearchResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	path := "v1/search"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -166,26 +166,6 @@ const (
 	TextResultTypeImagePng       TextResultType = "image/png"
 )
 
-type SearchNewParams struct {
-	// Optional list of specific bucket IDs to search in. If not provided, searches the
-	// latest version of all buckets
-	BucketIDs []string `json:"bucket_ids,omitzero,required"`
-	// Natural language search query that can include complex criteria
-	Input string `json:"input,required"`
-	// Client-provided search session identifier. Required for pagination and result
-	// tracking. We recommend using a UUID or ULID for this value.
-	RequestID string `json:"request_id,required"`
-	paramObj
-}
-
-func (r SearchNewParams) MarshalJSON() (data []byte, err error) {
-	type shadow SearchNewParams
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *SearchNewParams) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 type SearchGetParams struct {
 	// Client-provided search session identifier from the initial search
 	RequestID string `query:"request_id,required" json:"-"`
@@ -202,4 +182,24 @@ func (r SearchGetParams) URLQuery() (v url.Values, err error) {
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
 	})
+}
+
+type SearchFindParams struct {
+	// Optional list of specific bucket IDs to search in. If not provided, searches the
+	// latest version of all buckets
+	BucketIDs []string `json:"bucket_ids,omitzero,required"`
+	// Natural language search query that can include complex criteria
+	Input string `json:"input,required"`
+	// Client-provided search session identifier. Required for pagination and result
+	// tracking. We recommend using a UUID or ULID for this value.
+	RequestID string `json:"request_id,required"`
+	paramObj
+}
+
+func (r SearchFindParams) MarshalJSON() (data []byte, err error) {
+	type shadow SearchFindParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *SearchFindParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
 }

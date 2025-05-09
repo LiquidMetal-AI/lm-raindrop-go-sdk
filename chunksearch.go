@@ -39,14 +39,14 @@ func NewChunkSearchService(opts ...option.RequestOption) (r ChunkSearchService) 
 // Each input query is processed by our AI agent to determine the best way to
 // search the data. The system will then return the most relevant results from the
 // data ranked by relevance on the input query.
-func (r *ChunkSearchService) Execute(ctx context.Context, body ChunkSearchExecuteParams, opts ...option.RequestOption) (res *ChunkSearchExecuteResponse, err error) {
+func (r *ChunkSearchService) Find(ctx context.Context, body ChunkSearchFindParams, opts ...option.RequestOption) (res *ChunkSearchFindResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/chunk_search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type ChunkSearchExecuteResponse struct {
+type ChunkSearchFindResponse struct {
 	// Semantically relevant results with metadata and relevance scoring
 	Results []TextResult `json:"results,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -58,12 +58,12 @@ type ChunkSearchExecuteResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r ChunkSearchExecuteResponse) RawJSON() string { return r.JSON.raw }
-func (r *ChunkSearchExecuteResponse) UnmarshalJSON(data []byte) error {
+func (r ChunkSearchFindResponse) RawJSON() string { return r.JSON.raw }
+func (r *ChunkSearchFindResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type ChunkSearchExecuteParams struct {
+type ChunkSearchFindParams struct {
 	// Optional list of specific bucket IDs to search in. If not provided, searches the
 	// latest version of all accessible buckets
 	BucketIDs []string `json:"bucket_ids,omitzero,required"`
@@ -76,10 +76,10 @@ type ChunkSearchExecuteParams struct {
 	paramObj
 }
 
-func (r ChunkSearchExecuteParams) MarshalJSON() (data []byte, err error) {
-	type shadow ChunkSearchExecuteParams
+func (r ChunkSearchFindParams) MarshalJSON() (data []byte, err error) {
+	type shadow ChunkSearchFindParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *ChunkSearchExecuteParams) UnmarshalJSON(data []byte) error {
+func (r *ChunkSearchFindParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

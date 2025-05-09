@@ -24,7 +24,7 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	searchResponse, err := client.Search.New(context.TODO(), raindrop.SearchNewParams{
+	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
 		BucketIDs: []string{"string"},
 		Input:     "REPLACE_ME",
 		RequestID: "REPLACE_ME",
