@@ -64,15 +64,15 @@ func (r *ChunkSearchFindResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ChunkSearchFindParams struct {
-	// Optional list of specific bucket IDs to search in. If not provided, searches the
-	// latest version of all accessible buckets
-	BucketIDs []string `json:"bucket_ids,omitzero,required"`
 	// Natural language query or question. Can include complex criteria and
 	// relationships
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. We recommend using a UUID or ULID for
 	// this value.
 	RequestID string `json:"request_id,required"`
+	// Optional list of specific bucket locations to search in. If not provided,
+	// searches the latest version of all accessible buckets
+	BucketLocations []ChunkSearchFindParamsBucketLocation `json:"bucket_locations,omitzero"`
 	paramObj
 }
 
@@ -81,5 +81,20 @@ func (r ChunkSearchFindParams) MarshalJSON() (data []byte, err error) {
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *ChunkSearchFindParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property SmartbucketID is required.
+type ChunkSearchFindParamsBucketLocation struct {
+	// Identifier for the smartbucket (moduleId)
+	SmartbucketID string `json:"smartbucket_id,required"`
+	paramObj
+}
+
+func (r ChunkSearchFindParamsBucketLocation) MarshalJSON() (data []byte, err error) {
+	type shadow ChunkSearchFindParamsBucketLocation
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ChunkSearchFindParamsBucketLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

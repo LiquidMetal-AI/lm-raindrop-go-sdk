@@ -78,9 +78,9 @@ func (r *DocumentQueryAskResponse) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentQueryAskParams struct {
-	// The storage bucket ID containing the target document. Must be an accessible
-	// Smart Bucket
-	Bucket string `json:"bucket,required"`
+	// The storage bucket location containing the target document. Must be an
+	// accessible Smart Bucket
+	BucketLocation DocumentQueryAskParamsBucketLocation `json:"bucket_location,omitzero,required"`
 	// User's input or question about the document. Can be natural language questions,
 	// commands, or requests
 	Input string `json:"input,required"`
@@ -98,5 +98,23 @@ func (r DocumentQueryAskParams) MarshalJSON() (data []byte, err error) {
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *DocumentQueryAskParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The storage bucket location containing the target document. Must be an
+// accessible Smart Bucket
+//
+// The property SmartbucketID is required.
+type DocumentQueryAskParamsBucketLocation struct {
+	// Identifier for the smartbucket (moduleId)
+	SmartbucketID string `json:"smartbucket_id,required"`
+	paramObj
+}
+
+func (r DocumentQueryAskParamsBucketLocation) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocation
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParamsBucketLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

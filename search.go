@@ -204,9 +204,9 @@ func (r SearchGetParams) URLQuery() (v url.Values, err error) {
 }
 
 type SearchFindParams struct {
-	// Optional list of specific bucket IDs to search in. If not provided, searches the
-	// latest version of all buckets
-	BucketIDs []string `json:"bucket_ids,omitzero,required"`
+	// Optional list of specific bucket locations to search in. If not provided,
+	// searches the latest version of all buckets
+	BucketLocations []SearchFindParamsBucketLocation `json:"bucket_locations,omitzero,required"`
 	// Natural language search query that can include complex criteria
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. Required for pagination and result
@@ -220,5 +220,20 @@ func (r SearchFindParams) MarshalJSON() (data []byte, err error) {
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *SearchFindParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property SmartbucketID is required.
+type SearchFindParamsBucketLocation struct {
+	// Identifier for the smartbucket (moduleId)
+	SmartbucketID string `json:"smartbucket_id,required"`
+	paramObj
+}
+
+func (r SearchFindParamsBucketLocation) MarshalJSON() (data []byte, err error) {
+	type shadow SearchFindParamsBucketLocation
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *SearchFindParamsBucketLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
