@@ -53,19 +53,7 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}, {
-			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
-				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
-					ApplicationName: "my-app",
-					Name:            "my-bucket",
-					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
-				},
-			},
-		}},
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
@@ -339,19 +327,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-	BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-		OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-			ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-		},
-	}, {
-		OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
-				ApplicationName: "my-app",
-				Name:            "my-bucket",
-				Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
-			},
-		},
-	}},
+	BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 	Input:     "all my pdfs with images of cats that do not talk about dogs",
 	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 })
@@ -382,19 +358,7 @@ defer cancel()
 client.Search.Find(
 	ctx,
 	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}, {
-			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
-				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
-					ApplicationName: "my-app",
-					Name:            "my-bucket",
-					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
-				},
-			},
-		}},
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
@@ -434,19 +398,7 @@ client := raindrop.NewClient(
 client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}, {
-			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
-				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
-					ApplicationName: "my-app",
-					Name:            "my-bucket",
-					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
-				},
-			},
-		}},
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
@@ -465,19 +417,7 @@ var response *http.Response
 searchResponse, err := client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}, {
-			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
-				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
-					ApplicationName: "my-app",
-					Name:            "my-bucket",
-					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
-				},
-			},
-		}},
+		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
