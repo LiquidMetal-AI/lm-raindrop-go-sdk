@@ -38,8 +38,8 @@ func NewStorageObjectService(opts ...option.RequestOption) (r StorageObjectServi
 	return
 }
 
-// List all objects in a SmartBucket or regular bucket. The bucket parameter (ID)
-// is used to identify the bucket to list objects from.
+// List all objects in a SmartBucket or regular bucket. The bucket parameter
+// (module ID) is used to identify the bucket to list objects from.
 func (r *StorageObjectService) List(ctx context.Context, bucket string, opts ...option.RequestOption) (res *StorageObjectListResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if bucket == "" {
@@ -51,9 +51,9 @@ func (r *StorageObjectService) List(ctx context.Context, bucket string, opts ...
 	return
 }
 
-// Delete a file from a SmartBucket or regular bucket. The bucket parameter (ID) is
-// used to identify the bucket to delete from. The key is the path to the object in
-// the bucket.
+// Delete a file from a SmartBucket or regular bucket. The bucket parameter (module
+// ID) is used to identify the bucket to delete from. The key is the path to the
+// object in the bucket.
 func (r *StorageObjectService) Delete(ctx context.Context, key string, body StorageObjectDeleteParams, opts ...option.RequestOption) (res *StorageObjectDeleteResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if body.Bucket == "" {
@@ -69,9 +69,9 @@ func (r *StorageObjectService) Delete(ctx context.Context, key string, body Stor
 	return
 }
 
-// Download a file from a SmartBucket or regular bucket. The bucket parameter (ID)
-// is used to identify the bucket to download from. The key is the path to the
-// object in the bucket.
+// Download a file from a SmartBucket or regular bucket. The bucket parameter
+// (module ID) is used to identify the bucket to download from. The key is the path
+// to the object in the bucket.
 func (r *StorageObjectService) Download(ctx context.Context, key string, query StorageObjectDownloadParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
@@ -88,9 +88,9 @@ func (r *StorageObjectService) Download(ctx context.Context, key string, query S
 	return
 }
 
-// Upload a file to a SmartBucket or regular bucket. The bucket parameter (ID) is
-// used to identify the bucket to upload to. The key is the path to the object in
-// the bucket.
+// Upload a file to a SmartBucket or regular bucket. The bucket parameter (module
+// ID) is used to identify the bucket to upload to. The key is the path to the
+// object in the bucket.
 func (r *StorageObjectService) Upload(ctx context.Context, key string, params StorageObjectUploadParams, opts ...option.RequestOption) (res *StorageObjectUploadResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if params.Bucket == "" {
@@ -165,14 +165,14 @@ func (r *StorageObjectDeleteResponse) UnmarshalJSON(data []byte) error {
 }
 
 type StorageObjectUploadResponse struct {
-	Bucket  string `json:"bucket,required"`
-	Key     string `json:"key,required"`
-	Success bool   `json:"success,required"`
+	// ID of the bucket where the object was uploaded
+	BucketID string `json:"bucket_id"`
+	// Key/path of the uploaded object
+	Key string `json:"key"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		Bucket      respjson.Field
+		BucketID    respjson.Field
 		Key         respjson.Field
-		Success     respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`

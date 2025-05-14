@@ -39,10 +39,18 @@ func TestUserAgentHeader(t *testing.T) {
 		}),
 	)
 	client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -71,10 +79,18 @@ func TestRetryAfter(t *testing.T) {
 		}),
 	)
 	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -114,10 +130,18 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
 	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -152,10 +176,18 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
 	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -189,10 +221,18 @@ func TestRetryAfterMs(t *testing.T) {
 		}),
 	)
 	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -220,10 +260,18 @@ func TestContextCancel(t *testing.T) {
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
 	_, err := client.Search.Find(cancelCtx, raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -248,10 +296,18 @@ func TestContextCancelDelay(t *testing.T) {
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
 	_, err := client.Search.Find(cancelCtx, raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
@@ -282,10 +338,18 @@ func TestContextDeadline(t *testing.T) {
 			}),
 		)
 		_, err := client.Search.Find(deadlineCtx, raindrop.SearchFindParams{
-			BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-				SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+			BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+				OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+					ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+				},
 			}, {
-				SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+				OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+					Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+						ApplicationName: "my-app",
+						Name:            "my-bucket",
+						Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+					},
+				},
 			}},
 			Input:     "all my pdfs with images of cats that do not talk about dogs",
 			RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
