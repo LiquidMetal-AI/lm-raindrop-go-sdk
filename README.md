@@ -53,9 +53,9 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		BucketLocations: []any{map[string]interface{}{}},
+		Input:           "all my pdfs with images of cats that do not talk about dogs",
+		RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
 	if err != nil {
 		panic(err.Error())
@@ -284,8 +284,9 @@ You can use `.ListAutoPaging()` methods to iterate through items across all page
 
 ```go
 iter := client.Search.GetAutoPaging(context.TODO(), raindrop.SearchGetParams{
-	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
-	Page:      raindrop.Int(1),
+	BucketLocations: []any{map[string]interface{}{}},
+	RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
+	Page:            raindrop.Int(1),
 })
 // Automatically fetches more pages as needed.
 for iter.Next() {
@@ -302,8 +303,9 @@ with additional helper methods like `.GetNextPage()`, e.g.:
 
 ```go
 page, err := client.Search.Get(context.TODO(), raindrop.SearchGetParams{
-	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
-	Page:      raindrop.Int(1),
+	BucketLocations: []any{map[string]interface{}{}},
+	RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
+	Page:            raindrop.Int(1),
 })
 for page != nil {
 	for _, search := range page.Results {
@@ -327,9 +329,9 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-	BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
-	Input:     "all my pdfs with images of cats that do not talk about dogs",
-	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	BucketLocations: []any{map[string]interface{}{}},
+	Input:           "all my pdfs with images of cats that do not talk about dogs",
+	RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -358,9 +360,9 @@ defer cancel()
 client.Search.Find(
 	ctx,
 	raindrop.SearchFindParams{
-		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		BucketLocations: []any{map[string]interface{}{}},
+		Input:           "all my pdfs with images of cats that do not talk about dogs",
+		RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -398,9 +400,9 @@ client := raindrop.NewClient(
 client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		BucketLocations: []any{map[string]interface{}{}},
+		Input:           "all my pdfs with images of cats that do not talk about dogs",
+		RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithMaxRetries(5),
 )
@@ -417,9 +419,9 @@ var response *http.Response
 searchResponse, err := client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		BucketLocations: []any{map[string]interface{}{}},
+		Input:           "all my pdfs with images of cats that do not talk about dogs",
+		RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithResponseInto(&response),
 )

@@ -78,9 +78,9 @@ func (r *DocumentQueryAskResponse) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentQueryAskParams struct {
-	// The storage bucket ID containing the target document. Must be an accessible
-	// Smart Bucket
-	Bucket string `json:"bucket,required"`
+	// The storage bucket containing the target document. Must be an accessible Smart
+	// Bucket
+	BucketLocation any `json:"bucket_location,omitzero,required"`
 	// User's input or question about the document. Can be natural language questions,
 	// commands, or requests
 	Input string `json:"input,required"`
