@@ -25,7 +25,11 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
+		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
+			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		}, {
+			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+		}},
 		Input:     "all my pdfs with images of cats that do not talk about dogs",
 		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})

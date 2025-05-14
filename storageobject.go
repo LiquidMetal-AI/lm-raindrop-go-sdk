@@ -165,14 +165,14 @@ func (r *StorageObjectDeleteResponse) UnmarshalJSON(data []byte) error {
 }
 
 type StorageObjectUploadResponse struct {
-	// ID of the bucket where the object was uploaded
-	BucketID string `json:"bucket_id"`
-	// Key/path of the uploaded object
-	Key string `json:"key"`
+	Bucket  string `json:"bucket,required"`
+	Key     string `json:"key,required"`
+	Success bool   `json:"success,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		BucketID    respjson.Field
+		Bucket      respjson.Field
 		Key         respjson.Field
+		Success     respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
