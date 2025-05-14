@@ -64,9 +64,7 @@ func (r *ChunkSearchFindResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ChunkSearchFindParams struct {
-	// Optional list of specific bucket IDs to search in. If not provided, searches the
-	// latest version of all accessible buckets
-	BucketIDs []string `json:"bucket_ids,omitzero,required"`
+	BucketLocations []any `json:"bucket_locations,omitzero,required"`
 	// Natural language query or question. Can include complex criteria and
 	// relationships
 	Input string `json:"input,required"`

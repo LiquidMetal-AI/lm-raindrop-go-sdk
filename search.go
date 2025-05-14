@@ -186,6 +186,7 @@ const (
 )
 
 type SearchGetParams struct {
+	BucketLocations []any `query:"bucket_locations,omitzero,required" json:"-"`
 	// Client-provided search session identifier from the initial search
 	RequestID string `query:"request_id,required" json:"-"`
 	// Requested page number
@@ -204,9 +205,7 @@ func (r SearchGetParams) URLQuery() (v url.Values, err error) {
 }
 
 type SearchFindParams struct {
-	// Optional list of specific bucket IDs to search in. If not provided, searches the
-	// latest version of all buckets
-	BucketIDs []string `json:"bucket_ids,omitzero,required"`
+	BucketLocations []any `json:"bucket_locations,omitzero,required"`
 	// Natural language search query that can include complex criteria
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. Required for pagination and result

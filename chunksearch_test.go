@@ -27,9 +27,9 @@ func TestChunkSearchFind(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ChunkSearch.Find(context.TODO(), raindrop.ChunkSearchFindParams{
-		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s", "01jtgtrd37acrqf7k24dggg31v"},
-		Input:     "Information on how to raise a dog",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		BucketLocations: []any{map[string]interface{}{}},
+		Input:           "Information on how to raise a dog",
+		RequestID:       "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
