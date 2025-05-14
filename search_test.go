@@ -54,10 +54,18 @@ func TestSearchFind(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		}, {
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31v",
+			OfSearchFindsBucketLocationBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
+					ApplicationName: "my-app",
+					Name:            "my-bucket",
+					Version:         "01jtgtraw3b5qbahrhvrj3ygbb",
+				},
+			},
 		}},
 		Input:     "Find me all documents with pictures of a cat that do not talk about dogs",
 		RequestID: "123e4567-e89b-12d3-a456-426614174000",

@@ -27,10 +27,12 @@ func TestDocumentQueryAsk(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
-		BucketLocation: raindrop.DocumentQueryAskParamsBucketLocation{
-			SmartbucketID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocation: raindrop.DocumentQueryAskParamsBucketLocationUnion{
+			OfDocumentQueryAsksBucketLocationModuleID: &raindrop.DocumentQueryAskParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
 		},
-		Input:     "What is the key points in this document?",
+		Input:     "What are the key points in this document?",
 		ObjectID:  "object_id",
 		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
