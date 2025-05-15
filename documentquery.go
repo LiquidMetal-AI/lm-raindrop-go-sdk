@@ -80,7 +80,7 @@ func (r *DocumentQueryAskResponse) UnmarshalJSON(data []byte) error {
 type DocumentQueryAskParams struct {
 	// The storage bucket containing the target document. Must be an accessible Smart
 	// Bucket
-	BucketLocation any `json:"bucket_location,omitzero,required"`
+	BucketLocation DocumentQueryAskParamsBucketLocationUnion `json:"bucket_location,omitzero,required"`
 	// User's input or question about the document. Can be natural language questions,
 	// commands, or requests
 	Input string `json:"input,required"`
@@ -98,5 +98,78 @@ func (r DocumentQueryAskParams) MarshalJSON() (data []byte, err error) {
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *DocumentQueryAskParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type DocumentQueryAskParamsBucketLocationUnion struct {
+	OfDocumentQueryAsksBucketLocationModuleID *DocumentQueryAskParamsBucketLocationModuleID `json:",omitzero,inline"`
+	OfDocumentQueryAsksBucketLocationBucket   *DocumentQueryAskParamsBucketLocationBucket   `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u DocumentQueryAskParamsBucketLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion[DocumentQueryAskParamsBucketLocationUnion](u.OfDocumentQueryAsksBucketLocationModuleID, u.OfDocumentQueryAsksBucketLocationBucket)
+}
+func (u *DocumentQueryAskParamsBucketLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *DocumentQueryAskParamsBucketLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfDocumentQueryAsksBucketLocationModuleID) {
+		return u.OfDocumentQueryAsksBucketLocationModuleID
+	} else if !param.IsOmitted(u.OfDocumentQueryAsksBucketLocationBucket) {
+		return u.OfDocumentQueryAsksBucketLocationBucket
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type DocumentQueryAskParamsBucketLocationModuleID struct {
+	// Version-agnostic identifier for a module
+	ModuleID string `json:"module_id,required"`
+	paramObj
+}
+
+func (r DocumentQueryAskParamsBucketLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocationModuleID
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParamsBucketLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property Bucket is required.
+type DocumentQueryAskParamsBucketLocationBucket struct {
+	Bucket DocumentQueryAskParamsBucketLocationBucketBucket `json:"bucket,omitzero,required"`
+	paramObj
+}
+
+func (r DocumentQueryAskParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocationBucket
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties ApplicationName, Name, Version are required.
+type DocumentQueryAskParamsBucketLocationBucketBucket struct {
+	// Name of the application
+	ApplicationName string `json:"application_name,required"`
+	// Name of the bucket
+	Name string `json:"name,required"`
+	// Version of the bucket
+	Version string `json:"version,required"`
+	paramObj
+}
+
+func (r DocumentQueryAskParamsBucketLocationBucketBucket) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocationBucketBucket
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParamsBucketLocationBucketBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
