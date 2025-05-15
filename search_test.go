@@ -27,10 +27,9 @@ func TestSearchGetWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Search.Get(context.TODO(), raindrop.SearchGetParams{
-		BucketLocations: []any{map[string]interface{}{}},
-		RequestID:       "123e4567-e89b-12d3-a456-426614174000",
-		Page:            raindrop.Int(2),
-		PageSize:        raindrop.Int(10),
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		Page:      raindrop.Int(2),
+		PageSize:  raindrop.Int(10),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -55,9 +54,13 @@ func TestSearchFind(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []any{map[string]interface{}{}},
-		Input:           "Find me all documents with pictures of a cat that do not talk about dogs",
-		RequestID:       "123e4567-e89b-12d3-a456-426614174000",
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
+				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+			},
+		}},
+		Input:     "Find me all documents with pictures of a cat that do not talk about dogs",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -25,9 +25,8 @@ func TestManualPagination(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	page, err := client.Search.Get(context.TODO(), raindrop.SearchGetParams{
-		BucketLocations: []any{map[string]interface{}{}},
-		RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
-		Page:            raindrop.Int(1),
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		Page:      raindrop.Int(1),
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
