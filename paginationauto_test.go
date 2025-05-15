@@ -25,9 +25,8 @@ func TestAutoPagination(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	iter := client.Search.GetAutoPaging(context.TODO(), raindrop.SearchGetParams{
-		BucketLocations: []any{map[string]interface{}{}},
-		RequestID:       "c523cb44-9b59-4bf5-a840-01891d735b57",
-		Page:            raindrop.Int(1),
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		Page:      raindrop.Int(1),
 	})
 	// Prism mock isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
