@@ -3,7 +3,14 @@
 package raindrop
 
 import (
+	"context"
+	"net/http"
+
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
 )
 
 // DocumentQueryService contains methods and other services that help with
@@ -23,4 +30,146 @@ func NewDocumentQueryService(opts ...option.RequestOption) (r DocumentQueryServi
 	r = DocumentQueryService{}
 	r.Options = opts
 	return
+}
+
+// Enables natural conversational interactions with documents stored in
+// SmartBuckets. This endpoint allows users to ask questions, request summaries,
+// and explore document content through an intuitive conversational interface. The
+// system understands context and can handle complex queries about document
+// contents.
+//
+// The query system maintains conversation context throught the request_id,
+// enabling follow-up questions and deep exploration of document content. It works
+// across all supported file types and automatically handles multi-page documents,
+// making complex file interaction as simple as having a conversation.
+//
+// The system will:
+//
+// - Maintain conversation history for context when using the same request_id
+// - Process questions against file content
+// - Generate contextual, relevant responses
+//
+// Document query is supported for all file types, including PDFs, images, and
+// audio files.
+func (r *DocumentQueryService) Ask(ctx context.Context, body DocumentQueryAskParams, opts ...option.RequestOption) (res *DocumentQueryAskResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "v1/document_query"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
+type DocumentQueryAskResponse struct {
+	// AI-generated response that may include direct document quotes, content
+	// summaries, contextual explanations, references to specific sections, and related
+	// content suggestions
+	Answer string `json:"answer"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Answer      respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r DocumentQueryAskResponse) RawJSON() string { return r.JSON.raw }
+func (r *DocumentQueryAskResponse) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type DocumentQueryAskParams struct {
+	// The storage bucket containing the target document. Must be a valid, registered
+	// Smart Bucket. Used to identify which bucket to query against
+	BucketLocation DocumentQueryAskParamsBucketLocationUnion `json:"bucket_location,omitzero,required"`
+	// User's input or question about the document. Can be natural language questions,
+	// commands, or requests. The system will process this against the document content
+	Input string `json:"input,required"`
+	// Document identifier within the bucket. Typically matches the storage path or
+	// key. Used to identify which document to chat with
+	ObjectID string `json:"object_id,required"`
+	// Client-provided conversation session identifier. Required for maintaining
+	// context in follow-up questions. We recommend using a UUID or ULID for this value
+	RequestID string `json:"request_id,required"`
+	paramObj
+}
+
+func (r DocumentQueryAskParams) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type DocumentQueryAskParamsBucketLocationUnion struct {
+	OfBucket   *DocumentQueryAskParamsBucketLocationBucket   `json:",omitzero,inline"`
+	OfModuleID *DocumentQueryAskParamsBucketLocationModuleID `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u DocumentQueryAskParamsBucketLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion[DocumentQueryAskParamsBucketLocationUnion](u.OfBucket, u.OfModuleID)
+}
+func (u *DocumentQueryAskParamsBucketLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *DocumentQueryAskParamsBucketLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfBucket) {
+		return u.OfBucket
+	} else if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	}
+	return nil
+}
+
+// The property Bucket is required.
+type DocumentQueryAskParamsBucketLocationBucket struct {
+	// BucketName represents a bucket name with an optional version
+	Bucket DocumentQueryAskParamsBucketLocationBucketBucket `json:"bucket,omitzero,required"`
+	paramObj
+}
+
+func (r DocumentQueryAskParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocationBucket
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// BucketName represents a bucket name with an optional version
+type DocumentQueryAskParamsBucketLocationBucketBucket struct {
+	// Optional Application
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
+	// Optional version of the bucket
+	Version param.Opt[string] `json:"version,omitzero"`
+	// The name of the bucket
+	Name param.Opt[string] `json:"name,omitzero"`
+	paramObj
+}
+
+func (r DocumentQueryAskParamsBucketLocationBucketBucket) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocationBucketBucket
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParamsBucketLocationBucketBucket) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property ModuleID is required.
+type DocumentQueryAskParamsBucketLocationModuleID struct {
+	ModuleID string `json:"module_id,required"`
+	paramObj
+}
+
+func (r DocumentQueryAskParamsBucketLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocationModuleID
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DocumentQueryAskParamsBucketLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
 }
