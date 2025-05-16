@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestObjectGetWithOptionalParams(t *testing.T) {
+func TestObjectGet(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -31,10 +31,10 @@ func TestObjectGetWithOptionalParams(t *testing.T) {
 		"object_key",
 		raindrop.ObjectGetParams{
 			BucketName:     "bucket_name",
-			Key:            raindrop.String("key"),
-			ModuleID:       raindrop.String("module_id"),
-			OrganizationID: raindrop.String("organization_id"),
-			UserID:         raindrop.String("user_id"),
+			Key:            "key",
+			ModuleID:       "module_id",
+			OrganizationID: "organization_id",
+			UserID:         "user_id",
 		},
 	)
 	if err != nil {
@@ -46,7 +46,7 @@ func TestObjectGetWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestObjectListWithOptionalParams(t *testing.T) {
+func TestObjectList(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -63,9 +63,9 @@ func TestObjectListWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"bucket_name",
 		raindrop.ObjectListParams{
-			ModuleID:       raindrop.String("module_id"),
-			OrganizationID: raindrop.String("organization_id"),
-			UserID:         raindrop.String("user_id"),
+			ModuleID:       "module_id",
+			OrganizationID: "organization_id",
+			UserID:         "user_id",
 		},
 	)
 	if err != nil {
@@ -94,13 +94,17 @@ func TestObjectUploadWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"object_key",
 		raindrop.ObjectUploadParams{
-			BucketName:     "bucket_name",
-			Content:        raindrop.String("U3RhaW5sZXNzIHJvY2tz"),
-			ContentType:    raindrop.String("content_type"),
-			Key:            raindrop.String("key"),
-			ModuleID:       raindrop.String("module_id"),
-			OrganizationID: raindrop.String("organization_id"),
-			UserID:         raindrop.String("user_id"),
+			BucketName:          "bucket_name",
+			QueryKey:            "key",
+			QueryModuleID:       "module_id",
+			QueryOrganizationID: "organization_id",
+			QueryUserID:         "user_id",
+			Content:             raindrop.String("U3RhaW5sZXNzIHJvY2tz"),
+			ContentType:         raindrop.String("content_type"),
+			BodyKey:             raindrop.String("key"),
+			BodyModuleID:        raindrop.String("module_id"),
+			BodyOrganizationID:  raindrop.String("organization_id"),
+			BodyUserID:          raindrop.String("user_id"),
 		},
 	)
 	if err != nil {

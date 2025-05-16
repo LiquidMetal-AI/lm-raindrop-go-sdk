@@ -28,7 +28,11 @@ func TestUsage(t *testing.T) {
 		context.TODO(),
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName: "bucket_name",
+			BucketName:     "bucket_name",
+			Key:            "key",
+			ModuleID:       "module_id",
+			OrganizationID: "organization_id",
+			UserID:         "user_id",
 		},
 	)
 	if err != nil {
