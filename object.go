@@ -38,8 +38,8 @@ func NewObjectService(opts ...option.RequestOption) (r ObjectService) {
 	return
 }
 
-// **DESCRIPTION** Download a file from a SmartBucket or regular bucket. The bucket
-// parameter (ID) is used to identify the bucket to download from. The key is the
+// **DESCRIPTION** Delete a file from a SmartBucket or regular bucket. The bucket
+// parameter (ID) is used to identify the bucket to delete from. The key is the
 // path to the object in the bucket.
 func (r *ObjectService) Get(ctx context.Context, objectKey string, params ObjectGetParams, opts ...option.RequestOption) (res *ObjectGetResponse, err error) {
 	opts = append(r.Options[:], opts...)
@@ -74,7 +74,7 @@ func (r *ObjectService) List(ctx context.Context, bucketName string, query Objec
 // bucket to upload to. The key is the path to the object in the bucket.
 func (r *ObjectService) Upload(ctx context.Context, objectKey string, params ObjectUploadParams, opts ...option.RequestOption) (res *ObjectUploadResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	if params.BucketName == "" {
+	if params.PathBucketName == "" {
 		err = errors.New("missing required bucket_name parameter")
 		return
 	}
@@ -82,7 +82,7 @@ func (r *ObjectService) Upload(ctx context.Context, objectKey string, params Obj
 		err = errors.New("missing required object_key parameter")
 		return
 	}
-	path := fmt.Sprintf("v1/object/%s/%s", params.BucketName, objectKey)
+	path := fmt.Sprintf("v1/object/%s/%s", params.PathBucketName, objectKey)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return
 }
@@ -299,17 +299,17 @@ func (r *ObjectUploadResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ObjectGetParams struct {
+	// **DESCRIPTION** Name of the bucket **REQUIRED** true
 	BucketName string `path:"bucket_name,required" json:"-"`
-	// **DESCRIPTION** Object key/path to download **REQUIRED** true **EXAMPLE**
-	// "my-key"
-	Key string `query:"key,required" json:"-"`
+	// **DESCRIPTION** Object key/path to delete **REQUIRED** true **EXAMPLE** "my-key"
+	Key param.Opt[string] `query:"key,omitzero" json:"-"`
 	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
 	// "01jtgtrd37acrqf7k24dggg31s"
-	ModuleID string `query:"module_id,required" json:"-"`
+	ModuleID param.Opt[string] `query:"module_id,omitzero" json:"-"`
 	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
-	OrganizationID string `query:"organization_id,required" json:"-"`
+	OrganizationID param.Opt[string] `query:"organization_id,omitzero" json:"-"`
 	// **DESCRIPTION** User ID for access control **REQUIRED** true
-	UserID string `query:"user_id,required" json:"-"`
+	UserID param.Opt[string] `query:"user_id,omitzero" json:"-"`
 	paramObj
 }
 
@@ -324,11 +324,11 @@ func (r ObjectGetParams) URLQuery() (v url.Values, err error) {
 type ObjectListParams struct {
 	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
 	// "01jtgtrd37acrqf7k24dggg31s"
-	ModuleID string `query:"module_id,required" json:"-"`
+	ModuleID param.Opt[string] `query:"module_id,omitzero" json:"-"`
 	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
-	OrganizationID string `query:"organization_id,required" json:"-"`
+	OrganizationID param.Opt[string] `query:"organization_id,omitzero" json:"-"`
 	// **DESCRIPTION** User ID for access control **REQUIRED** true
-	UserID string `query:"user_id,required" json:"-"`
+	UserID param.Opt[string] `query:"user_id,omitzero" json:"-"`
 	paramObj
 }
 
@@ -341,17 +341,10 @@ func (r ObjectListParams) URLQuery() (v url.Values, err error) {
 }
 
 type ObjectUploadParams struct {
-	BucketName string `path:"bucket_name,required" json:"-"`
-	// **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
-	// "my-key"
-	QueryKey string `query:"key,required" json:"-"`
-	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
-	// "01jtgtrd37acrqf7k24dggg31s"
-	QueryModuleID string `query:"module_id,required" json:"-"`
-	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
-	QueryOrganizationID string `query:"organization_id,required" json:"-"`
-	// **DESCRIPTION** User ID for access control **REQUIRED** true
-	QueryUserID string `query:"user_id,required" json:"-"`
+	// **DESCRIPTION** Name of the bucket **REQUIRED** true
+	PathBucketName string `path:"bucket_name,required" json:"-"`
+	// **DESCRIPTION** Name of the bucket **REQUIRED** true
+	BodyBucketName param.Opt[string] `json:"bucket_name,omitzero"`
 	// **DESCRIPTION** Binary content of the object **REQUIRED** true
 	Content param.Opt[string] `json:"content,omitzero" format:"byte"`
 	// **DESCRIPTION** MIME type of the object **REQUIRED** true **EXAMPLE**
@@ -359,14 +352,16 @@ type ObjectUploadParams struct {
 	ContentType param.Opt[string] `json:"content_type,omitzero"`
 	// **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
 	// "my-key"
-	BodyKey param.Opt[string] `json:"key,omitzero"`
+	Key param.Opt[string] `json:"key,omitzero"`
 	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
 	// "01jtgtrd37acrqf7k24dggg31s"
-	BodyModuleID param.Opt[string] `json:"module_id,omitzero"`
+	ModuleID param.Opt[string] `json:"module_id,omitzero"`
+	// **DESCRIPTION** Key/path of the object in the bucket **REQUIRED** true
+	ObjectKey param.Opt[string] `json:"object_key,omitzero"`
 	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
-	BodyOrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
 	// **DESCRIPTION** User ID for access control **REQUIRED** true
-	BodyUserID param.Opt[string] `json:"user_id,omitzero"`
+	UserID param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -376,12 +371,4 @@ func (r ObjectUploadParams) MarshalJSON() (data []byte, err error) {
 }
 func (r *ObjectUploadParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
-}
-
-// URLQuery serializes [ObjectUploadParams]'s query parameters as `url.Values`.
-func (r ObjectUploadParams) URLQuery() (v url.Values, err error) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
 }
