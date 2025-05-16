@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestObjectListObjectsWithOptionalParams(t *testing.T) {
+func TestStorageObjectListObjectsWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,10 +26,10 @@ func TestObjectListObjectsWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Object.ListObjects(
+	_, err := client.StorageObject.ListObjects(
 		context.TODO(),
 		"bucket_name",
-		raindrop.ObjectListObjectsParams{
+		raindrop.StorageObjectListObjectsParams{
 			ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 		},
 	)
@@ -42,7 +42,7 @@ func TestObjectListObjectsWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestObjectPutObjectWithOptionalParams(t *testing.T) {
+func TestStorageObjectPutObjectWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -55,10 +55,10 @@ func TestObjectPutObjectWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Object.PutObject(
+	_, err := client.StorageObject.PutObject(
 		context.TODO(),
 		"object_key",
-		raindrop.ObjectPutObjectParams{
+		raindrop.StorageObjectPutObjectParams{
 			BucketName:  "bucket_name",
 			Content:     "U3RhaW5sZXNzIHJvY2tz",
 			ContentType: raindrop.String("application/pdf"),
@@ -75,7 +75,7 @@ func TestObjectPutObjectWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestObjectGetObjectWithOptionalParams(t *testing.T) {
+func TestStorageObjectGetObjectWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -88,10 +88,10 @@ func TestObjectGetObjectWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Object.GetObject(
+	_, err := client.StorageObject.GetObject(
 		context.TODO(),
 		"object_key",
-		raindrop.ObjectGetObjectParams{
+		raindrop.StorageObjectGetObjectParams{
 			BucketName: "bucket_name",
 			Key:        raindrop.String("my-key"),
 			ModuleID:   raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
