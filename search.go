@@ -54,16 +54,16 @@ func NewSearchService(opts ...option.RequestOption) (r SearchService) {
 // - Content-based search across text, images, and audio
 // - Automatic PII detection
 // - Multi-modal search (text, images, audio)
-func (r *SearchService) Run(ctx context.Context, body SearchRunParams, opts ...option.RequestOption) (res *SearchRunResponse, err error) {
+func (r *SearchService) Find(ctx context.Context, body SearchFindParams, opts ...option.RequestOption) (res *SearchFindResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type SearchRunResponse struct {
+type SearchFindResponse struct {
 	// Pagination details for result navigation
-	Pagination SearchRunResponsePagination `json:"pagination"`
+	Pagination SearchFindResponsePagination `json:"pagination"`
 	// Matched results with metadata
 	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -76,13 +76,13 @@ type SearchRunResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchRunResponse) RawJSON() string { return r.JSON.raw }
-func (r *SearchRunResponse) UnmarshalJSON(data []byte) error {
+func (r SearchFindResponse) RawJSON() string { return r.JSON.raw }
+func (r *SearchFindResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // Pagination details for result navigation
-type SearchRunResponsePagination struct {
+type SearchFindResponsePagination struct {
 	// Indicates more results available. Used for infinite scroll implementation
 	HasMore bool `json:"has_more"`
 	// Current page number (1-based)
@@ -106,12 +106,12 @@ type SearchRunResponsePagination struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchRunResponsePagination) RawJSON() string { return r.JSON.raw }
-func (r *SearchRunResponsePagination) UnmarshalJSON(data []byte) error {
+func (r SearchFindResponsePagination) RawJSON() string { return r.JSON.raw }
+func (r *SearchFindResponsePagination) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type SearchRunParams struct {
+type SearchFindParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
 	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
@@ -125,10 +125,10 @@ type SearchRunParams struct {
 	paramObj
 }
 
-func (r SearchRunParams) MarshalJSON() (data []byte, err error) {
-	type shadow SearchRunParams
+func (r SearchFindParams) MarshalJSON() (data []byte, err error) {
+	type shadow SearchFindParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SearchRunParams) UnmarshalJSON(data []byte) error {
+func (r *SearchFindParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

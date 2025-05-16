@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestSummarizePageNewSummary(t *testing.T) {
+func TestSummarizePageSumarizePage(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,7 +26,7 @@ func TestSummarizePageNewSummary(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.SummarizePage.NewSummary(context.TODO(), raindrop.SummarizePageNewSummaryParams{
+	_, err := client.SummarizePage.SumarizePage(context.TODO(), raindrop.SummarizePageSumarizePageParams{
 		Page:      1,
 		PageSize:  10,
 		RequestID: "123e4567-e89b-12d3-a456-426614174000",

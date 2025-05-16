@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestDocumentQueryNew(t *testing.T) {
+func TestDocumentQueryAsk(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,7 +26,7 @@ func TestDocumentQueryNew(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+	_, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
