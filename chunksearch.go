@@ -49,7 +49,7 @@ func (r *ChunkSearchService) Find(ctx context.Context, body ChunkSearchFindParam
 type ChunkSearchFindResponse struct {
 	// Ordered list of relevant text segments. Each result includes full context and
 	// metadata
-	Results []ChunkSearchFindResponseResult `json:"results"`
+	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Results     respjson.Field
@@ -61,87 +61,6 @@ type ChunkSearchFindResponse struct {
 // Returns the unmodified JSON received from the API
 func (r ChunkSearchFindResponse) RawJSON() string { return r.JSON.raw }
 func (r *ChunkSearchFindResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type ChunkSearchFindResponseResult struct {
-	// Unique identifier for this text segment. Used for deduplication and result
-	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
-	// Vector representation for similarity matching. Used in semantic search
-	// operations
-	Embed string `json:"embed,nullable"`
-	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
-	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
-	Score float64 `json:"score,nullable"`
-	// Source document references. Contains bucket and object information
-	Source ChunkSearchFindResponseResultSource `json:"source"`
-	// The actual content of the result. May be a document excerpt or full content
-	Text string `json:"text,nullable"`
-	// Content MIME type. Helps with proper result rendering
-	Type string `json:"type,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ChunkSignature   respjson.Field
-		Embed            respjson.Field
-		PayloadSignature respjson.Field
-		Score            respjson.Field
-		Source           respjson.Field
-		Text             respjson.Field
-		Type             respjson.Field
-		ExtraFields      map[string]respjson.Field
-		raw              string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r ChunkSearchFindResponseResult) RawJSON() string { return r.JSON.raw }
-func (r *ChunkSearchFindResponseResult) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Source document references. Contains bucket and object information
-type ChunkSearchFindResponseResultSource struct {
-	// The bucket information containing this result
-	Bucket ChunkSearchFindResponseResultSourceBucket `json:"bucket"`
-	// The object key within the bucket
-	Object string `json:"object"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Bucket      respjson.Field
-		Object      respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r ChunkSearchFindResponseResultSource) RawJSON() string { return r.JSON.raw }
-func (r *ChunkSearchFindResponseResultSource) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The bucket information containing this result
-type ChunkSearchFindResponseResultSourceBucket struct {
-	ApplicationName      string `json:"application_name"`
-	ApplicationVersionID string `json:"application_version_id"`
-	BucketName           string `json:"bucket_name"`
-	ModuleID             string `json:"module_id"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ModuleID             respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r ChunkSearchFindResponseResultSourceBucket) RawJSON() string { return r.JSON.raw }
-func (r *ChunkSearchFindResponseResultSourceBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
