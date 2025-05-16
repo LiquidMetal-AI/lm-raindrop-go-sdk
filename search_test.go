@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestSearchFindWithOptionalParams(t *testing.T) {
+func TestSearchFind(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -36,8 +36,8 @@ func TestSearchFindWithOptionalParams(t *testing.T) {
 				},
 			},
 		}},
-		Input:     raindrop.String("Show me documents containing credit card numbers or social security numbers"),
-		RequestID: raindrop.String("123e4567-e89b-12d3-a456-426614174000"),
+		Input:     "Show me documents containing credit card numbers or social security numbers",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		var apierr *raindrop.Error

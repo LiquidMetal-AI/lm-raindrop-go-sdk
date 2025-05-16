@@ -53,8 +53,13 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	response, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
-		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{},
+			},
+		}},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
 	if err != nil {
 		panic(err.Error())
@@ -295,8 +300,13 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-	Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
-	RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
+	BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+		OfBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+			Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{},
+		},
+	}},
+	Input:     "all my pdfs with images of cats that do not talk about dogs",
+	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -325,8 +335,13 @@ defer cancel()
 client.Search.Find(
 	ctx,
 	raindrop.SearchFindParams{
-		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
-		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{},
+			},
+		}},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -364,8 +379,13 @@ client := raindrop.NewClient(
 client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
-		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{},
+			},
+		}},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithMaxRetries(5),
 )
@@ -382,8 +402,13 @@ var response *http.Response
 response, err := client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
-		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{},
+			},
+		}},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	},
 	option.WithResponseInto(&response),
 )

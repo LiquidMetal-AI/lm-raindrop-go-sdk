@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestChatInteractWithOptionalParams(t *testing.T) {
+func TestChatInteract(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -36,9 +36,9 @@ func TestChatInteractWithOptionalParams(t *testing.T) {
 				},
 			},
 		},
-		Input:     raindrop.String("What are the key points in this document?"),
-		ObjectID:  raindrop.String("document.pdf"),
-		RequestID: raindrop.String("123e4567-e89b-12d3-a456-426614174000"),
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
