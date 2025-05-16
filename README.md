@@ -52,19 +52,14 @@ func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	response, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
+		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
+		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", searchResponse.Pagination)
+	fmt.Printf("%+v\n", response.Pagination)
 }
 
 ```
@@ -286,39 +281,8 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
-```go
-iter := client.Search.GetAutoPaging(context.TODO(), raindrop.SearchGetParams{
-	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
-	Page:      raindrop.Int(1),
-})
-// Automatically fetches more pages as needed.
-for iter.Next() {
-	textResult := iter.Current()
-	fmt.Printf("%+v\n", textResult)
-}
-if err := iter.Err(); err != nil {
-	panic(err.Error())
-}
-```
-
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
-
-```go
-page, err := client.Search.Get(context.TODO(), raindrop.SearchGetParams{
-	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
-	Page:      raindrop.Int(1),
-})
-for page != nil {
-	for _, search := range page.Results {
-		fmt.Printf("%+v\n", search)
-	}
-	page, err = page.GetNextPage()
-}
-if err != nil {
-	panic(err.Error())
-}
-```
 
 ### Errors
 
@@ -331,13 +295,8 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-	BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-		OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-			ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-		},
-	}},
-	Input:     "all my pdfs with images of cats that do not talk about dogs",
-	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
+	RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -366,13 +325,8 @@ defer cancel()
 client.Search.Find(
 	ctx,
 	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
+		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -410,13 +364,8 @@ client := raindrop.NewClient(
 client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
+		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
 	},
 	option.WithMaxRetries(5),
 )
@@ -430,23 +379,18 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-searchResponse, err := client.Search.Find(
+response, err := client.Search.Find(
 	context.TODO(),
 	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfSearchFindsBucketLocationModuleID: &raindrop.SearchFindParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
-			},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
+		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
 	},
 	option.WithResponseInto(&response),
 )
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", searchResponse)
+fmt.Printf("%+v\n", response)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)

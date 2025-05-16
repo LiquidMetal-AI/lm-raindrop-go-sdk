@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestDocumentQueryAsk(t *testing.T) {
+func TestChatInteractWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,15 +26,19 @@ func TestDocumentQueryAsk(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
-		BucketLocation: raindrop.DocumentQueryAskParamsBucketLocationUnion{
-			OfDocumentQueryAsksBucketLocationModuleID: &raindrop.DocumentQueryAskParamsBucketLocationModuleID{
-				ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+	_, err := client.Chat.Interact(context.TODO(), raindrop.ChatInteractParams{
+		BucketLocation: raindrop.ChatInteractParamsBucketLocationUnion{
+			OfBucket: &raindrop.ChatInteractParamsBucketLocationBucket{
+				Bucket: raindrop.ChatInteractParamsBucketLocationBucketBucket{
+					ApplicationName: raindrop.String("my-app"),
+					Name:            raindrop.String("my-bucket"),
+					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+				},
 			},
 		},
-		Input:     "What is the key points in this document?",
-		ObjectID:  "object_id",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		Input:     raindrop.String("What are the key points in this document?"),
+		ObjectID:  raindrop.String("document.pdf"),
+		RequestID: raindrop.String("123e4567-e89b-12d3-a456-426614174000"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
