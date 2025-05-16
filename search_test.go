@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestSearchRun(t *testing.T) {
+func TestSearchFind(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,7 +26,7 @@ func TestSearchRun(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Search.Run(context.TODO(), raindrop.SearchRunParams{
+	_, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
 		BucketLocations: []raindrop.BucketLocatorUnionParam{{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{

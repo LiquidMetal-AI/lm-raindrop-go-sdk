@@ -44,7 +44,7 @@ func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+	response, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{},
@@ -57,7 +57,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", documentQuery.Answer)
+	fmt.Printf("%+v\n", response.Answer)
 }
 
 ```
@@ -263,7 +263,7 @@ client := raindrop.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.DocumentQuery.New(context.TODO(), ...,
+client.DocumentQuery.Ask(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -292,7 +292,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+_, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
 	BucketLocation: raindrop.BucketLocatorUnionParam{
 		OfBucket: &raindrop.BucketLocatorBucketParam{
 			Bucket: raindrop.BucketLocatorBucketBucketParam{},
@@ -326,9 +326,9 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.DocumentQuery.New(
+client.DocumentQuery.Ask(
 	ctx,
-	raindrop.DocumentQueryNewParams{
+	raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{},
@@ -371,9 +371,9 @@ client := raindrop.NewClient(
 )
 
 // Override per-request:
-client.DocumentQuery.New(
+client.DocumentQuery.Ask(
 	context.TODO(),
-	raindrop.DocumentQueryNewParams{
+	raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{},
@@ -395,9 +395,9 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-documentQuery, err := client.DocumentQuery.New(
+response, err := client.DocumentQuery.Ask(
 	context.TODO(),
-	raindrop.DocumentQueryNewParams{
+	raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{},
@@ -412,7 +412,7 @@ documentQuery, err := client.DocumentQuery.New(
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", documentQuery)
+fmt.Printf("%+v\n", response)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)

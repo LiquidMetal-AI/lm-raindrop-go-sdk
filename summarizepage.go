@@ -51,14 +51,14 @@ func NewSummarizePageService(opts ...option.RequestOption) (r SummarizePageServi
 // - Mixed content types
 // - Technical documentation
 // - Research materials
-func (r *SummarizePageService) NewSummary(ctx context.Context, body SummarizePageNewSummaryParams, opts ...option.RequestOption) (res *SummarizePageNewSummaryResponse, err error) {
+func (r *SummarizePageService) SumarizePage(ctx context.Context, body SummarizePageSumarizePageParams, opts ...option.RequestOption) (res *SummarizePageSumarizePageResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/summarize_page"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type SummarizePageNewSummaryResponse struct {
+type SummarizePageSumarizePageResponse struct {
 	// AI-generated summary including key themes and topics, content type distribution,
 	// important findings, and document relationships
 	Summary string `json:"summary"`
@@ -71,12 +71,12 @@ type SummarizePageNewSummaryResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SummarizePageNewSummaryResponse) RawJSON() string { return r.JSON.raw }
-func (r *SummarizePageNewSummaryResponse) UnmarshalJSON(data []byte) error {
+func (r SummarizePageSumarizePageResponse) RawJSON() string { return r.JSON.raw }
+func (r *SummarizePageSumarizePageResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type SummarizePageNewSummaryParams struct {
+type SummarizePageSumarizePageParams struct {
 	// Target page number (1-based)
 	Page int64 `json:"page,required"`
 	// Results per page. Affects summary granularity
@@ -86,10 +86,10 @@ type SummarizePageNewSummaryParams struct {
 	paramObj
 }
 
-func (r SummarizePageNewSummaryParams) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizePageNewSummaryParams
+func (r SummarizePageSumarizePageParams) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizePageSumarizePageParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SummarizePageNewSummaryParams) UnmarshalJSON(data []byte) error {
+func (r *SummarizePageSumarizePageParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
