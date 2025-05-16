@@ -27,13 +27,11 @@ func TestDocumentQueryAsk(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
-		BucketLocation: raindrop.DocumentQueryAskParamsBucketLocationUnion{
-			OfBucket: &raindrop.DocumentQueryAskParamsBucketLocationBucket{
-				Bucket: raindrop.DocumentQueryAskParamsBucketLocationBucketBucket{
-					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
-				},
+		BucketLocation: raindrop.DocumentQueryAskParamsBucketLocation{
+			Bucket: raindrop.DocumentQueryAskParamsBucketLocationBucket{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            raindrop.String("my-bucket"),
+				Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
 			},
 		},
 		Input:     "What are the key points in this document?",

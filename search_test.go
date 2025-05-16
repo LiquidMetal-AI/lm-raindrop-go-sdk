@@ -27,13 +27,11 @@ func TestSearchFind(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
-			OfBucket: &raindrop.SearchFindParamsBucketLocationBucket{
-				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{
-					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
-				},
+		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
+			Bucket: raindrop.SearchFindParamsBucketLocationBucket{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            raindrop.String("my-bucket"),
+				Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
 			},
 		}},
 		Input:     "Show me documents containing credit card numbers or social security numbers",
