@@ -20,7 +20,6 @@ type Client struct {
 	DocumentQuery DocumentQueryService
 	ChunkSearch   ChunkSearchService
 	SummarizePage SummarizePageService
-	Chat          ChatService
 	StorageObject StorageObjectService
 }
 
@@ -50,7 +49,6 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.DocumentQuery = NewDocumentQueryService(opts...)
 	r.ChunkSearch = NewChunkSearchService(opts...)
 	r.SummarizePage = NewSummarizePageService(opts...)
-	r.Chat = NewChatService(opts...)
 	r.StorageObject = NewStorageObjectService(opts...)
 
 	return
