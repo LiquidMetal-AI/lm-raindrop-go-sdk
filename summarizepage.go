@@ -59,8 +59,9 @@ func (r *SummarizePageService) NewSummary(ctx context.Context, body SummarizePag
 }
 
 type SummarizePageNewSummaryResponse struct {
-	// AI-generated summary including key themes and topics, content type distribution,
-	// important findings, and document relationships
+	// **DESCRIPTION** AI-generated summary including key themes and topics, content
+	// type distribution, important findings, and document relationships **EXAMPLE**
+	// "The search results contain information about..."
 	Summary string `json:"summary"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -77,12 +78,16 @@ func (r *SummarizePageNewSummaryResponse) UnmarshalJSON(data []byte) error {
 }
 
 type SummarizePageNewSummaryParams struct {
-	// Target page number (1-based)
-	Page int64 `json:"page,required"`
-	// Results per page. Affects summary granularity
-	PageSize int64 `json:"page_size,required"`
-	// Original search session identifier from the initial search
-	RequestID string `json:"request_id,required"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	// **DESCRIPTION** Target page number (1-based) **EXAMPLE** 1 **REQUIRED** TRUE
+	Page param.Opt[int64] `json:"page,omitzero"`
+	// **DESCRIPTION** Results per page. Affects summary granularity **EXAMPLE** 10
+	// **REQUIRED** TRUE
+	PageSize param.Opt[int64] `json:"page_size,omitzero"`
+	// **DESCRIPTION** Original search session identifier from the initial search
+	// **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
+	RequestID param.Opt[string] `json:"request_id,omitzero"`
+	UserID    param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 

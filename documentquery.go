@@ -144,9 +144,10 @@ func (r *BucketLocatorModuleIDParam) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentQueryNewResponse struct {
-	// AI-generated response that may include direct document quotes, content
-	// summaries, contextual explanations, references to specific sections, and related
-	// content suggestions
+	// **DESCRIPTION** AI-generated response that may include direct document quotes,
+	// content summaries, contextual explanations, references to specific sections, and
+	// related content suggestions **EXAMPLE** "Based on the document, the key points
+	// are..."
 	Answer string `json:"answer"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -163,18 +164,27 @@ func (r *DocumentQueryNewResponse) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentQueryNewParams struct {
-	// The storage bucket containing the target document. Must be a valid, registered
-	// Smart Bucket. Used to identify which bucket to query against
-	BucketLocation BucketLocatorUnionParam `json:"bucket_location,omitzero,required"`
-	// User's input or question about the document. Can be natural language questions,
-	// commands, or requests. The system will process this against the document content
-	Input string `json:"input,required"`
-	// Document identifier within the bucket. Typically matches the storage path or
-	// key. Used to identify which document to chat with
-	ObjectID string `json:"object_id,required"`
-	// Client-provided conversation session identifier. Required for maintaining
-	// context in follow-up questions. We recommend using a UUID or ULID for this value
-	RequestID string `json:"request_id,required"`
+	// **DESCRIPTION** User's input or question about the document. Can be natural
+	// language questions, commands, or requests. The system will process this against
+	// the document content **EXAMPLE** "What are the key points in this document?"
+	// **REQUIRED** TRUE
+	Input param.Opt[string] `json:"input,omitzero"`
+	// **DESCRIPTION** Document identifier within the bucket. Typically matches the
+	// storage path or key. Used to identify which document to chat with **EXAMPLE**
+	// "document.pdf" **REQUIRED** TRUE
+	ObjectID       param.Opt[string] `json:"object_id,omitzero"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	// **DESCRIPTION** Client-provided conversation session identifier. Required for
+	// maintaining context in follow-up questions. We recommend using a UUID or ULID
+	// for this value **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED**
+	// TRUE
+	RequestID param.Opt[string] `json:"request_id,omitzero"`
+	UserID    param.Opt[string] `json:"user_id,omitzero"`
+	// **DESCRIPTION** The storage bucket containing the target document. Must be a
+	// valid, registered Smart Bucket. Used to identify which bucket to query against
+	// **EXAMPLE** {"bucket": {"name": "my-bucket", "version":
+	// "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}} **REQUIRED** TRUE
+	BucketLocation BucketLocatorUnionParam `json:"bucket_location,omitzero"`
 	paramObj
 }
 

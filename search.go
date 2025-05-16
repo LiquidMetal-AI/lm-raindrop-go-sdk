@@ -62,9 +62,11 @@ func (r *SearchService) Run(ctx context.Context, body SearchRunParams, opts ...o
 }
 
 type SearchRunResponse struct {
-	// Pagination details for result navigation
+	// **DESCRIPTION** Pagination details for result navigation **EXAMPLE** {"total":
+	// 100, "page": 1, "page_size": 10, "total_pages": 10, "has_more": true}
 	Pagination SearchRunResponsePagination `json:"pagination"`
-	// Matched results with metadata
+	// **DESCRIPTION** Matched results with metadata **EXAMPLE** [{"chunk_signature":
+	// "chunk_123abc", "text": "Sample text", "score": 0.95}]
 	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -81,17 +83,20 @@ func (r *SearchRunResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Pagination details for result navigation
+// **DESCRIPTION** Pagination details for result navigation **EXAMPLE** {"total":
+// 100, "page": 1, "page_size": 10, "total_pages": 10, "has_more": true}
 type SearchRunResponsePagination struct {
-	// Indicates more results available. Used for infinite scroll implementation
+	// **DESCRIPTION** Indicates more results available. Used for infinite scroll
+	// implementation **EXAMPLE** true
 	HasMore bool `json:"has_more"`
-	// Current page number (1-based)
+	// **DESCRIPTION** Current page number (1-based) **EXAMPLE** 1
 	Page int64 `json:"page"`
-	// Results per page. May be adjusted for performance
+	// **DESCRIPTION** Results per page. May be adjusted for performance **EXAMPLE** 15
 	PageSize int64 `json:"page_size"`
-	// Total number of available results
+	// **DESCRIPTION** Total number of available results **EXAMPLE** 1020
 	Total int64 `json:"total"`
-	// Total available pages. Calculated as ceil(total/page_size)
+	// **DESCRIPTION** Total available pages. Calculated as ceil(total/page_size)
+	// **EXAMPLE** 68
 	TotalPages int64 `json:"total_pages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -112,16 +117,22 @@ func (r *SearchRunResponsePagination) UnmarshalJSON(data []byte) error {
 }
 
 type SearchRunParams struct {
-	// The buckets to search. If provided, the search will only return results from
-	// these buckets
-	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
-	// Natural language search query that can include complex criteria. Supports
-	// queries like finding documents with specific content types, PII, or semantic
-	// meaning
-	Input string `json:"input,required"`
-	// Client-provided search session identifier. Required for pagination and result
-	// tracking. We recommend using a UUID or ULID for this value
-	RequestID string `json:"request_id,required"`
+	// **DESCRIPTION** Natural language search query that can include complex criteria.
+	// Supports queries like finding documents with specific content types, PII, or
+	// semantic meaning **EXAMPLE** "Show me documents containing credit card numbers
+	// or social security numbers" **REQUIRED** TRUE
+	Input          param.Opt[string] `json:"input,omitzero"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	// **DESCRIPTION** Client-provided search session identifier. Required for
+	// pagination and result tracking. We recommend using a UUID or ULID for this value
+	// **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
+	RequestID param.Opt[string] `json:"request_id,omitzero"`
+	UserID    param.Opt[string] `json:"user_id,omitzero"`
+	// **DESCRIPTION** The buckets to search. If provided, the search will only return
+	// results from these buckets **EXAMPLE** [{"bucket": {"name": "my-bucket",
+	// "version": "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}}]
+	// **REQUIRED** TRUE
+	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero"`
 	paramObj
 }
 

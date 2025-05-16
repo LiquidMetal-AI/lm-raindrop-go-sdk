@@ -44,16 +44,7 @@ func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
-	})
+	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{})
 	if err != nil {
 		panic(err.Error())
 	}
@@ -292,16 +283,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
-	BucketLocation: raindrop.BucketLocatorUnionParam{
-		OfBucket: &raindrop.BucketLocatorBucketParam{
-			Bucket: raindrop.BucketLocatorBucketBucketParam{},
-		},
-	},
-	Input:     "What are the key points in this document?",
-	ObjectID:  "document.pdf",
-	RequestID: "123e4567-e89b-12d3-a456-426614174000",
-})
+_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{})
 if err != nil {
 	var apierr *raindrop.Error
 	if errors.As(err, &apierr) {
@@ -328,16 +310,7 @@ ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
 client.DocumentQuery.New(
 	ctx,
-	raindrop.DocumentQueryNewParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
-	},
+	raindrop.DocumentQueryNewParams{},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -373,16 +346,7 @@ client := raindrop.NewClient(
 // Override per-request:
 client.DocumentQuery.New(
 	context.TODO(),
-	raindrop.DocumentQueryNewParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
-	},
+	raindrop.DocumentQueryNewParams{},
 	option.WithMaxRetries(5),
 )
 ```
@@ -397,16 +361,7 @@ you need to examine response headers, status codes, or other details.
 var response *http.Response
 documentQuery, err := client.DocumentQuery.New(
 	context.TODO(),
-	raindrop.DocumentQueryNewParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
-	},
+	raindrop.DocumentQueryNewParams{},
 	option.WithResponseInto(&response),
 )
 if err != nil {
