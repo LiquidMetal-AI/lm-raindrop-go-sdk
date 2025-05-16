@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestChunkSearchExecute(t *testing.T) {
+func TestChunkSearchExecuteWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -30,14 +30,16 @@ func TestChunkSearchExecute(t *testing.T) {
 		BucketLocations: []raindrop.BucketLocatorUnionParam{{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+					ApplicationName: raindrop.String("application_name"),
+					Name:            raindrop.String("name"),
+					Version:         raindrop.String("version"),
 				},
 			},
 		}},
-		Input:     "Find documents about revenue in Q4 2023",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		Input:          raindrop.String("input"),
+		OrganizationID: raindrop.String("organization_id"),
+		RequestID:      raindrop.String("request_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -47,21 +47,29 @@ func (r *ChunkSearchService) Execute(ctx context.Context, body ChunkSearchExecut
 }
 
 type TextResult struct {
-	// Unique identifier for this text segment. Used for deduplication and result
-	// tracking
+	// **DESCRIPTION** Unique identifier for this text segment. Used for deduplication
+	// and result tracking **EXAMPLE**
+	// "51abb575a5e438a2db5fa064611995dfd76aa14d9e4b2a44c29a6374203126a5"
 	ChunkSignature string `json:"chunk_signature,nullable"`
-	// Vector representation for similarity matching. Used in semantic search
-	// operations
+	// **DESCRIPTION** Vector representation for similarity matching. Used in semantic
+	// search operations **EXAMPLE** "base64_encoded_vector_data"
 	Embed string `json:"embed,nullable"`
-	// Parent document identifier. Links related content chunks together
+	// **DESCRIPTION** Parent document identifier. Links related content chunks
+	// together **EXAMPLE**
+	// "e2ec3b118e205ff5d627e0c866224a25ba52e6d3ab758a3ef3d49e80908d7444"
 	PayloadSignature string `json:"payload_signature,nullable"`
-	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
+	// **DESCRIPTION** Relevance score (0.0 to 1.0). Higher scores indicate better
+	// matches **EXAMPLE** 0.95
 	Score float64 `json:"score,nullable"`
-	// Source document references. Contains bucket and object information
+	// **DESCRIPTION** Source document references. Contains bucket and object
+	// information **EXAMPLE** {"bucket": {"moduleId": "01jt3vs2nyt2xwk2f54x2bkn84",
+	// "bucketName": "mr-bucket"}, "object": "document.pdf"}
 	Source TextResultSource `json:"source"`
-	// The actual content of the result. May be a document excerpt or full content
+	// **DESCRIPTION** The actual content of the result. May be a document excerpt or
+	// full content **EXAMPLE** "This is a sample text chunk from the document"
 	Text string `json:"text,nullable"`
-	// Content MIME type. Helps with proper result rendering
+	// **DESCRIPTION** Content MIME type. Helps with proper result rendering
+	// **EXAMPLE** "application/pdf"
 	Type string `json:"type,nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -83,11 +91,14 @@ func (r *TextResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Source document references. Contains bucket and object information
+// **DESCRIPTION** Source document references. Contains bucket and object
+// information **EXAMPLE** {"bucket": {"moduleId": "01jt3vs2nyt2xwk2f54x2bkn84",
+// "bucketName": "mr-bucket"}, "object": "document.pdf"}
 type TextResultSource struct {
-	// The bucket information containing this result
+	// **DESCRIPTION** The bucket information containing this result **EXAMPLE**
+	// {"moduleId": "01jt3vs2nyt2xwk2f54x2bkn84", "bucketName": "mr-bucket"}
 	Bucket BucketResponse `json:"bucket"`
-	// The object key within the bucket
+	// **DESCRIPTION** The object key within the bucket **EXAMPLE** "document.pdf"
 	Object string `json:"object"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -105,8 +116,9 @@ func (r *TextResultSource) UnmarshalJSON(data []byte) error {
 }
 
 type ChunkSearchExecuteResponse struct {
-	// Ordered list of relevant text segments. Each result includes full context and
-	// metadata
+	// **DESCRIPTION** Ordered list of relevant text segments. Each result includes
+	// full context and metadata **EXAMPLE** [{"chunk_signature": "chunk_123abc",
+	// "text": "Sample text", "score": 0.95}]
 	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -123,15 +135,21 @@ func (r *ChunkSearchExecuteResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ChunkSearchExecuteParams struct {
-	// The buckets to search. If provided, the search will only return results from
-	// these buckets
-	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
-	// Natural language query or question. Can include complex criteria and
-	// relationships. The system will optimize the search strategy based on this input
-	Input string `json:"input,required"`
-	// Client-provided search session identifier. Required for pagination and result
-	// tracking. We recommend using a UUID or ULID for this value
-	RequestID string `json:"request_id,required"`
+	// **DESCRIPTION** Natural language query or question. Can include complex criteria
+	// and relationships. The system will optimize the search strategy based on this
+	// input **EXAMPLE** "Find documents about revenue in Q4 2023" **REQUIRED** TRUE
+	Input          param.Opt[string] `json:"input,omitzero"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	// **DESCRIPTION** Client-provided search session identifier. Required for
+	// pagination and result tracking. We recommend using a UUID or ULID for this value
+	// **EXAMPLE** "123e4567-e89b-12d3-a456-426614174000" **REQUIRED** TRUE
+	RequestID param.Opt[string] `json:"request_id,omitzero"`
+	UserID    param.Opt[string] `json:"user_id,omitzero"`
+	// **DESCRIPTION** The buckets to search. If provided, the search will only return
+	// results from these buckets **EXAMPLE** [{"bucket": {"name": "my-bucket",
+	// "version": "01jtgtraw3b5qbahrhvrj3ygbb", "application_name": "my-app"}}]
+	// **REQUIRED** TRUE
+	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero"`
 	paramObj
 }
 

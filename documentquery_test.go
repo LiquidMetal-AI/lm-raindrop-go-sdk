@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestDocumentQueryNew(t *testing.T) {
+func TestDocumentQueryNewWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -30,15 +30,17 @@ func TestDocumentQueryNew(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+					ApplicationName: raindrop.String("application_name"),
+					Name:            raindrop.String("name"),
+					Version:         raindrop.String("version"),
 				},
 			},
 		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		Input:          raindrop.String("input"),
+		ObjectID:       raindrop.String("object_id"),
+		OrganizationID: raindrop.String("organization_id"),
+		RequestID:      raindrop.String("request_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
