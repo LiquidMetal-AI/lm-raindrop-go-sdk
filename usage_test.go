@@ -24,9 +24,15 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{})
+	object, err := client.Object.Get(
+		context.TODO(),
+		"object_key",
+		raindrop.ObjectGetParams{
+			BucketName: "bucket_name",
+		},
+	)
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", documentQuery.Answer)
+	t.Logf("%+v\n", object.Bucket)
 }
