@@ -61,11 +61,92 @@ func (r *SearchService) Find(ctx context.Context, body SearchFindParams, opts ..
 	return
 }
 
+type TextResult struct {
+	// Unique identifier for this text segment. Used for deduplication and result
+	// tracking
+	ChunkSignature string `json:"chunk_signature,nullable"`
+	// Vector representation for similarity matching. Used in semantic search
+	// operations
+	Embed string `json:"embed,nullable"`
+	// Parent document identifier. Links related content chunks together
+	PayloadSignature string `json:"payload_signature,nullable"`
+	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
+	Score float64 `json:"score,nullable"`
+	// Source document references. Contains bucket and object information
+	Source TextResultSource `json:"source"`
+	// The actual content of the result. May be a document excerpt or full content
+	Text string `json:"text,nullable"`
+	// Content MIME type. Helps with proper result rendering
+	Type string `json:"type,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ChunkSignature   respjson.Field
+		Embed            respjson.Field
+		PayloadSignature respjson.Field
+		Score            respjson.Field
+		Source           respjson.Field
+		Text             respjson.Field
+		Type             respjson.Field
+		ExtraFields      map[string]respjson.Field
+		raw              string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResult) RawJSON() string { return r.JSON.raw }
+func (r *TextResult) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Source document references. Contains bucket and object information
+type TextResultSource struct {
+	// The bucket information containing this result
+	Bucket TextResultSourceBucket `json:"bucket"`
+	// The object key within the bucket
+	Object string `json:"object"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Bucket      respjson.Field
+		Object      respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResultSource) RawJSON() string { return r.JSON.raw }
+func (r *TextResultSource) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The bucket information containing this result
+type TextResultSourceBucket struct {
+	ApplicationName      string `json:"application_name"`
+	ApplicationVersionID string `json:"application_version_id"`
+	BucketName           string `json:"bucket_name"`
+	ModuleID             string `json:"module_id"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ApplicationName      respjson.Field
+		ApplicationVersionID respjson.Field
+		BucketName           respjson.Field
+		ModuleID             respjson.Field
+		ExtraFields          map[string]respjson.Field
+		raw                  string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResultSourceBucket) RawJSON() string { return r.JSON.raw }
+func (r *TextResultSourceBucket) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type SearchFindResponse struct {
 	// Pagination details for result navigation
 	Pagination SearchFindResponsePagination `json:"pagination"`
 	// Matched results with metadata
-	Results []SearchFindResponseResult `json:"results"`
+	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Pagination  respjson.Field
@@ -108,87 +189,6 @@ type SearchFindResponsePagination struct {
 // Returns the unmodified JSON received from the API
 func (r SearchFindResponsePagination) RawJSON() string { return r.JSON.raw }
 func (r *SearchFindResponsePagination) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type SearchFindResponseResult struct {
-	// Unique identifier for this text segment. Used for deduplication and result
-	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
-	// Vector representation for similarity matching. Used in semantic search
-	// operations
-	Embed string `json:"embed,nullable"`
-	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
-	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
-	Score float64 `json:"score,nullable"`
-	// Source document references. Contains bucket and object information
-	Source SearchFindResponseResultSource `json:"source"`
-	// The actual content of the result. May be a document excerpt or full content
-	Text string `json:"text,nullable"`
-	// Content MIME type. Helps with proper result rendering
-	Type string `json:"type,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ChunkSignature   respjson.Field
-		Embed            respjson.Field
-		PayloadSignature respjson.Field
-		Score            respjson.Field
-		Source           respjson.Field
-		Text             respjson.Field
-		Type             respjson.Field
-		ExtraFields      map[string]respjson.Field
-		raw              string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r SearchFindResponseResult) RawJSON() string { return r.JSON.raw }
-func (r *SearchFindResponseResult) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Source document references. Contains bucket and object information
-type SearchFindResponseResultSource struct {
-	// The bucket information containing this result
-	Bucket SearchFindResponseResultSourceBucket `json:"bucket"`
-	// The object key within the bucket
-	Object string `json:"object"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Bucket      respjson.Field
-		Object      respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r SearchFindResponseResultSource) RawJSON() string { return r.JSON.raw }
-func (r *SearchFindResponseResultSource) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The bucket information containing this result
-type SearchFindResponseResultSourceBucket struct {
-	ApplicationName      string `json:"application_name"`
-	ApplicationVersionID string `json:"application_version_id"`
-	BucketName           string `json:"bucket_name"`
-	ModuleID             string `json:"module_id"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ModuleID             respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r SearchFindResponseResultSourceBucket) RawJSON() string { return r.JSON.raw }
-func (r *SearchFindResponseResultSourceBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
