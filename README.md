@@ -44,11 +44,17 @@ func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{})
+	object, err := client.Object.Get(
+		context.TODO(),
+		"object_key",
+		raindrop.ObjectGetParams{
+			BucketName: "bucket_name",
+		},
+	)
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", documentQuery.Answer)
+	fmt.Printf("%+v\n", object.Bucket)
 }
 
 ```
@@ -254,7 +260,7 @@ client := raindrop.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.DocumentQuery.New(context.TODO(), ...,
+client.Object.Get(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -283,14 +289,20 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{})
+_, err := client.Object.Get(
+	context.TODO(),
+	"object_key",
+	raindrop.ObjectGetParams{
+		BucketName: "bucket_name",
+	},
+)
 if err != nil {
 	var apierr *raindrop.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/v1/document_query": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/v1/object/{bucket_name}/{object_key}": 400 Bad Request { ... }
 }
 ```
 
@@ -308,9 +320,12 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.DocumentQuery.New(
+client.Object.Get(
 	ctx,
-	raindrop.DocumentQueryNewParams{},
+	"object_key",
+	raindrop.ObjectGetParams{
+		BucketName: "bucket_name",
+	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -344,9 +359,12 @@ client := raindrop.NewClient(
 )
 
 // Override per-request:
-client.DocumentQuery.New(
+client.Object.Get(
 	context.TODO(),
-	raindrop.DocumentQueryNewParams{},
+	"object_key",
+	raindrop.ObjectGetParams{
+		BucketName: "bucket_name",
+	},
 	option.WithMaxRetries(5),
 )
 ```
@@ -359,15 +377,18 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-documentQuery, err := client.DocumentQuery.New(
+object, err := client.Object.Get(
 	context.TODO(),
-	raindrop.DocumentQueryNewParams{},
+	"object_key",
+	raindrop.ObjectGetParams{
+		BucketName: "bucket_name",
+	},
 	option.WithResponseInto(&response),
 )
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", documentQuery)
+fmt.Printf("%+v\n", object)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)
