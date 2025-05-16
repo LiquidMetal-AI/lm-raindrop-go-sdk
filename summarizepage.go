@@ -78,11 +78,11 @@ func (r *SummarizePageNewResponse) UnmarshalJSON(data []byte) error {
 
 type SummarizePageNewParams struct {
 	// Target page number (1-based)
-	Page param.Opt[int64] `json:"page,omitzero"`
+	Page int64 `json:"page,required"`
 	// Results per page. Affects summary granularity
-	PageSize param.Opt[int64] `json:"page_size,omitzero"`
+	PageSize int64 `json:"page_size,required"`
 	// Original search session identifier from the initial search
-	RequestID param.Opt[string] `json:"request_id,omitzero"`
+	RequestID string `json:"request_id,required"`
 	paramObj
 }
 

@@ -319,7 +319,7 @@ func (r ObjectListObjectsParams) URLQuery() (v url.Values, err error) {
 type ObjectPutObjectParams struct {
 	BucketName string `path:"bucket_name,required" json:"-"`
 	// Binary content of the object
-	Content param.Opt[string] `json:"content,omitzero" format:"byte"`
+	Content string `json:"content,required" format:"byte"`
 	// MIME type of the object
 	ContentType param.Opt[string] `json:"content_type,omitzero"`
 	// Object key/path in the bucket

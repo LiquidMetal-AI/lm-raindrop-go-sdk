@@ -25,8 +25,13 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	response, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		Input:     raindrop.String("all my pdfs with images of cats that do not talk about dogs"),
-		RequestID: raindrop.String("c523cb44-9b59-4bf5-a840-01891d735b57"),
+		BucketLocations: []raindrop.SearchFindParamsBucketLocationUnion{{
+			OfBucket: &raindrop.SearchFindParamsBucketLocationBucket{
+				Bucket: raindrop.SearchFindParamsBucketLocationBucketBucket{},
+			},
+		}},
+		Input:     "all my pdfs with images of cats that do not talk about dogs",
+		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())

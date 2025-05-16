@@ -60,7 +60,7 @@ func TestObjectPutObjectWithOptionalParams(t *testing.T) {
 		"object_key",
 		raindrop.ObjectPutObjectParams{
 			BucketName:  "bucket_name",
-			Content:     raindrop.String("U3RhaW5sZXNzIHJvY2tz"),
+			Content:     "U3RhaW5sZXNzIHJvY2tz",
 			ContentType: raindrop.String("application/pdf"),
 			Key:         raindrop.String("my-key"),
 			ModuleID:    raindrop.String("01jtgtrd37acrqf7k24dggg31s"),

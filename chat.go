@@ -78,18 +78,18 @@ func (r *ChatInteractResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ChatInteractParams struct {
-	// User's input or question about the document. Can be natural language questions,
-	// commands, or requests. The system will process this against the document content
-	Input param.Opt[string] `json:"input,omitzero"`
-	// Document identifier within the bucket. Typically matches the storage path or
-	// key. Used to identify which document to chat with
-	ObjectID param.Opt[string] `json:"object_id,omitzero"`
-	// Client-provided conversation session identifier. Required for maintaining
-	// context in follow-up questions. We recommend using a UUID or ULID for this value
-	RequestID param.Opt[string] `json:"request_id,omitzero"`
 	// The storage bucket containing the target document. Must be a valid, registered
 	// Smart Bucket. Used to identify which bucket to query against
-	BucketLocation ChatInteractParamsBucketLocationUnion `json:"bucket_location,omitzero"`
+	BucketLocation ChatInteractParamsBucketLocationUnion `json:"bucket_location,omitzero,required"`
+	// User's input or question about the document. Can be natural language questions,
+	// commands, or requests. The system will process this against the document content
+	Input string `json:"input,required"`
+	// Document identifier within the bucket. Typically matches the storage path or
+	// key. Used to identify which document to chat with
+	ObjectID string `json:"object_id,required"`
+	// Client-provided conversation session identifier. Required for maintaining
+	// context in follow-up questions. We recommend using a UUID or ULID for this value
+	RequestID string `json:"request_id,required"`
 	paramObj
 }
 

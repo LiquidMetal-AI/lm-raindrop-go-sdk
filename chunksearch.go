@@ -146,15 +146,15 @@ func (r *ChunkSearchFindResponseResultSourceBucket) UnmarshalJSON(data []byte) e
 }
 
 type ChunkSearchFindParams struct {
-	// Natural language query or question. Can include complex criteria and
-	// relationships. The system will optimize the search strategy based on this input
-	Input param.Opt[string] `json:"input,omitzero"`
-	// Client-provided search session identifier. Required for pagination and result
-	// tracking. We recommend using a UUID or ULID for this value
-	RequestID param.Opt[string] `json:"request_id,omitzero"`
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []ChunkSearchFindParamsBucketLocationUnion `json:"bucket_locations,omitzero"`
+	BucketLocations []ChunkSearchFindParamsBucketLocationUnion `json:"bucket_locations,omitzero,required"`
+	// Natural language query or question. Can include complex criteria and
+	// relationships. The system will optimize the search strategy based on this input
+	Input string `json:"input,required"`
+	// Client-provided search session identifier. Required for pagination and result
+	// tracking. We recommend using a UUID or ULID for this value
+	RequestID string `json:"request_id,required"`
 	paramObj
 }
 
