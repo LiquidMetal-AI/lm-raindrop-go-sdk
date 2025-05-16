@@ -42,11 +42,7 @@ func TestUserAgentHeader(t *testing.T) {
 		context.Background(),
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName:     "bucket_name",
-			Key:            "key",
-			ModuleID:       "module_id",
-			OrganizationID: "organization_id",
-			UserID:         "user_id",
+			BucketName: "bucket_name",
 		},
 	)
 	if userAgent != fmt.Sprintf("Raindrop/Go %s", internal.PackageVersion) {
@@ -76,11 +72,7 @@ func TestRetryAfter(t *testing.T) {
 		context.Background(),
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName:     "bucket_name",
-			Key:            "key",
-			ModuleID:       "module_id",
-			OrganizationID: "organization_id",
-			UserID:         "user_id",
+			BucketName: "bucket_name",
 		},
 	)
 	if err == nil {
@@ -121,11 +113,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		context.Background(),
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName:     "bucket_name",
-			Key:            "key",
-			ModuleID:       "module_id",
-			OrganizationID: "organization_id",
-			UserID:         "user_id",
+			BucketName: "bucket_name",
 		},
 	)
 	if err == nil {
@@ -161,11 +149,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		context.Background(),
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName:     "bucket_name",
-			Key:            "key",
-			ModuleID:       "module_id",
-			OrganizationID: "organization_id",
-			UserID:         "user_id",
+			BucketName: "bucket_name",
 		},
 	)
 	if err == nil {
@@ -200,11 +184,7 @@ func TestRetryAfterMs(t *testing.T) {
 		context.Background(),
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName:     "bucket_name",
-			Key:            "key",
-			ModuleID:       "module_id",
-			OrganizationID: "organization_id",
-			UserID:         "user_id",
+			BucketName: "bucket_name",
 		},
 	)
 	if err == nil {
@@ -233,11 +213,7 @@ func TestContextCancel(t *testing.T) {
 		cancelCtx,
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName:     "bucket_name",
-			Key:            "key",
-			ModuleID:       "module_id",
-			OrganizationID: "organization_id",
-			UserID:         "user_id",
+			BucketName: "bucket_name",
 		},
 	)
 	if err == nil {
@@ -263,11 +239,7 @@ func TestContextCancelDelay(t *testing.T) {
 		cancelCtx,
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName:     "bucket_name",
-			Key:            "key",
-			ModuleID:       "module_id",
-			OrganizationID: "organization_id",
-			UserID:         "user_id",
+			BucketName: "bucket_name",
 		},
 	)
 	if err == nil {
@@ -299,11 +271,7 @@ func TestContextDeadline(t *testing.T) {
 			deadlineCtx,
 			"object_key",
 			raindrop.ObjectGetParams{
-				BucketName:     "bucket_name",
-				Key:            "key",
-				ModuleID:       "module_id",
-				OrganizationID: "organization_id",
-				UserID:         "user_id",
+				BucketName: "bucket_name",
 			},
 		)
 		if err == nil {
