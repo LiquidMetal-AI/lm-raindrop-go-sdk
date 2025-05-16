@@ -6,11 +6,11 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/stainless-sdks/raindrop-go/internal/apijson"
+	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
+	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/stainless-sdks/raindrop-go/packages/respjson"
 )
 
 // ChunkSearchService contains methods and other services that help with
@@ -39,14 +39,72 @@ func NewChunkSearchService(opts ...option.RequestOption) (r ChunkSearchService) 
 // Each input query is processed by our AI agent to determine the best way to
 // search the data. The system will then return the most relevant results from the
 // data ranked by relevance on the input query.
-func (r *ChunkSearchService) Find(ctx context.Context, body ChunkSearchFindParams, opts ...option.RequestOption) (res *ChunkSearchFindResponse, err error) {
+func (r *ChunkSearchService) Execute(ctx context.Context, body ChunkSearchExecuteParams, opts ...option.RequestOption) (res *ChunkSearchExecuteResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/chunk_search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type ChunkSearchFindResponse struct {
+type TextResult struct {
+	// Unique identifier for this text segment. Used for deduplication and result
+	// tracking
+	ChunkSignature string `json:"chunk_signature,nullable"`
+	// Vector representation for similarity matching. Used in semantic search
+	// operations
+	Embed string `json:"embed,nullable"`
+	// Parent document identifier. Links related content chunks together
+	PayloadSignature string `json:"payload_signature,nullable"`
+	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
+	Score float64 `json:"score,nullable"`
+	// Source document references. Contains bucket and object information
+	Source TextResultSource `json:"source"`
+	// The actual content of the result. May be a document excerpt or full content
+	Text string `json:"text,nullable"`
+	// Content MIME type. Helps with proper result rendering
+	Type string `json:"type,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ChunkSignature   respjson.Field
+		Embed            respjson.Field
+		PayloadSignature respjson.Field
+		Score            respjson.Field
+		Source           respjson.Field
+		Text             respjson.Field
+		Type             respjson.Field
+		ExtraFields      map[string]respjson.Field
+		raw              string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResult) RawJSON() string { return r.JSON.raw }
+func (r *TextResult) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Source document references. Contains bucket and object information
+type TextResultSource struct {
+	// The bucket information containing this result
+	Bucket BucketResponse `json:"bucket"`
+	// The object key within the bucket
+	Object string `json:"object"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Bucket      respjson.Field
+		Object      respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResultSource) RawJSON() string { return r.JSON.raw }
+func (r *TextResultSource) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ChunkSearchExecuteResponse struct {
 	// Ordered list of relevant text segments. Each result includes full context and
 	// metadata
 	Results []TextResult `json:"results"`
@@ -59,15 +117,15 @@ type ChunkSearchFindResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r ChunkSearchFindResponse) RawJSON() string { return r.JSON.raw }
-func (r *ChunkSearchFindResponse) UnmarshalJSON(data []byte) error {
+func (r ChunkSearchExecuteResponse) RawJSON() string { return r.JSON.raw }
+func (r *ChunkSearchExecuteResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type ChunkSearchFindParams struct {
+type ChunkSearchExecuteParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []ChunkSearchFindParamsBucketLocation `json:"bucket_locations,omitzero,required"`
+	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
 	// Natural language query or question. Can include complex criteria and
 	// relationships. The system will optimize the search strategy based on this input
 	Input string `json:"input,required"`
@@ -77,44 +135,10 @@ type ChunkSearchFindParams struct {
 	paramObj
 }
 
-func (r ChunkSearchFindParams) MarshalJSON() (data []byte, err error) {
-	type shadow ChunkSearchFindParams
+func (r ChunkSearchExecuteParams) MarshalJSON() (data []byte, err error) {
+	type shadow ChunkSearchExecuteParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *ChunkSearchFindParams) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property Bucket is required.
-type ChunkSearchFindParamsBucketLocation struct {
-	// BucketName represents a bucket name with an optional version
-	Bucket ChunkSearchFindParamsBucketLocationBucket `json:"bucket,omitzero,required"`
-	paramObj
-}
-
-func (r ChunkSearchFindParamsBucketLocation) MarshalJSON() (data []byte, err error) {
-	type shadow ChunkSearchFindParamsBucketLocation
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *ChunkSearchFindParamsBucketLocation) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// BucketName represents a bucket name with an optional version
-type ChunkSearchFindParamsBucketLocationBucket struct {
-	// Optional Application
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional version of the bucket
-	Version param.Opt[string] `json:"version,omitzero"`
-	// The name of the bucket
-	Name param.Opt[string] `json:"name,omitzero"`
-	paramObj
-}
-
-func (r ChunkSearchFindParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
-	type shadow ChunkSearchFindParamsBucketLocationBucket
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *ChunkSearchFindParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
+func (r *ChunkSearchExecuteParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

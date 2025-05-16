@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go"
+	"github.com/stainless-sdks/raindrop-go/internal"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
 type closureTransport struct {
@@ -38,12 +38,15 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	client.DocumentQuery.New(context.Background(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if userAgent != fmt.Sprintf("Raindrop/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
@@ -68,12 +71,15 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	_, err := client.DocumentQuery.New(context.Background(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -109,12 +115,15 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	_, err := client.DocumentQuery.New(context.Background(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -145,12 +154,15 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	_, err := client.DocumentQuery.New(context.Background(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -180,12 +192,15 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Search.Find(context.Background(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	_, err := client.DocumentQuery.New(context.Background(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -209,12 +224,15 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Search.Find(cancelCtx, raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	_, err := client.DocumentQuery.New(cancelCtx, raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
@@ -235,12 +253,15 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Search.Find(cancelCtx, raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	_, err := client.DocumentQuery.New(cancelCtx, raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err == nil {
 		t.Error("expected there to be a cancel error")
@@ -267,12 +288,15 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Search.Find(deadlineCtx, raindrop.SearchFindParams{
-			BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-				Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-			}},
-			Input:     "all my pdfs with images of cats that do not talk about dogs",
-			RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+		_, err := client.DocumentQuery.New(deadlineCtx, raindrop.DocumentQueryNewParams{
+			BucketLocation: raindrop.BucketLocatorUnionParam{
+				OfBucket: &raindrop.BucketLocatorBucketParam{
+					Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				},
+			},
+			Input:     "What are the key points in this document?",
+			ObjectID:  "document.pdf",
+			RequestID: "123e4567-e89b-12d3-a456-426614174000",
 		})
 		if err == nil {
 			t.Error("expected there to be a deadline error")

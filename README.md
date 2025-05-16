@@ -1,33 +1,25 @@
 # Raindrop Go API Library
 
-<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk"><img src="https://pkg.go.dev/badge/github.com/LiquidMetal-AI/lm-raindrop-go-sdk.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/raindrop-go.svg" alt="Go Reference"></a>
 
-The Raindrop Go library provides convenient access to the [Raindrop REST API](docs.liquidmetal.ai)
+The Raindrop Go library provides convenient access to the Raindrop REST API
 from applications written in Go.
 
 It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
-<!-- x-release-please-start-version -->
-
 ```go
 import (
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk" // imported as raindrop
+	"github.com/stainless-sdks/raindrop-go" // imported as raindrop
 )
 ```
 
-<!-- x-release-please-end -->
-
 Or to pin the version:
 
-<!-- x-release-please-start-version -->
-
 ```sh
-go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.0-alpha.6'
+go get -u 'github.com/stainless-sdks/raindrop-go@v0.1.0-alpha.6'
 ```
-
-<!-- x-release-please-end -->
 
 ## Requirements
 
@@ -44,25 +36,28 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
 func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	response, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", response.Pagination)
+	fmt.Printf("%+v\n", documentQuery.Answer)
 }
 
 ```
@@ -268,7 +263,7 @@ client := raindrop.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Search.Find(context.TODO(), ...,
+client.DocumentQuery.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -276,7 +271,7 @@ client.Search.Find(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option).
+See the [full list of request options](https://pkg.go.dev/github.com/stainless-sdks/raindrop-go/option).
 
 ### Pagination
 
@@ -297,12 +292,15 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-	BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-		Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-	}},
-	Input:     "all my pdfs with images of cats that do not talk about dogs",
-	RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+	BucketLocation: raindrop.BucketLocatorUnionParam{
+		OfBucket: &raindrop.BucketLocatorBucketParam{
+			Bucket: raindrop.BucketLocatorBucketBucketParam{},
+		},
+	},
+	Input:     "What are the key points in this document?",
+	ObjectID:  "document.pdf",
+	RequestID: "123e4567-e89b-12d3-a456-426614174000",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -310,7 +308,7 @@ if err != nil {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/v1/search": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/v1/document_query": 400 Bad Request { ... }
 }
 ```
 
@@ -328,14 +326,17 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Search.Find(
+client.DocumentQuery.New(
 	ctx,
-	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -370,14 +371,17 @@ client := raindrop.NewClient(
 )
 
 // Override per-request:
-client.Search.Find(
+client.DocumentQuery.New(
 	context.TODO(),
-	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	},
 	option.WithMaxRetries(5),
 )
@@ -391,21 +395,24 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-response, err := client.Search.Find(
+documentQuery, err := client.DocumentQuery.New(
 	context.TODO(),
-	raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	},
 	option.WithResponseInto(&response),
 )
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", response)
+fmt.Printf("%+v\n", documentQuery)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)
@@ -506,7 +513,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/LiquidMetal-AI/lm-raindrop-go-sdk/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/raindrop-go/issues) with questions, bugs, or suggestions.
 
 ## Contributing
 

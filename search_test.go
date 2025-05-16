@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go"
+	"github.com/stainless-sdks/raindrop-go/internal/testutil"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestSearchFind(t *testing.T) {
+func TestSearchRun(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,12 +26,14 @@ func TestSearchFind(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{
-				ApplicationName: raindrop.String("my-app"),
-				Name:            raindrop.String("my-bucket"),
-				Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+	_, err := client.Search.Run(context.TODO(), raindrop.SearchRunParams{
+		BucketLocations: []raindrop.BucketLocatorUnionParam{{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					ApplicationName: raindrop.String("my-app"),
+					Name:            raindrop.String("my-bucket"),
+					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+				},
 			},
 		}},
 		Input:     "Show me documents containing credit card numbers or social security numbers",

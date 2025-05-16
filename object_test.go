@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go"
+	"github.com/stainless-sdks/raindrop-go/internal/testutil"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestStorageObjectListObjectsWithOptionalParams(t *testing.T) {
+func TestObjectListObjectsWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,10 +26,10 @@ func TestStorageObjectListObjectsWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.StorageObject.ListObjects(
+	_, err := client.Object.ListObjects(
 		context.TODO(),
 		"bucket_name",
-		raindrop.StorageObjectListObjectsParams{
+		raindrop.ObjectListObjectsParams{
 			ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 		},
 	)
@@ -42,7 +42,7 @@ func TestStorageObjectListObjectsWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestStorageObjectPutObjectWithOptionalParams(t *testing.T) {
+func TestObjectPutObjectWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -55,10 +55,10 @@ func TestStorageObjectPutObjectWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.StorageObject.PutObject(
+	_, err := client.Object.PutObject(
 		context.TODO(),
 		"object_key",
-		raindrop.StorageObjectPutObjectParams{
+		raindrop.ObjectPutObjectParams{
 			BucketName:  "bucket_name",
 			Content:     "U3RhaW5sZXNzIHJvY2tz",
 			ContentType: raindrop.String("application/pdf"),
@@ -75,7 +75,7 @@ func TestStorageObjectPutObjectWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestStorageObjectGetObjectWithOptionalParams(t *testing.T) {
+func TestObjectGetObjectWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -88,10 +88,10 @@ func TestStorageObjectGetObjectWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.StorageObject.GetObject(
+	_, err := client.Object.GetObject(
 		context.TODO(),
 		"object_key",
-		raindrop.StorageObjectGetObjectParams{
+		raindrop.ObjectGetObjectParams{
 			BucketName: "bucket_name",
 			Key:        raindrop.String("my-key"),
 			ModuleID:   raindrop.String("01jtgtrd37acrqf7k24dggg31s"),

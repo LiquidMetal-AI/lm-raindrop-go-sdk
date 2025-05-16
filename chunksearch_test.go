@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go"
+	"github.com/stainless-sdks/raindrop-go/internal/testutil"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestChunkSearchFind(t *testing.T) {
+func TestChunkSearchExecute(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,12 +26,14 @@ func TestChunkSearchFind(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.ChunkSearch.Find(context.TODO(), raindrop.ChunkSearchFindParams{
-		BucketLocations: []raindrop.ChunkSearchFindParamsBucketLocation{{
-			Bucket: raindrop.ChunkSearchFindParamsBucketLocationBucket{
-				ApplicationName: raindrop.String("my-app"),
-				Name:            raindrop.String("my-bucket"),
-				Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+	_, err := client.ChunkSearch.Execute(context.TODO(), raindrop.ChunkSearchExecuteParams{
+		BucketLocations: []raindrop.BucketLocatorUnionParam{{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					ApplicationName: raindrop.String("my-app"),
+					Name:            raindrop.String("my-bucket"),
+					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+				},
 			},
 		}},
 		Input:     "Find documents about revenue in Q4 2023",
