@@ -44,17 +44,20 @@ func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	object, err := client.Object.Get(
-		context.TODO(),
-		"object_key",
-		raindrop.ObjectGetParams{
-			BucketName: "bucket_name",
+	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
 		},
-	)
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", object.Bucket)
+	fmt.Printf("%+v\n", documentQuery.Answer)
 }
 
 ```
@@ -260,7 +263,7 @@ client := raindrop.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Object.Get(context.TODO(), ...,
+client.DocumentQuery.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -289,20 +292,23 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Object.Get(
-	context.TODO(),
-	"object_key",
-	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+	BucketLocation: raindrop.BucketLocatorUnionParam{
+		OfBucket: &raindrop.BucketLocatorBucketParam{
+			Bucket: raindrop.BucketLocatorBucketBucketParam{},
+		},
 	},
-)
+	Input:     "What are the key points in this document?",
+	ObjectID:  "document.pdf",
+	RequestID: "123e4567-e89b-12d3-a456-426614174000",
+})
 if err != nil {
 	var apierr *raindrop.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/v1/object/{bucket_name}/{object_key}": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/v1/document_query": 400 Bad Request { ... }
 }
 ```
 
@@ -320,11 +326,17 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Object.Get(
+client.DocumentQuery.New(
 	ctx,
-	"object_key",
-	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+	raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -359,11 +371,17 @@ client := raindrop.NewClient(
 )
 
 // Override per-request:
-client.Object.Get(
+client.DocumentQuery.New(
 	context.TODO(),
-	"object_key",
-	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+	raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	},
 	option.WithMaxRetries(5),
 )
@@ -377,18 +395,24 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-object, err := client.Object.Get(
+documentQuery, err := client.DocumentQuery.New(
 	context.TODO(),
-	"object_key",
-	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+	raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	},
 	option.WithResponseInto(&response),
 )
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", object)
+fmt.Printf("%+v\n", documentQuery)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)
