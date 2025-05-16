@@ -46,9 +46,91 @@ func (r *ChunkSearchService) Find(ctx context.Context, body ChunkSearchFindParam
 	return
 }
 
+type TextResult struct {
+	// Unique identifier for this text segment. Used for deduplication and result
+	// tracking
+	ChunkSignature string `json:"chunk_signature,nullable"`
+	// Vector representation for similarity matching. Used in semantic search
+	// operations
+	Embed string `json:"embed,nullable"`
+	// Parent document identifier. Links related content chunks together
+	PayloadSignature string `json:"payload_signature,nullable"`
+	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
+	Score float64 `json:"score,nullable"`
+	// Source document references. Contains bucket and object information
+	Source TextResultSource `json:"source"`
+	// The actual content of the result. May be a document excerpt or full content
+	Text string `json:"text,nullable"`
+	// Content MIME type. Helps with proper result rendering
+	Type string `json:"type,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ChunkSignature   respjson.Field
+		Embed            respjson.Field
+		PayloadSignature respjson.Field
+		Score            respjson.Field
+		Source           respjson.Field
+		Text             respjson.Field
+		Type             respjson.Field
+		ExtraFields      map[string]respjson.Field
+		raw              string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResult) RawJSON() string { return r.JSON.raw }
+func (r *TextResult) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Source document references. Contains bucket and object information
+type TextResultSource struct {
+	// The bucket information containing this result
+	Bucket TextResultSourceBucket `json:"bucket"`
+	// The object key within the bucket
+	Object string `json:"object"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Bucket      respjson.Field
+		Object      respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResultSource) RawJSON() string { return r.JSON.raw }
+func (r *TextResultSource) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The bucket information containing this result
+type TextResultSourceBucket struct {
+	ApplicationName      string `json:"application_name"`
+	ApplicationVersionID string `json:"application_version_id"`
+	BucketName           string `json:"bucket_name"`
+	ModuleID             string `json:"module_id"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ApplicationName      respjson.Field
+		ApplicationVersionID respjson.Field
+		BucketName           respjson.Field
+		ModuleID             respjson.Field
+		ExtraFields          map[string]respjson.Field
+		raw                  string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResultSourceBucket) RawJSON() string { return r.JSON.raw }
+func (r *TextResultSourceBucket) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type ChunkSearchFindResponse struct {
-	// Semantically relevant results with metadata and relevance scoring
-	Results []TextResult `json:"results,required"`
+	// Ordered list of relevant text segments. Each result includes full context and
+	// metadata
+	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Results     respjson.Field
@@ -64,14 +146,14 @@ func (r *ChunkSearchFindResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ChunkSearchFindParams struct {
-	// Optional list of specific bucket IDs to search in. If not provided, searches the
-	// latest version of all accessible buckets
-	BucketIDs []string `json:"bucket_ids,omitzero,required"`
+	// The buckets to search. If provided, the search will only return results from
+	// these buckets
+	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
 	// Natural language query or question. Can include complex criteria and
-	// relationships
+	// relationships. The system will optimize the search strategy based on this input
 	Input string `json:"input,required"`
-	// Client-provided search session identifier. We recommend using a UUID or ULID for
-	// this value.
+	// Client-provided search session identifier. Required for pagination and result
+	// tracking. We recommend using a UUID or ULID for this value
 	RequestID string `json:"request_id,required"`
 	paramObj
 }

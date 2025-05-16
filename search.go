@@ -5,10 +5,8 @@ package raindrop
 import (
 	"context"
 	"net/http"
-	"net/url"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiquery"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
@@ -34,17 +32,6 @@ func NewSearchService(opts ...option.RequestOption) (r SearchService) {
 	return
 }
 
-// Retrieve additional pages from a previous search. This endpoint enables
-// navigation through large result sets while maintaining search context and result
-// relevance. Retrieving paginated results requires a valid `request_id` from a
-// previously completed search.
-func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...option.RequestOption) (res *SearchResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	path := "v1/search"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
-}
-
 // Primary search endpoint that provides advanced search capabilities across all
 // document types stored in SmartBuckets.
 //
@@ -58,7 +45,7 @@ func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...
 //   - 'Find images of landscapes taken during sunset'
 //   - 'Get documents mentioning revenue forecasts from Q4 2023'
 //   - 'Find me all PDF documents that contain pictures of a cat'
-//   - 'Find me all audio files that contain infomration about the weather in SF in
+//   - 'Find me all audio files that contain information about the weather in SF in
 //     2024'
 //
 // Key capabilities:
@@ -67,17 +54,18 @@ func (r *SearchService) Get(ctx context.Context, query SearchGetParams, opts ...
 // - Content-based search across text, images, and audio
 // - Automatic PII detection
 // - Multi-modal search (text, images, audio)
-func (r *SearchService) Find(ctx context.Context, body SearchFindParams, opts ...option.RequestOption) (res *SearchResponse, err error) {
+func (r *SearchService) Find(ctx context.Context, body SearchFindParams, opts ...option.RequestOption) (res *SearchFindResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type SearchResponse struct {
-	Pagination SearchResponsePagination `json:"pagination,required"`
+type SearchFindResponse struct {
+	// Pagination details for result navigation
+	Pagination SearchFindResponsePagination `json:"pagination"`
 	// Matched results with metadata
-	Results []TextResult `json:"results,required"`
+	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Pagination  respjson.Field
@@ -88,22 +76,23 @@ type SearchResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchResponse) RawJSON() string { return r.JSON.raw }
-func (r *SearchResponse) UnmarshalJSON(data []byte) error {
+func (r SearchFindResponse) RawJSON() string { return r.JSON.raw }
+func (r *SearchFindResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type SearchResponsePagination struct {
-	// Indicates more results available
-	HasMore bool `json:"has_more,required"`
+// Pagination details for result navigation
+type SearchFindResponsePagination struct {
+	// Indicates more results available. Used for infinite scroll implementation
+	HasMore bool `json:"has_more"`
 	// Current page number (1-based)
-	Page int64 `json:"page,required"`
-	// Results per page
-	PageSize int64 `json:"page_size,required"`
+	Page int64 `json:"page"`
+	// Results per page. May be adjusted for performance
+	PageSize int64 `json:"page_size"`
 	// Total number of available results
-	Total int64 `json:"total,required"`
-	// Total available pages
-	TotalPages int64 `json:"total_pages,required"`
+	Total int64 `json:"total"`
+	// Total available pages. Calculated as ceil(total/page_size)
+	TotalPages int64 `json:"total_pages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		HasMore     respjson.Field
@@ -117,81 +106,21 @@ type SearchResponsePagination struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchResponsePagination) RawJSON() string { return r.JSON.raw }
-func (r *SearchResponsePagination) UnmarshalJSON(data []byte) error {
+func (r SearchFindResponsePagination) RawJSON() string { return r.JSON.raw }
+func (r *SearchFindResponsePagination) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
-}
-
-type TextResult struct {
-	// Unique identifier for this text segment
-	ChunkSignature string `json:"chunk_signature,required"`
-	// Parent document identifier
-	PayloadSignature string `json:"payload_signature"`
-	// Relevance score (0.0 to 1.0)
-	Score float64 `json:"score"`
-	// Source document information in JSON format
-	Source string `json:"source"`
-	// The actual content of the result
-	Text string `json:"text"`
-	// Content MIME type
-	//
-	// Any of "text/plain", "application/pdf", "image/jpeg", "image/png".
-	Type TextResultType `json:"type"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ChunkSignature   respjson.Field
-		PayloadSignature respjson.Field
-		Score            respjson.Field
-		Source           respjson.Field
-		Text             respjson.Field
-		Type             respjson.Field
-		ExtraFields      map[string]respjson.Field
-		raw              string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r TextResult) RawJSON() string { return r.JSON.raw }
-func (r *TextResult) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Content MIME type
-type TextResultType string
-
-const (
-	TextResultTypeTextPlain      TextResultType = "text/plain"
-	TextResultTypeApplicationPdf TextResultType = "application/pdf"
-	TextResultTypeImageJpeg      TextResultType = "image/jpeg"
-	TextResultTypeImagePng       TextResultType = "image/png"
-)
-
-type SearchGetParams struct {
-	// Client-provided search session identifier from the initial search
-	RequestID string `query:"request_id,required" json:"-"`
-	// Requested page number
-	Page param.Opt[int64] `query:"page,omitzero" json:"-"`
-	// Results per page
-	PageSize param.Opt[int64] `query:"page_size,omitzero" json:"-"`
-	paramObj
-}
-
-// URLQuery serializes [SearchGetParams]'s query parameters as `url.Values`.
-func (r SearchGetParams) URLQuery() (v url.Values, err error) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
 }
 
 type SearchFindParams struct {
-	// Optional list of specific bucket IDs to search in. If not provided, searches the
-	// latest version of all buckets
-	BucketIDs []string `json:"bucket_ids,omitzero,required"`
-	// Natural language search query that can include complex criteria
+	// The buckets to search. If provided, the search will only return results from
+	// these buckets
+	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
+	// Natural language search query that can include complex criteria. Supports
+	// queries like finding documents with specific content types, PII, or semantic
+	// meaning
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. Required for pagination and result
-	// tracking. We recommend using a UUID or ULID for this value.
+	// tracking. We recommend using a UUID or ULID for this value
 	RequestID string `json:"request_id,required"`
 	paramObj
 }

@@ -16,11 +16,10 @@ import (
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
 	Options       []option.RequestOption
-	Search        SearchService
 	DocumentQuery DocumentQueryService
 	ChunkSearch   ChunkSearchService
 	SummarizePage SummarizePageService
-	StorageObject StorageObjectService
+	Search        SearchService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -45,11 +44,10 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 
 	r = Client{Options: opts}
 
-	r.Search = NewSearchService(opts...)
 	r.DocumentQuery = NewDocumentQueryService(opts...)
 	r.ChunkSearch = NewChunkSearchService(opts...)
 	r.SummarizePage = NewSummarizePageService(opts...)
-	r.StorageObject = NewStorageObjectService(opts...)
+	r.Search = NewSearchService(opts...)
 
 	return
 }

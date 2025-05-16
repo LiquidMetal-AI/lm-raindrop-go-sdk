@@ -43,17 +43,25 @@ func NewSummarizePageService(opts ...option.RequestOption) (r SummarizePageServi
 // - Extracts important findings
 // - Highlights document relationships
 // - Provides content type distribution
-func (r *SummarizePageService) New(ctx context.Context, body SummarizePageNewParams, opts ...option.RequestOption) (res *SummarizePageNewResponse, err error) {
+// - Summarizes metadata patterns
+//
+// This is particularly valuable when dealing with:
+//
+// - Large document collections
+// - Mixed content types
+// - Technical documentation
+// - Research materials
+func (r *SummarizePageService) SumarizePage(ctx context.Context, body SummarizePageSumarizePageParams, opts ...option.RequestOption) (res *SummarizePageSumarizePageResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/summarize_page"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type SummarizePageNewResponse struct {
+type SummarizePageSumarizePageResponse struct {
 	// AI-generated summary including key themes and topics, content type distribution,
 	// important findings, and document relationships
-	Summary string `json:"summary,required"`
+	Summary string `json:"summary"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Summary     respjson.Field
@@ -63,25 +71,25 @@ type SummarizePageNewResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SummarizePageNewResponse) RawJSON() string { return r.JSON.raw }
-func (r *SummarizePageNewResponse) UnmarshalJSON(data []byte) error {
+func (r SummarizePageSumarizePageResponse) RawJSON() string { return r.JSON.raw }
+func (r *SummarizePageSumarizePageResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type SummarizePageNewParams struct {
-	// Client-provided search session identifier from the original search
-	RequestID string `json:"request_id,required"`
+type SummarizePageSumarizePageParams struct {
 	// Target page number (1-based)
-	Page param.Opt[int64] `json:"page,omitzero"`
-	// Results per page. Affects how many documents are included in the summary
-	PageSize param.Opt[int64] `json:"page_size,omitzero"`
+	Page int64 `json:"page,required"`
+	// Results per page. Affects summary granularity
+	PageSize int64 `json:"page_size,required"`
+	// Original search session identifier from the initial search
+	RequestID string `json:"request_id,required"`
 	paramObj
 }
 
-func (r SummarizePageNewParams) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizePageNewParams
+func (r SummarizePageSumarizePageParams) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizePageSumarizePageParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SummarizePageNewParams) UnmarshalJSON(data []byte) error {
+func (r *SummarizePageSumarizePageParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

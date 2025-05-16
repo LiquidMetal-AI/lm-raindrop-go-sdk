@@ -24,13 +24,18 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	searchResponse, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketIDs: []string{"01jtgtrd37acrqf7k24dggg31s"},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	response, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", searchResponse.Pagination)
+	t.Logf("%+v\n", response.Answer)
 }
