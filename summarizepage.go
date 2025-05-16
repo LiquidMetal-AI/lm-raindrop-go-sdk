@@ -43,6 +43,14 @@ func NewSummarizePageService(opts ...option.RequestOption) (r SummarizePageServi
 // - Extracts important findings
 // - Highlights document relationships
 // - Provides content type distribution
+// - Summarizes metadata patterns
+//
+// This is particularly valuable when dealing with:
+//
+// - Large document collections
+// - Mixed content types
+// - Technical documentation
+// - Research materials
 func (r *SummarizePageService) New(ctx context.Context, body SummarizePageNewParams, opts ...option.RequestOption) (res *SummarizePageNewResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/summarize_page"
@@ -53,7 +61,7 @@ func (r *SummarizePageService) New(ctx context.Context, body SummarizePageNewPar
 type SummarizePageNewResponse struct {
 	// AI-generated summary including key themes and topics, content type distribution,
 	// important findings, and document relationships
-	Summary string `json:"summary,required"`
+	Summary string `json:"summary"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Summary     respjson.Field
@@ -69,12 +77,12 @@ func (r *SummarizePageNewResponse) UnmarshalJSON(data []byte) error {
 }
 
 type SummarizePageNewParams struct {
-	// Client-provided search session identifier from the original search
-	RequestID string `json:"request_id,required"`
 	// Target page number (1-based)
 	Page param.Opt[int64] `json:"page,omitzero"`
-	// Results per page. Affects how many documents are included in the summary
+	// Results per page. Affects summary granularity
 	PageSize param.Opt[int64] `json:"page_size,omitzero"`
+	// Original search session identifier from the initial search
+	RequestID param.Opt[string] `json:"request_id,omitzero"`
 	paramObj
 }
 

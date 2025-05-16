@@ -3,12 +3,8 @@
 package raindrop_test
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"io"
-	"net/http"
-	"net/http/httptest"
 	"os"
 	"testing"
 
@@ -17,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestStorageObjectList(t *testing.T) {
+func TestObjectListObjectsWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -30,34 +26,11 @@ func TestStorageObjectList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.StorageObject.List(context.TODO(), "01jtgtrd37acrqf7k24dggg31s")
-	if err != nil {
-		var apierr *raindrop.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestStorageObjectDelete(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := raindrop.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.StorageObject.Delete(
+	_, err := client.Object.ListObjects(
 		context.TODO(),
-		"my-key",
-		raindrop.StorageObjectDeleteParams{
-			Bucket: "01jtgtrd37acrqf7k24dggg31s",
+		"bucket_name",
+		raindrop.ObjectListObjectsParams{
+			ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 		},
 	)
 	if err != nil {
@@ -69,48 +42,7 @@ func TestStorageObjectDelete(t *testing.T) {
 	}
 }
 
-func TestStorageObjectDownload(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
-		w.Write([]byte("abc"))
-	}))
-	defer server.Close()
-	baseURL := server.URL
-	client := raindrop.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	resp, err := client.StorageObject.Download(
-		context.TODO(),
-		"my-key",
-		raindrop.StorageObjectDownloadParams{
-			Bucket: "01jtgtrd37acrqf7k24dggg31s",
-		},
-	)
-	if err != nil {
-		var apierr *raindrop.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-	defer resp.Body.Close()
-
-	b, err := io.ReadAll(resp.Body)
-	if err != nil {
-		var apierr *raindrop.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-	if !bytes.Equal(b, []byte("abc")) {
-		t.Fatalf("return value not %s: %s", "abc", b)
-	}
-}
-
-func TestStorageObjectUpload(t *testing.T) {
+func TestObjectPutObjectWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -123,12 +55,46 @@ func TestStorageObjectUpload(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.StorageObject.Upload(
+	_, err := client.Object.PutObject(
 		context.TODO(),
-		"my-key",
-		raindrop.StorageObjectUploadParams{
-			Bucket: "01jtgtrd37acrqf7k24dggg31s",
-			Body:   io.Reader(bytes.NewBuffer([]byte("some file contents"))),
+		"object_key",
+		raindrop.ObjectPutObjectParams{
+			BucketName:  "bucket_name",
+			Content:     raindrop.String("U3RhaW5sZXNzIHJvY2tz"),
+			ContentType: raindrop.String("application/pdf"),
+			Key:         raindrop.String("my-key"),
+			ModuleID:    raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		},
+	)
+	if err != nil {
+		var apierr *raindrop.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestObjectGetObjectWithOptionalParams(t *testing.T) {
+	t.Skip("skipped: tests are disabled for the time being")
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := raindrop.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Object.GetObject(
+		context.TODO(),
+		"object_key",
+		raindrop.ObjectGetObjectParams{
+			BucketName: "bucket_name",
+			Key:        raindrop.String("my-key"),
+			ModuleID:   raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 		},
 	)
 	if err != nil {
