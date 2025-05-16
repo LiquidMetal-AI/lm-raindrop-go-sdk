@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/raindrop-go
+module github.com/LiquidMetal-AI/lm-raindrop-go-sdk
 
 go 1.21
 

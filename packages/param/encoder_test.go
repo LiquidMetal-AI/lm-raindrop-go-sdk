@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 )
 
 type Struct struct {

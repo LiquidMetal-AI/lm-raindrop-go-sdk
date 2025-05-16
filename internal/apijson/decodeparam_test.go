@@ -3,8 +3,8 @@ package apijson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stainless-sdks/raindrop-go/internal/apijson"
-	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"reflect"
 	"testing"
 )
