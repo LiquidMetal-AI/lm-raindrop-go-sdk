@@ -1,7 +1,7 @@
 package paramutil
 
 import (
-	"github.com/stainless-sdks/raindrop-go/internal/encoding/json/sentinel"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/encoding/json/sentinel"
 )
 
 // NullPtr returns a pointer to the zero value of the type T.
