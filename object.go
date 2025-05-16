@@ -38,8 +38,8 @@ func NewObjectService(opts ...option.RequestOption) (r ObjectService) {
 	return
 }
 
-// **DESCRIPTION** Delete a file from a SmartBucket or regular bucket. The bucket
-// parameter (ID) is used to identify the bucket to delete from. The key is the
+// **DESCRIPTION** Download a file from a SmartBucket or regular bucket. The bucket
+// parameter (ID) is used to identify the bucket to download from. The key is the
 // path to the object in the bucket.
 func (r *ObjectService) Get(ctx context.Context, objectKey string, params ObjectGetParams, opts ...option.RequestOption) (res *ObjectGetResponse, err error) {
 	opts = append(r.Options[:], opts...)
@@ -300,15 +300,16 @@ func (r *ObjectUploadResponse) UnmarshalJSON(data []byte) error {
 
 type ObjectGetParams struct {
 	BucketName string `path:"bucket_name,required" json:"-"`
-	// **DESCRIPTION** Object key/path to delete **REQUIRED** true **EXAMPLE** "my-key"
-	Key param.Opt[string] `query:"key,omitzero" json:"-"`
+	// **DESCRIPTION** Object key/path to download **REQUIRED** true **EXAMPLE**
+	// "my-key"
+	Key string `query:"key,required" json:"-"`
 	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
 	// "01jtgtrd37acrqf7k24dggg31s"
-	ModuleID param.Opt[string] `query:"module_id,omitzero" json:"-"`
+	ModuleID string `query:"module_id,required" json:"-"`
 	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
-	OrganizationID param.Opt[string] `query:"organization_id,omitzero" json:"-"`
+	OrganizationID string `query:"organization_id,required" json:"-"`
 	// **DESCRIPTION** User ID for access control **REQUIRED** true
-	UserID param.Opt[string] `query:"user_id,omitzero" json:"-"`
+	UserID string `query:"user_id,required" json:"-"`
 	paramObj
 }
 
@@ -323,11 +324,11 @@ func (r ObjectGetParams) URLQuery() (v url.Values, err error) {
 type ObjectListParams struct {
 	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
 	// "01jtgtrd37acrqf7k24dggg31s"
-	ModuleID param.Opt[string] `query:"module_id,omitzero" json:"-"`
+	ModuleID string `query:"module_id,required" json:"-"`
 	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
-	OrganizationID param.Opt[string] `query:"organization_id,omitzero" json:"-"`
+	OrganizationID string `query:"organization_id,required" json:"-"`
 	// **DESCRIPTION** User ID for access control **REQUIRED** true
-	UserID param.Opt[string] `query:"user_id,omitzero" json:"-"`
+	UserID string `query:"user_id,required" json:"-"`
 	paramObj
 }
 
@@ -341,6 +342,16 @@ func (r ObjectListParams) URLQuery() (v url.Values, err error) {
 
 type ObjectUploadParams struct {
 	BucketName string `path:"bucket_name,required" json:"-"`
+	// **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
+	// "my-key"
+	QueryKey string `query:"key,required" json:"-"`
+	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
+	// "01jtgtrd37acrqf7k24dggg31s"
+	QueryModuleID string `query:"module_id,required" json:"-"`
+	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
+	QueryOrganizationID string `query:"organization_id,required" json:"-"`
+	// **DESCRIPTION** User ID for access control **REQUIRED** true
+	QueryUserID string `query:"user_id,required" json:"-"`
 	// **DESCRIPTION** Binary content of the object **REQUIRED** true
 	Content param.Opt[string] `json:"content,omitzero" format:"byte"`
 	// **DESCRIPTION** MIME type of the object **REQUIRED** true **EXAMPLE**
@@ -348,14 +359,14 @@ type ObjectUploadParams struct {
 	ContentType param.Opt[string] `json:"content_type,omitzero"`
 	// **DESCRIPTION** Object key/path in the bucket **REQUIRED** true **EXAMPLE**
 	// "my-key"
-	Key param.Opt[string] `json:"key,omitzero"`
+	BodyKey param.Opt[string] `json:"key,omitzero"`
 	// **DESCRIPTION** Module ID identifying the bucket **REQUIRED** true **EXAMPLE**
 	// "01jtgtrd37acrqf7k24dggg31s"
-	ModuleID param.Opt[string] `json:"module_id,omitzero"`
+	BodyModuleID param.Opt[string] `json:"module_id,omitzero"`
 	// **DESCRIPTION** Organization ID for access control **REQUIRED** true
-	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	BodyOrganizationID param.Opt[string] `json:"organization_id,omitzero"`
 	// **DESCRIPTION** User ID for access control **REQUIRED** true
-	UserID param.Opt[string] `json:"user_id,omitzero"`
+	BodyUserID param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -365,4 +376,12 @@ func (r ObjectUploadParams) MarshalJSON() (data []byte, err error) {
 }
 func (r *ObjectUploadParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+// URLQuery serializes [ObjectUploadParams]'s query parameters as `url.Values`.
+func (r ObjectUploadParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

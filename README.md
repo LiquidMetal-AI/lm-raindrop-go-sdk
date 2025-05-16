@@ -48,7 +48,11 @@ func main() {
 		context.TODO(),
 		"object_key",
 		raindrop.ObjectGetParams{
-			BucketName: "bucket_name",
+			BucketName:     "bucket_name",
+			Key:            "key",
+			ModuleID:       "module_id",
+			OrganizationID: "organization_id",
+			UserID:         "user_id",
 		},
 	)
 	if err != nil {
@@ -293,7 +297,11 @@ _, err := client.Object.Get(
 	context.TODO(),
 	"object_key",
 	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+		BucketName:     "bucket_name",
+		Key:            "key",
+		ModuleID:       "module_id",
+		OrganizationID: "organization_id",
+		UserID:         "user_id",
 	},
 )
 if err != nil {
@@ -324,7 +332,11 @@ client.Object.Get(
 	ctx,
 	"object_key",
 	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+		BucketName:     "bucket_name",
+		Key:            "key",
+		ModuleID:       "module_id",
+		OrganizationID: "organization_id",
+		UserID:         "user_id",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -363,7 +375,11 @@ client.Object.Get(
 	context.TODO(),
 	"object_key",
 	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+		BucketName:     "bucket_name",
+		Key:            "key",
+		ModuleID:       "module_id",
+		OrganizationID: "organization_id",
+		UserID:         "user_id",
 	},
 	option.WithMaxRetries(5),
 )
@@ -381,7 +397,11 @@ object, err := client.Object.Get(
 	context.TODO(),
 	"object_key",
 	raindrop.ObjectGetParams{
-		BucketName: "bucket_name",
+		BucketName:     "bucket_name",
+		Key:            "key",
+		ModuleID:       "module_id",
+		OrganizationID: "organization_id",
+		UserID:         "user_id",
 	},
 	option.WithResponseInto(&response),
 )
