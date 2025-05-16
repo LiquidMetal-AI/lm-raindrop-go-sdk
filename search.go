@@ -6,11 +6,11 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/stainless-sdks/raindrop-go/internal/apijson"
+	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
+	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/stainless-sdks/raindrop-go/packages/respjson"
 )
 
 // SearchService contains methods and other services that help with interacting
@@ -54,97 +54,16 @@ func NewSearchService(opts ...option.RequestOption) (r SearchService) {
 // - Content-based search across text, images, and audio
 // - Automatic PII detection
 // - Multi-modal search (text, images, audio)
-func (r *SearchService) Find(ctx context.Context, body SearchFindParams, opts ...option.RequestOption) (res *SearchFindResponse, err error) {
+func (r *SearchService) Run(ctx context.Context, body SearchRunParams, opts ...option.RequestOption) (res *SearchRunResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type TextResult struct {
-	// Unique identifier for this text segment. Used for deduplication and result
-	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
-	// Vector representation for similarity matching. Used in semantic search
-	// operations
-	Embed string `json:"embed,nullable"`
-	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
-	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
-	Score float64 `json:"score,nullable"`
-	// Source document references. Contains bucket and object information
-	Source TextResultSource `json:"source"`
-	// The actual content of the result. May be a document excerpt or full content
-	Text string `json:"text,nullable"`
-	// Content MIME type. Helps with proper result rendering
-	Type string `json:"type,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ChunkSignature   respjson.Field
-		Embed            respjson.Field
-		PayloadSignature respjson.Field
-		Score            respjson.Field
-		Source           respjson.Field
-		Text             respjson.Field
-		Type             respjson.Field
-		ExtraFields      map[string]respjson.Field
-		raw              string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r TextResult) RawJSON() string { return r.JSON.raw }
-func (r *TextResult) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Source document references. Contains bucket and object information
-type TextResultSource struct {
-	// The bucket information containing this result
-	Bucket TextResultSourceBucket `json:"bucket"`
-	// The object key within the bucket
-	Object string `json:"object"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Bucket      respjson.Field
-		Object      respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r TextResultSource) RawJSON() string { return r.JSON.raw }
-func (r *TextResultSource) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The bucket information containing this result
-type TextResultSourceBucket struct {
-	ApplicationName      string `json:"application_name"`
-	ApplicationVersionID string `json:"application_version_id"`
-	BucketName           string `json:"bucket_name"`
-	ModuleID             string `json:"module_id"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ModuleID             respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r TextResultSourceBucket) RawJSON() string { return r.JSON.raw }
-func (r *TextResultSourceBucket) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type SearchFindResponse struct {
+type SearchRunResponse struct {
 	// Pagination details for result navigation
-	Pagination SearchFindResponsePagination `json:"pagination"`
+	Pagination SearchRunResponsePagination `json:"pagination"`
 	// Matched results with metadata
 	Results []TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -157,13 +76,13 @@ type SearchFindResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchFindResponse) RawJSON() string { return r.JSON.raw }
-func (r *SearchFindResponse) UnmarshalJSON(data []byte) error {
+func (r SearchRunResponse) RawJSON() string { return r.JSON.raw }
+func (r *SearchRunResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // Pagination details for result navigation
-type SearchFindResponsePagination struct {
+type SearchRunResponsePagination struct {
 	// Indicates more results available. Used for infinite scroll implementation
 	HasMore bool `json:"has_more"`
 	// Current page number (1-based)
@@ -187,15 +106,15 @@ type SearchFindResponsePagination struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchFindResponsePagination) RawJSON() string { return r.JSON.raw }
-func (r *SearchFindResponsePagination) UnmarshalJSON(data []byte) error {
+func (r SearchRunResponsePagination) RawJSON() string { return r.JSON.raw }
+func (r *SearchRunResponsePagination) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type SearchFindParams struct {
+type SearchRunParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []SearchFindParamsBucketLocation `json:"bucket_locations,omitzero,required"`
+	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
 	// Natural language search query that can include complex criteria. Supports
 	// queries like finding documents with specific content types, PII, or semantic
 	// meaning
@@ -206,44 +125,10 @@ type SearchFindParams struct {
 	paramObj
 }
 
-func (r SearchFindParams) MarshalJSON() (data []byte, err error) {
-	type shadow SearchFindParams
+func (r SearchRunParams) MarshalJSON() (data []byte, err error) {
+	type shadow SearchRunParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SearchFindParams) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property Bucket is required.
-type SearchFindParamsBucketLocation struct {
-	// BucketName represents a bucket name with an optional version
-	Bucket SearchFindParamsBucketLocationBucket `json:"bucket,omitzero,required"`
-	paramObj
-}
-
-func (r SearchFindParamsBucketLocation) MarshalJSON() (data []byte, err error) {
-	type shadow SearchFindParamsBucketLocation
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *SearchFindParamsBucketLocation) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// BucketName represents a bucket name with an optional version
-type SearchFindParamsBucketLocationBucket struct {
-	// Optional Application
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional version of the bucket
-	Version param.Opt[string] `json:"version,omitzero"`
-	// The name of the bucket
-	Name param.Opt[string] `json:"name,omitzero"`
-	paramObj
-}
-
-func (r SearchFindParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
-	type shadow SearchFindParamsBucketLocationBucket
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *SearchFindParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
+func (r *SearchRunParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

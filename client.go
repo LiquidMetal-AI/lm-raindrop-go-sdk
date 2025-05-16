@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
@@ -16,11 +16,11 @@ import (
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
 	Options       []option.RequestOption
-	Search        SearchService
 	DocumentQuery DocumentQueryService
 	ChunkSearch   ChunkSearchService
 	SummarizePage SummarizePageService
-	StorageObject StorageObjectService
+	Search        SearchService
+	Object        ObjectService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -45,11 +45,11 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 
 	r = Client{Options: opts}
 
-	r.Search = NewSearchService(opts...)
 	r.DocumentQuery = NewDocumentQueryService(opts...)
 	r.ChunkSearch = NewChunkSearchService(opts...)
 	r.SummarizePage = NewSummarizePageService(opts...)
-	r.StorageObject = NewStorageObjectService(opts...)
+	r.Search = NewSearchService(opts...)
+	r.Object = NewObjectService(opts...)
 
 	return
 }

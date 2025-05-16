@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"time"
 
-	shimjson "github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/encoding/json"
+	shimjson "github.com/stainless-sdks/raindrop-go/internal/encoding/json"
 
 	"github.com/tidwall/sjson"
 )

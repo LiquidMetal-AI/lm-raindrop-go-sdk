@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/stainless-sdks/raindrop-go"
+	"github.com/stainless-sdks/raindrop-go/internal/testutil"
+	"github.com/stainless-sdks/raindrop-go/option"
 )
 
 func TestUsage(t *testing.T) {
@@ -24,15 +24,18 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	response, err := client.Search.Find(context.TODO(), raindrop.SearchFindParams{
-		BucketLocations: []raindrop.SearchFindParamsBucketLocation{{
-			Bucket: raindrop.SearchFindParamsBucketLocationBucket{},
-		}},
-		Input:     "all my pdfs with images of cats that do not talk about dogs",
-		RequestID: "c523cb44-9b59-4bf5-a840-01891d735b57",
+	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", response.Pagination)
+	t.Logf("%+v\n", documentQuery.Answer)
 }

@@ -6,11 +6,11 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/stainless-sdks/raindrop-go/internal/apijson"
+	"github.com/stainless-sdks/raindrop-go/internal/requestconfig"
+	"github.com/stainless-sdks/raindrop-go/option"
+	"github.com/stainless-sdks/raindrop-go/packages/param"
+	"github.com/stainless-sdks/raindrop-go/packages/respjson"
 )
 
 // SummarizePageService contains methods and other services that help with
@@ -51,14 +51,14 @@ func NewSummarizePageService(opts ...option.RequestOption) (r SummarizePageServi
 // - Mixed content types
 // - Technical documentation
 // - Research materials
-func (r *SummarizePageService) New(ctx context.Context, body SummarizePageNewParams, opts ...option.RequestOption) (res *SummarizePageNewResponse, err error) {
+func (r *SummarizePageService) NewSummary(ctx context.Context, body SummarizePageNewSummaryParams, opts ...option.RequestOption) (res *SummarizePageNewSummaryResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/summarize_page"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type SummarizePageNewResponse struct {
+type SummarizePageNewSummaryResponse struct {
 	// AI-generated summary including key themes and topics, content type distribution,
 	// important findings, and document relationships
 	Summary string `json:"summary"`
@@ -71,12 +71,12 @@ type SummarizePageNewResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SummarizePageNewResponse) RawJSON() string { return r.JSON.raw }
-func (r *SummarizePageNewResponse) UnmarshalJSON(data []byte) error {
+func (r SummarizePageNewSummaryResponse) RawJSON() string { return r.JSON.raw }
+func (r *SummarizePageNewSummaryResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type SummarizePageNewParams struct {
+type SummarizePageNewSummaryParams struct {
 	// Target page number (1-based)
 	Page int64 `json:"page,required"`
 	// Results per page. Affects summary granularity
@@ -86,10 +86,10 @@ type SummarizePageNewParams struct {
 	paramObj
 }
 
-func (r SummarizePageNewParams) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizePageNewParams
+func (r SummarizePageNewSummaryParams) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizePageNewSummaryParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SummarizePageNewParams) UnmarshalJSON(data []byte) error {
+func (r *SummarizePageNewSummaryParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
