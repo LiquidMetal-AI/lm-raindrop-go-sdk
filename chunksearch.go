@@ -97,7 +97,7 @@ func (r *TextResult) UnmarshalJSON(data []byte) error {
 type TextResultSource struct {
 	// **DESCRIPTION** The bucket information containing this result **EXAMPLE**
 	// {"moduleId": "01jt3vs2nyt2xwk2f54x2bkn84", "bucketName": "mr-bucket"}
-	Bucket BucketResponse `json:"bucket"`
+	Bucket TextResultSourceBucket `json:"bucket"`
 	// **DESCRIPTION** The object key within the bucket **EXAMPLE** "document.pdf"
 	Object string `json:"object"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -112,6 +112,30 @@ type TextResultSource struct {
 // Returns the unmodified JSON received from the API
 func (r TextResultSource) RawJSON() string { return r.JSON.raw }
 func (r *TextResultSource) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// **DESCRIPTION** The bucket information containing this result **EXAMPLE**
+// {"moduleId": "01jt3vs2nyt2xwk2f54x2bkn84", "bucketName": "mr-bucket"}
+type TextResultSourceBucket struct {
+	ApplicationName      string `json:"application_name"`
+	ApplicationVersionID string `json:"application_version_id"`
+	BucketName           string `json:"bucket_name"`
+	ModuleID             string `json:"module_id"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ApplicationName      respjson.Field
+		ApplicationVersionID respjson.Field
+		BucketName           respjson.Field
+		ModuleID             respjson.Field
+		ExtraFields          map[string]respjson.Field
+		raw                  string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TextResultSourceBucket) RawJSON() string { return r.JSON.raw }
+func (r *TextResultSourceBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
