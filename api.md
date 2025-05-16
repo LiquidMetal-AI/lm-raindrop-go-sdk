@@ -37,14 +37,19 @@ Methods:
 
 Response Types:
 
+- <a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#PaginationInfo">PaginationInfo</a>
 - <a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#SearchRunResponse">SearchRunResponse</a>
 
 Methods:
 
 - <code title="post /v1/search">client.Search.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#SearchService.Run">Run</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#SearchRunParams">SearchRunParams</a>) (<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#SearchRunResponse">SearchRunResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
-# Object
+# LiquidmetalV1alpha1SearchAgentService
 
 Response Types:
 
-- <a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#BucketResponse">BucketResponse</a>
+- <a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse">LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse</a>
+
+Methods:
+
+- <code title="post /liquidmetal.v1alpha1.SearchAgentService/GetPaginatedResults">client.LiquidmetalV1alpha1SearchAgentService.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#LiquidmetalV1alpha1SearchAgentServiceService.GetPaginatedResults">GetPaginatedResults</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, params <a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsParams">LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsParams</a>) (<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go">raindrop</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/raindrop-go#LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse">LiquidmetalV1alpha1SearchAgentServiceGetPaginatedResultsResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

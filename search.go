@@ -61,31 +61,7 @@ func (r *SearchService) Run(ctx context.Context, body SearchRunParams, opts ...o
 	return
 }
 
-type SearchRunResponse struct {
-	// **DESCRIPTION** Pagination details for result navigation **EXAMPLE** {"total":
-	// 100, "page": 1, "page_size": 10, "total_pages": 10, "has_more": true}
-	Pagination SearchRunResponsePagination `json:"pagination"`
-	// **DESCRIPTION** Matched results with metadata **EXAMPLE** [{"chunk_signature":
-	// "chunk_123abc", "text": "Sample text", "score": 0.95}]
-	Results []TextResult `json:"results"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Pagination  respjson.Field
-		Results     respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r SearchRunResponse) RawJSON() string { return r.JSON.raw }
-func (r *SearchRunResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// **DESCRIPTION** Pagination details for result navigation **EXAMPLE** {"total":
-// 100, "page": 1, "page_size": 10, "total_pages": 10, "has_more": true}
-type SearchRunResponsePagination struct {
+type PaginationInfo struct {
 	// **DESCRIPTION** Indicates more results available. Used for infinite scroll
 	// implementation **EXAMPLE** true
 	HasMore bool `json:"has_more"`
@@ -111,8 +87,30 @@ type SearchRunResponsePagination struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r SearchRunResponsePagination) RawJSON() string { return r.JSON.raw }
-func (r *SearchRunResponsePagination) UnmarshalJSON(data []byte) error {
+func (r PaginationInfo) RawJSON() string { return r.JSON.raw }
+func (r *PaginationInfo) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type SearchRunResponse struct {
+	// **DESCRIPTION** Pagination details for result navigation **EXAMPLE** {"total":
+	// 100, "page": 1, "page_size": 10, "total_pages": 10, "has_more": true}
+	Pagination PaginationInfo `json:"pagination"`
+	// **DESCRIPTION** Matched results with metadata **EXAMPLE** [{"chunk_signature":
+	// "chunk_123abc", "text": "Sample text", "score": 0.95}]
+	Results []TextResult `json:"results"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Pagination  respjson.Field
+		Results     respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r SearchRunResponse) RawJSON() string { return r.JSON.raw }
+func (r *SearchRunResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
