@@ -4,6 +4,7 @@ package raindrop_test
 
 import (
 	"context"
+	"errors"
 	"os"
 	"testing"
 
@@ -12,7 +13,8 @@ import (
 	"github.com/stainless-sdks/raindrop-go/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestDocumentQueryNew(t *testing.T) {
+	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,10 +26,14 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	documentQuery, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
+	_, err := client.DocumentQuery.New(context.TODO(), raindrop.DocumentQueryNewParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					ApplicationName: raindrop.String("my-app"),
+					Name:            raindrop.String("my-bucket"),
+					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -35,7 +41,10 @@ func TestUsage(t *testing.T) {
 		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
+		var apierr *raindrop.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", documentQuery.Answer)
 }

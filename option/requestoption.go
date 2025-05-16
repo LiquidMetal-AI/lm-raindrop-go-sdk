@@ -269,6 +269,6 @@ func WithEnvironmentProduction() RequestOption {
 func WithAPIKey(value string) RequestOption {
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.APIKey = value
-		return r.Apply(WithHeader("authorization", fmt.Sprintf("Bearer %s", r.APIKey)))
+		return r.Apply(WithHeader("Authorization", r.APIKey))
 	})
 }
