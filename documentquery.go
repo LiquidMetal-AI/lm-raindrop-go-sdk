@@ -80,7 +80,7 @@ func (r *DocumentQueryAskResponse) UnmarshalJSON(data []byte) error {
 type DocumentQueryAskParams struct {
 	// The storage bucket containing the target document. Must be a valid, registered
 	// Smart Bucket. Used to identify which bucket to query against
-	BucketLocation DocumentQueryAskParamsBucketLocationUnion `json:"bucket_location,omitzero,required"`
+	BucketLocation DocumentQueryAskParamsBucketLocation `json:"bucket_location,omitzero,required"`
 	// User's input or question about the document. Can be natural language questions,
 	// commands, or requests. The system will process this against the document content
 	Input string `json:"input,required"`
@@ -101,48 +101,26 @@ func (r *DocumentQueryAskParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
+// The storage bucket containing the target document. Must be a valid, registered
+// Smart Bucket. Used to identify which bucket to query against
 //
-// Use [param.IsOmitted] to confirm if a field is set.
-type DocumentQueryAskParamsBucketLocationUnion struct {
-	OfBucket   *DocumentQueryAskParamsBucketLocationBucket   `json:",omitzero,inline"`
-	OfModuleID *DocumentQueryAskParamsBucketLocationModuleID `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u DocumentQueryAskParamsBucketLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion[DocumentQueryAskParamsBucketLocationUnion](u.OfBucket, u.OfModuleID)
-}
-func (u *DocumentQueryAskParamsBucketLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *DocumentQueryAskParamsBucketLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfBucket) {
-		return u.OfBucket
-	} else if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	}
-	return nil
-}
-
 // The property Bucket is required.
-type DocumentQueryAskParamsBucketLocationBucket struct {
+type DocumentQueryAskParamsBucketLocation struct {
 	// BucketName represents a bucket name with an optional version
-	Bucket DocumentQueryAskParamsBucketLocationBucketBucket `json:"bucket,omitzero,required"`
+	Bucket DocumentQueryAskParamsBucketLocationBucket `json:"bucket,omitzero,required"`
 	paramObj
 }
 
-func (r DocumentQueryAskParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
-	type shadow DocumentQueryAskParamsBucketLocationBucket
+func (r DocumentQueryAskParamsBucketLocation) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DocumentQueryAskParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
+func (r *DocumentQueryAskParamsBucketLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // BucketName represents a bucket name with an optional version
-type DocumentQueryAskParamsBucketLocationBucketBucket struct {
+type DocumentQueryAskParamsBucketLocationBucket struct {
 	// Optional Application
 	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
 	// Optional version of the bucket
@@ -152,24 +130,10 @@ type DocumentQueryAskParamsBucketLocationBucketBucket struct {
 	paramObj
 }
 
-func (r DocumentQueryAskParamsBucketLocationBucketBucket) MarshalJSON() (data []byte, err error) {
-	type shadow DocumentQueryAskParamsBucketLocationBucketBucket
+func (r DocumentQueryAskParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
+	type shadow DocumentQueryAskParamsBucketLocationBucket
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DocumentQueryAskParamsBucketLocationBucketBucket) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property ModuleID is required.
-type DocumentQueryAskParamsBucketLocationModuleID struct {
-	ModuleID string `json:"module_id,required"`
-	paramObj
-}
-
-func (r DocumentQueryAskParamsBucketLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow DocumentQueryAskParamsBucketLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *DocumentQueryAskParamsBucketLocationModuleID) UnmarshalJSON(data []byte) error {
+func (r *DocumentQueryAskParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

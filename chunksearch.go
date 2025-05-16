@@ -67,7 +67,7 @@ func (r *ChunkSearchFindResponse) UnmarshalJSON(data []byte) error {
 type ChunkSearchFindParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []ChunkSearchFindParamsBucketLocationUnion `json:"bucket_locations,omitzero,required"`
+	BucketLocations []ChunkSearchFindParamsBucketLocation `json:"bucket_locations,omitzero,required"`
 	// Natural language query or question. Can include complex criteria and
 	// relationships. The system will optimize the search strategy based on this input
 	Input string `json:"input,required"`
@@ -85,48 +85,23 @@ func (r *ChunkSearchFindParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type ChunkSearchFindParamsBucketLocationUnion struct {
-	OfBucket   *ChunkSearchFindParamsBucketLocationBucket   `json:",omitzero,inline"`
-	OfModuleID *ChunkSearchFindParamsBucketLocationModuleID `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u ChunkSearchFindParamsBucketLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion[ChunkSearchFindParamsBucketLocationUnion](u.OfBucket, u.OfModuleID)
-}
-func (u *ChunkSearchFindParamsBucketLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *ChunkSearchFindParamsBucketLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfBucket) {
-		return u.OfBucket
-	} else if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	}
-	return nil
-}
-
 // The property Bucket is required.
-type ChunkSearchFindParamsBucketLocationBucket struct {
+type ChunkSearchFindParamsBucketLocation struct {
 	// BucketName represents a bucket name with an optional version
-	Bucket ChunkSearchFindParamsBucketLocationBucketBucket `json:"bucket,omitzero,required"`
+	Bucket ChunkSearchFindParamsBucketLocationBucket `json:"bucket,omitzero,required"`
 	paramObj
 }
 
-func (r ChunkSearchFindParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
-	type shadow ChunkSearchFindParamsBucketLocationBucket
+func (r ChunkSearchFindParamsBucketLocation) MarshalJSON() (data []byte, err error) {
+	type shadow ChunkSearchFindParamsBucketLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *ChunkSearchFindParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
+func (r *ChunkSearchFindParamsBucketLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // BucketName represents a bucket name with an optional version
-type ChunkSearchFindParamsBucketLocationBucketBucket struct {
+type ChunkSearchFindParamsBucketLocationBucket struct {
 	// Optional Application
 	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
 	// Optional version of the bucket
@@ -136,24 +111,10 @@ type ChunkSearchFindParamsBucketLocationBucketBucket struct {
 	paramObj
 }
 
-func (r ChunkSearchFindParamsBucketLocationBucketBucket) MarshalJSON() (data []byte, err error) {
-	type shadow ChunkSearchFindParamsBucketLocationBucketBucket
+func (r ChunkSearchFindParamsBucketLocationBucket) MarshalJSON() (data []byte, err error) {
+	type shadow ChunkSearchFindParamsBucketLocationBucket
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *ChunkSearchFindParamsBucketLocationBucketBucket) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property ModuleID is required.
-type ChunkSearchFindParamsBucketLocationModuleID struct {
-	ModuleID string `json:"module_id,required"`
-	paramObj
-}
-
-func (r ChunkSearchFindParamsBucketLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow ChunkSearchFindParamsBucketLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *ChunkSearchFindParamsBucketLocationModuleID) UnmarshalJSON(data []byte) error {
+func (r *ChunkSearchFindParamsBucketLocationBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

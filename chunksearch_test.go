@@ -27,13 +27,11 @@ func TestChunkSearchFind(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ChunkSearch.Find(context.TODO(), raindrop.ChunkSearchFindParams{
-		BucketLocations: []raindrop.ChunkSearchFindParamsBucketLocationUnion{{
-			OfBucket: &raindrop.ChunkSearchFindParamsBucketLocationBucket{
-				Bucket: raindrop.ChunkSearchFindParamsBucketLocationBucketBucket{
-					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
-				},
+		BucketLocations: []raindrop.ChunkSearchFindParamsBucketLocation{{
+			Bucket: raindrop.ChunkSearchFindParamsBucketLocationBucket{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            raindrop.String("my-bucket"),
+				Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
 			},
 		}},
 		Input:     "Find documents about revenue in Q4 2023",
