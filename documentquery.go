@@ -97,7 +97,7 @@ func (u *BucketLocatorUnionParam) asAny() any {
 
 // The property Bucket is required.
 type BucketLocatorBucketParam struct {
-	// BucketName represents a bucket name with an optional version
+	// **EXAMPLE** { name: 'my-smartbucket' } **REQUIRED** FALSE
 	Bucket BucketLocatorBucketBucketParam `json:"bucket,omitzero,required"`
 	paramObj
 }
@@ -110,14 +110,17 @@ func (r *BucketLocatorBucketParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// BucketName represents a bucket name with an optional version
+// **EXAMPLE** { name: 'my-smartbucket' } **REQUIRED** FALSE
+//
+// The property Name is required.
 type BucketLocatorBucketBucketParam struct {
-	// Optional Application
+	// The name of the bucket **EXAMPLE** "my-bucket" **REQUIRED** TRUE
+	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
 	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional version of the bucket
+	// Optional version of the bucket **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **REQUIRED** FALSE
 	Version param.Opt[string] `json:"version,omitzero"`
-	// The name of the bucket
-	Name param.Opt[string] `json:"name,omitzero"`
 	paramObj
 }
 
@@ -131,6 +134,7 @@ func (r *BucketLocatorBucketBucketParam) UnmarshalJSON(data []byte) error {
 
 // The property ModuleID is required.
 type BucketLocatorModuleIDParam struct {
+	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p" **REQUIRED** FALSE
 	ModuleID string `json:"module_id,required"`
 	paramObj
 }

@@ -55,7 +55,9 @@ func main() {
 	response, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -303,7 +305,9 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 _, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
 	BucketLocation: raindrop.BucketLocatorUnionParam{
 		OfBucket: &raindrop.BucketLocatorBucketParam{
-			Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Name: "my-bucket",
+			},
 		},
 	},
 	Input:     "What are the key points in this document?",
@@ -339,7 +343,9 @@ client.DocumentQuery.Ask(
 	raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -384,7 +390,9 @@ client.DocumentQuery.Ask(
 	raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -408,7 +416,9 @@ response, err := client.DocumentQuery.Ask(
 	raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
