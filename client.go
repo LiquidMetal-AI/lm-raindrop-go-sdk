@@ -20,6 +20,10 @@ type Client struct {
 	ChunkSearch   ChunkSearchService
 	SummarizePage SummarizePageService
 	Search        SearchService
+	PutObject     PutObjectService
+	GetObject     GetObjectService
+	DeleteObject  DeleteObjectService
+	ListObjects   ListObjectService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -48,6 +52,10 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.ChunkSearch = NewChunkSearchService(opts...)
 	r.SummarizePage = NewSummarizePageService(opts...)
 	r.Search = NewSearchService(opts...)
+	r.PutObject = NewPutObjectService(opts...)
+	r.GetObject = NewGetObjectService(opts...)
+	r.DeleteObject = NewDeleteObjectService(opts...)
+	r.ListObjects = NewListObjectService(opts...)
 
 	return
 }
