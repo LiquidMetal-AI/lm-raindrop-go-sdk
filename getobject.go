@@ -5,10 +5,8 @@ package raindrop
 import (
 	"context"
 	"net/http"
-	"net/url"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiquery"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
@@ -66,17 +64,16 @@ func (r *GetObjectDownloadResponse) UnmarshalJSON(data []byte) error {
 
 type GetObjectDownloadParams struct {
 	// Object key/path to download
-	Key param.Opt[string] `query:"key,omitzero" json:"-"`
+	Key param.Opt[string] `json:"key,omitzero"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `query:"module_id,omitzero" json:"-"`
+	ModuleID param.Opt[string] `json:"module_id,omitzero"`
 	paramObj
 }
 
-// URLQuery serializes [GetObjectDownloadParams]'s query parameters as
-// `url.Values`.
-func (r GetObjectDownloadParams) URLQuery() (v url.Values, err error) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
+func (r GetObjectDownloadParams) MarshalJSON() (data []byte, err error) {
+	type shadow GetObjectDownloadParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *GetObjectDownloadParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
 }

@@ -6,11 +6,9 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"net/url"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiquery"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
@@ -127,14 +125,14 @@ func (r *ListObjectNewResponseObjectSizeUnion) UnmarshalJSON(data []byte) error 
 
 type ListObjectNewParams struct {
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `query:"module_id,omitzero" json:"-"`
+	ModuleID param.Opt[string] `json:"module_id,omitzero"`
 	paramObj
 }
 
-// URLQuery serializes [ListObjectNewParams]'s query parameters as `url.Values`.
-func (r ListObjectNewParams) URLQuery() (v url.Values, err error) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
+func (r ListObjectNewParams) MarshalJSON() (data []byte, err error) {
+	type shadow ListObjectNewParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ListObjectNewParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
 }
