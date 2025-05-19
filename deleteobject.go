@@ -5,9 +5,8 @@ package raindrop
 import (
 	"context"
 	"net/http"
-	"net/url"
 
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apiquery"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
@@ -46,17 +45,16 @@ type DeleteObjectDeleteResponse = any
 
 type DeleteObjectDeleteParams struct {
 	// Object key/path to delete
-	Key param.Opt[string] `query:"key,omitzero" json:"-"`
+	Key param.Opt[string] `json:"key,omitzero"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `query:"module_id,omitzero" json:"-"`
+	ModuleID param.Opt[string] `json:"module_id,omitzero"`
 	paramObj
 }
 
-// URLQuery serializes [DeleteObjectDeleteParams]'s query parameters as
-// `url.Values`.
-func (r DeleteObjectDeleteParams) URLQuery() (v url.Values, err error) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
+func (r DeleteObjectDeleteParams) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteObjectDeleteParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DeleteObjectDeleteParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
 }
