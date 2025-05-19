@@ -38,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
@@ -73,7 +73,7 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
@@ -119,7 +119,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
@@ -160,7 +160,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
@@ -200,7 +200,7 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
@@ -234,7 +234,7 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.DocumentQuery.Ask(cancelCtx, raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(cancelCtx, raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
@@ -265,7 +265,7 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.DocumentQuery.Ask(cancelCtx, raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(cancelCtx, raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
@@ -302,7 +302,7 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.DocumentQuery.Ask(deadlineCtx, raindrop.DocumentQueryAskParams{
+		_, err := client.Query.DocumentQuery(deadlineCtx, raindrop.QueryDocumentQueryParams{
 			BucketLocation: raindrop.BucketLocatorUnionParam{
 				OfBucket: &raindrop.BucketLocatorBucketParam{
 					Bucket: raindrop.BucketLocatorBucketBucketParam{
