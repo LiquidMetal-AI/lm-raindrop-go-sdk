@@ -2,7 +2,7 @@
 
 <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk"><img src="https://pkg.go.dev/badge/github.com/LiquidMetal-AI/lm-raindrop-go-sdk.svg" alt="Go Reference"></a>
 
-The Raindrop Go library provides convenient access to the Raindrop REST API
+The Raindrop Go library provides convenient access to the [Raindrop REST API](docs.liquidmetal.ai)
 from applications written in Go.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.0-alpha.6'
+go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.4'
 ```
 
 <!-- x-release-please-end -->
