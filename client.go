@@ -15,15 +15,9 @@ import (
 // interacting with the raindrop API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options       []option.RequestOption
-	DocumentQuery DocumentQueryService
-	ChunkSearch   ChunkSearchService
-	SummarizePage SummarizePageService
-	Search        SearchService
-	PutObject     PutObjectService
-	GetObject     GetObjectService
-	DeleteObject  DeleteObjectService
-	ListObjects   ListObjectService
+	Options []option.RequestOption
+	Query   QueryService
+	Bucket  BucketService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -48,14 +42,8 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 
 	r = Client{Options: opts}
 
-	r.DocumentQuery = NewDocumentQueryService(opts...)
-	r.ChunkSearch = NewChunkSearchService(opts...)
-	r.SummarizePage = NewSummarizePageService(opts...)
-	r.Search = NewSearchService(opts...)
-	r.PutObject = NewPutObjectService(opts...)
-	r.GetObject = NewGetObjectService(opts...)
-	r.DeleteObject = NewDeleteObjectService(opts...)
-	r.ListObjects = NewListObjectService(opts...)
+	r.Query = NewQueryService(opts...)
+	r.Bucket = NewBucketService(opts...)
 
 	return
 }
