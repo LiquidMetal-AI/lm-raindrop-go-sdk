@@ -27,7 +27,9 @@ func TestUsage(t *testing.T) {
 	response, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",

@@ -30,8 +30,8 @@ func TestChunkSearchFind(t *testing.T) {
 		BucketLocations: []raindrop.BucketLocatorUnionParam{{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-bucket",
 					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
 					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
 				},
 			},

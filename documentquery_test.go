@@ -30,8 +30,8 @@ func TestDocumentQueryAsk(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-bucket",
 					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
 					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
 				},
 			},

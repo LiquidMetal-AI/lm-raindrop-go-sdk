@@ -106,10 +106,14 @@ func (r *TextResultSource) UnmarshalJSON(data []byte) error {
 
 // The bucket information containing this result
 type TextResultSourceBucket struct {
-	ApplicationName      string `json:"application_name"`
+	// **EXAMPLE** "my-app"
+	ApplicationName string `json:"application_name"`
+	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
 	ApplicationVersionID string `json:"application_version_id"`
-	BucketName           string `json:"bucket_name"`
-	ModuleID             string `json:"module_id"`
+	// **EXAMPLE** "my-smartbucket"
+	BucketName string `json:"bucket_name"`
+	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	ModuleID string `json:"module_id"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
