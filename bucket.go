@@ -93,11 +93,11 @@ func (r *BucketListResponse) UnmarshalJSON(data []byte) error {
 // ObjectInfo represents metadata about a single object
 type BucketListResponseObject struct {
 	// MIME type of the object
-	ContentType string `json:"content_type"`
+	ContentType string `json:"contentType"`
 	// Object key/path in the bucket
 	Key string `json:"key"`
 	// Last modification timestamp
-	LastModified time.Time `json:"last_modified" format:"date-time"`
+	LastModified time.Time `json:"lastModified" format:"date-time"`
 	// Size of the object in bytes
 	Size BucketListResponseObjectSizeUnion `json:"size" format:"int64"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -159,7 +159,7 @@ type BucketGetResponse struct {
 	// No specific comments in original for these fields directly, but they were part
 	// of the original GetObjectResponse.
 	Content     string `json:"content" format:"byte"`
-	ContentType string `json:"content_type"`
+	ContentType string `json:"contentType"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Content     respjson.Field
@@ -198,13 +198,13 @@ func (r *BucketPutResponse) UnmarshalJSON(data []byte) error {
 // Information about the bucket where the object was uploaded
 type BucketPutResponseBucket struct {
 	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
+	ApplicationName string `json:"applicationName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
+	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
+	BucketName string `json:"bucketName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
+	ModuleID string `json:"moduleId"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
@@ -223,8 +223,12 @@ func (r *BucketPutResponseBucket) UnmarshalJSON(data []byte) error {
 }
 
 type BucketListParams struct {
+	// Organization ID for access control
+	OrganizationID string `json:"organizationId,required"`
+	// User ID for access control
+	UserID string `json:"userId,required"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"module_id,omitzero"`
+	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
 	paramObj
 }
 
@@ -237,10 +241,14 @@ func (r *BucketListParams) UnmarshalJSON(data []byte) error {
 }
 
 type BucketDeleteParams struct {
+	// Organization ID for access control
+	OrganizationID string `json:"organizationId,required"`
+	// User ID for access control
+	UserID string `json:"userId,required"`
 	// Object key/path to delete
 	Key param.Opt[string] `json:"key,omitzero"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"module_id,omitzero"`
+	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
 	paramObj
 }
 
@@ -253,10 +261,14 @@ func (r *BucketDeleteParams) UnmarshalJSON(data []byte) error {
 }
 
 type BucketGetParams struct {
+	// Organization ID for access control
+	OrganizationID string `json:"organizationId,required"`
+	// User ID for access control
+	UserID string `json:"userId,required"`
 	// Object key/path to download
 	Key param.Opt[string] `json:"key,omitzero"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"module_id,omitzero"`
+	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
 	paramObj
 }
 
@@ -271,12 +283,16 @@ func (r *BucketGetParams) UnmarshalJSON(data []byte) error {
 type BucketPutParams struct {
 	// Binary content of the object
 	Content string `json:"content,required" format:"byte"`
+	// Organization ID for access control
+	OrganizationID string `json:"organizationId,required"`
+	// User ID for access control
+	UserID string `json:"userId,required"`
 	// MIME type of the object
-	ContentType param.Opt[string] `json:"content_type,omitzero"`
+	ContentType param.Opt[string] `json:"contentType,omitzero"`
 	// Object key/path in the bucket
 	Key param.Opt[string] `json:"key,omitzero"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"module_id,omitzero"`
+	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
 	paramObj
 }
 
