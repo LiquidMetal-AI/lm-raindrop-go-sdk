@@ -75,7 +75,7 @@ func (r *BucketService) Put(ctx context.Context, body BucketPutParams, opts ...o
 
 type BucketListResponse struct {
 	// List of objects in the bucket with their metadata
-	Objects []BucketListResponseObject `json:"objects"`
+	Objects []BucketListResponseObject `json:"objects,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Objects     respjson.Field
@@ -93,13 +93,13 @@ func (r *BucketListResponse) UnmarshalJSON(data []byte) error {
 // ObjectInfo represents metadata about a single object
 type BucketListResponseObject struct {
 	// MIME type of the object
-	ContentType string `json:"contentType"`
+	ContentType string `json:"contentType,required"`
 	// Object key/path in the bucket
-	Key string `json:"key"`
+	Key string `json:"key,required"`
 	// Last modification timestamp
-	LastModified time.Time `json:"lastModified" format:"date-time"`
+	LastModified time.Time `json:"lastModified,required" format:"date-time"`
 	// Size of the object in bytes
-	Size BucketListResponseObjectSizeUnion `json:"size" format:"int64"`
+	Size BucketListResponseObjectSizeUnion `json:"size,required" format:"int64"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ContentType  respjson.Field
@@ -224,7 +224,7 @@ func (r *BucketPutResponseBucket) UnmarshalJSON(data []byte) error {
 
 type BucketListParams struct {
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
@@ -238,9 +238,9 @@ func (r *BucketListParams) UnmarshalJSON(data []byte) error {
 
 type BucketDeleteParams struct {
 	// Object key/path to delete
-	Key param.Opt[string] `json:"key,omitzero"`
+	Key string `json:"key,required"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
@@ -254,9 +254,9 @@ func (r *BucketDeleteParams) UnmarshalJSON(data []byte) error {
 
 type BucketGetParams struct {
 	// Object key/path to download
-	Key param.Opt[string] `json:"key,omitzero"`
+	Key string `json:"key,required"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
@@ -272,11 +272,11 @@ type BucketPutParams struct {
 	// Binary content of the object
 	Content string `json:"content,required" format:"byte"`
 	// MIME type of the object
-	ContentType param.Opt[string] `json:"contentType,omitzero"`
+	ContentType string `json:"contentType,required"`
 	// Object key/path in the bucket
-	Key param.Opt[string] `json:"key,omitzero"`
+	Key string `json:"key,required"`
 	// Module ID identifying the bucket
-	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
