@@ -9,6 +9,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/pagination"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
 )
@@ -76,11 +77,29 @@ func (r *QueryService) DocumentQuery(ctx context.Context, body QueryDocumentQuer
 // navigation through large result sets while maintaining search context and result
 // relevance. Retrieving paginated results requires a valid request_id from a
 // previously completed search.
-func (r *QueryService) GetPaginatedSearch(ctx context.Context, body QueryGetPaginatedSearchParams, opts ...option.RequestOption) (res *QueryGetPaginatedSearchResponse, err error) {
+func (r *QueryService) GetPaginatedSearch(ctx context.Context, body QueryGetPaginatedSearchParams, opts ...option.RequestOption) (res *pagination.PageNumber[QueryGetPaginatedSearchResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/search_get_page"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve additional pages from a previous search. This endpoint enables
+// navigation through large result sets while maintaining search context and result
+// relevance. Retrieving paginated results requires a valid request_id from a
+// previously completed search.
+func (r *QueryService) GetPaginatedSearchAutoPaging(ctx context.Context, body QueryGetPaginatedSearchParams, opts ...option.RequestOption) *pagination.PageNumberAutoPager[QueryGetPaginatedSearchResponse] {
+	return pagination.NewPageNumberAutoPager(r.GetPaginatedSearch(ctx, body, opts...))
 }
 
 // Primary search endpoint that provides advanced search capabilities across all
@@ -350,56 +369,6 @@ func (r *QueryDocumentQueryResponse) UnmarshalJSON(data []byte) error {
 }
 
 type QueryGetPaginatedSearchResponse struct {
-	// Updated pagination information
-	Pagination QueryGetPaginatedSearchResponsePagination `json:"pagination"`
-	// Page results with full metadata
-	Results []QueryGetPaginatedSearchResponseResult `json:"results"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Pagination  respjson.Field
-		Results     respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponse) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Updated pagination information
-type QueryGetPaginatedSearchResponsePagination struct {
-	// Indicates more results available. Used for infinite scroll implementation
-	HasMore bool `json:"hasMore"`
-	// Current page number (1-based)
-	Page int64 `json:"page"`
-	// Results per page. May be adjusted for performance
-	PageSize int64 `json:"pageSize"`
-	// Total number of available results
-	Total int64 `json:"total"`
-	// Total available pages. Calculated as ceil(total/page_size)
-	TotalPages int64 `json:"totalPages"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		HasMore     respjson.Field
-		Page        respjson.Field
-		PageSize    respjson.Field
-		Total       respjson.Field
-		TotalPages  respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponsePagination) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponsePagination) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type QueryGetPaginatedSearchResponseResult struct {
 	// Unique identifier for this text segment. Used for deduplication and result
 	// tracking
 	ChunkSignature string `json:"chunkSignature,nullable"`
@@ -411,7 +380,7 @@ type QueryGetPaginatedSearchResponseResult struct {
 	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
 	Score float64 `json:"score,nullable"`
 	// Source document references. Contains bucket and object information
-	Source QueryGetPaginatedSearchResponseResultSource `json:"source"`
+	Source QueryGetPaginatedSearchResponseSource `json:"source"`
 	// The actual content of the result. May be a document excerpt or full content
 	Text string `json:"text,nullable"`
 	// Content MIME type. Helps with proper result rendering
@@ -431,15 +400,15 @@ type QueryGetPaginatedSearchResponseResult struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponseResult) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponseResult) UnmarshalJSON(data []byte) error {
+func (r QueryGetPaginatedSearchResponse) RawJSON() string { return r.JSON.raw }
+func (r *QueryGetPaginatedSearchResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // Source document references. Contains bucket and object information
-type QueryGetPaginatedSearchResponseResultSource struct {
+type QueryGetPaginatedSearchResponseSource struct {
 	// The bucket information containing this result
-	Bucket QueryGetPaginatedSearchResponseResultSourceBucket `json:"bucket"`
+	Bucket QueryGetPaginatedSearchResponseSourceBucket `json:"bucket"`
 	// The object key within the bucket
 	Object string `json:"object"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -452,13 +421,13 @@ type QueryGetPaginatedSearchResponseResultSource struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponseResultSource) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponseResultSource) UnmarshalJSON(data []byte) error {
+func (r QueryGetPaginatedSearchResponseSource) RawJSON() string { return r.JSON.raw }
+func (r *QueryGetPaginatedSearchResponseSource) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // The bucket information containing this result
-type QueryGetPaginatedSearchResponseResultSourceBucket struct {
+type QueryGetPaginatedSearchResponseSourceBucket struct {
 	// **EXAMPLE** "my-app"
 	ApplicationName string `json:"applicationName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
@@ -479,8 +448,8 @@ type QueryGetPaginatedSearchResponseResultSourceBucket struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponseResultSourceBucket) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponseResultSourceBucket) UnmarshalJSON(data []byte) error {
+func (r QueryGetPaginatedSearchResponseSourceBucket) RawJSON() string { return r.JSON.raw }
+func (r *QueryGetPaginatedSearchResponseSourceBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
