@@ -84,6 +84,33 @@ func TestQueryDocumentQuery(t *testing.T) {
 	}
 }
 
+func TestQueryGetPaginatedSearch(t *testing.T) {
+	t.Skip("skipped: tests are disabled for the time being")
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := raindrop.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
+		Page:      raindrop.Int(2),
+		PageSize:  raindrop.Int(10),
+		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+	})
+	if err != nil {
+		var apierr *raindrop.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
 func TestQuerySearch(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
