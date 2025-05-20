@@ -197,7 +197,7 @@ type BucketLocatorBucketBucketParam struct {
 	// The name of the bucket **EXAMPLE** "my-bucket" **REQUIRED** TRUE
 	Name string `json:"name,required"`
 	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
+	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
 	// Optional version of the bucket **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
 	// **REQUIRED** FALSE
 	Version param.Opt[string] `json:"version,omitzero"`
@@ -215,7 +215,7 @@ func (r *BucketLocatorBucketBucketParam) UnmarshalJSON(data []byte) error {
 // The property ModuleID is required.
 type BucketLocatorModuleIDParam struct {
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p" **REQUIRED** FALSE
-	ModuleID string `json:"module_id,required"`
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
@@ -248,12 +248,12 @@ func (r *QueryChunkSearchResponse) UnmarshalJSON(data []byte) error {
 type QueryChunkSearchResponseResult struct {
 	// Unique identifier for this text segment. Used for deduplication and result
 	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
+	ChunkSignature string `json:"chunkSignature,nullable"`
 	// Vector representation for similarity matching. Used in semantic search
 	// operations
 	Embed string `json:"embed,nullable"`
 	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
+	PayloadSignature string `json:"payloadSignature,nullable"`
 	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
 	Score float64 `json:"score,nullable"`
 	// Source document references. Contains bucket and object information
@@ -306,13 +306,13 @@ func (r *QueryChunkSearchResponseResultSource) UnmarshalJSON(data []byte) error 
 // The bucket information containing this result
 type QueryChunkSearchResponseResultSourceBucket struct {
 	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
+	ApplicationName string `json:"applicationName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
+	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
+	BucketName string `json:"bucketName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
+	ModuleID string `json:"moduleId"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
@@ -372,15 +372,15 @@ func (r *QueryGetPaginatedSearchResponse) UnmarshalJSON(data []byte) error {
 // Updated pagination information
 type QueryGetPaginatedSearchResponsePagination struct {
 	// Indicates more results available. Used for infinite scroll implementation
-	HasMore bool `json:"has_more"`
+	HasMore bool `json:"hasMore"`
 	// Current page number (1-based)
 	Page int64 `json:"page"`
 	// Results per page. May be adjusted for performance
-	PageSize int64 `json:"page_size"`
+	PageSize int64 `json:"pageSize"`
 	// Total number of available results
 	Total int64 `json:"total"`
 	// Total available pages. Calculated as ceil(total/page_size)
-	TotalPages int64 `json:"total_pages"`
+	TotalPages int64 `json:"totalPages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		HasMore     respjson.Field
@@ -402,12 +402,12 @@ func (r *QueryGetPaginatedSearchResponsePagination) UnmarshalJSON(data []byte) e
 type QueryGetPaginatedSearchResponseResult struct {
 	// Unique identifier for this text segment. Used for deduplication and result
 	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
+	ChunkSignature string `json:"chunkSignature,nullable"`
 	// Vector representation for similarity matching. Used in semantic search
 	// operations
 	Embed string `json:"embed,nullable"`
 	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
+	PayloadSignature string `json:"payloadSignature,nullable"`
 	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
 	Score float64 `json:"score,nullable"`
 	// Source document references. Contains bucket and object information
@@ -460,13 +460,13 @@ func (r *QueryGetPaginatedSearchResponseResultSource) UnmarshalJSON(data []byte)
 // The bucket information containing this result
 type QueryGetPaginatedSearchResponseResultSourceBucket struct {
 	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
+	ApplicationName string `json:"applicationName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
+	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
+	BucketName string `json:"bucketName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
+	ModuleID string `json:"moduleId"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
@@ -507,15 +507,15 @@ func (r *QuerySearchResponse) UnmarshalJSON(data []byte) error {
 // Pagination details for result navigation
 type QuerySearchResponsePagination struct {
 	// Indicates more results available. Used for infinite scroll implementation
-	HasMore bool `json:"has_more"`
+	HasMore bool `json:"hasMore"`
 	// Current page number (1-based)
 	Page int64 `json:"page"`
 	// Results per page. May be adjusted for performance
-	PageSize int64 `json:"page_size"`
+	PageSize int64 `json:"pageSize"`
 	// Total number of available results
 	Total int64 `json:"total"`
 	// Total available pages. Calculated as ceil(total/page_size)
-	TotalPages int64 `json:"total_pages"`
+	TotalPages int64 `json:"totalPages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		HasMore     respjson.Field
@@ -537,12 +537,12 @@ func (r *QuerySearchResponsePagination) UnmarshalJSON(data []byte) error {
 type QuerySearchResponseResult struct {
 	// Unique identifier for this text segment. Used for deduplication and result
 	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
+	ChunkSignature string `json:"chunkSignature,nullable"`
 	// Vector representation for similarity matching. Used in semantic search
 	// operations
 	Embed string `json:"embed,nullable"`
 	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
+	PayloadSignature string `json:"payloadSignature,nullable"`
 	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
 	Score float64 `json:"score,nullable"`
 	// Source document references. Contains bucket and object information
@@ -595,13 +595,13 @@ func (r *QuerySearchResponseResultSource) UnmarshalJSON(data []byte) error {
 // The bucket information containing this result
 type QuerySearchResponseResultSourceBucket struct {
 	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
+	ApplicationName string `json:"applicationName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
+	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
+	BucketName string `json:"bucketName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
+	ModuleID string `json:"moduleId"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
@@ -640,13 +640,15 @@ func (r *QuerySumarizePageResponse) UnmarshalJSON(data []byte) error {
 type QueryChunkSearchParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
+	BucketLocations []BucketLocatorUnionParam `json:"bucketLocations,omitzero,required"`
 	// Natural language query or question. Can include complex criteria and
 	// relationships. The system will optimize the search strategy based on this input
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. Required for pagination and result
 	// tracking. We recommend using a UUID or ULID for this value
-	RequestID string `json:"request_id,required"`
+	RequestID      string            `json:"requestId,required"`
+	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
+	UserID         param.Opt[string] `json:"userId,omitzero"`
 	paramObj
 }
 
@@ -661,16 +663,18 @@ func (r *QueryChunkSearchParams) UnmarshalJSON(data []byte) error {
 type QueryDocumentQueryParams struct {
 	// The storage bucket containing the target document. Must be a valid, registered
 	// Smart Bucket. Used to identify which bucket to query against
-	BucketLocation BucketLocatorUnionParam `json:"bucket_location,omitzero,required"`
+	BucketLocation BucketLocatorUnionParam `json:"bucketLocation,omitzero,required"`
 	// User's input or question about the document. Can be natural language questions,
 	// commands, or requests. The system will process this against the document content
 	Input string `json:"input,required"`
 	// Document identifier within the bucket. Typically matches the storage path or
 	// key. Used to identify which document to chat with
-	ObjectID string `json:"object_id,required"`
+	ObjectID string `json:"objectId,required"`
 	// Client-provided conversation session identifier. Required for maintaining
 	// context in follow-up questions. We recommend using a UUID or ULID for this value
-	RequestID string `json:"request_id,required"`
+	RequestID      string            `json:"requestId,required"`
+	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
+	UserID         param.Opt[string] `json:"userId,omitzero"`
 	paramObj
 }
 
@@ -686,9 +690,11 @@ type QueryGetPaginatedSearchParams struct {
 	// Requested page number
 	Page param.Opt[int64] `json:"page,omitzero,required"`
 	// Results per page
-	PageSize param.Opt[int64] `json:"page_size,omitzero,required"`
+	PageSize param.Opt[int64] `json:"pageSize,omitzero,required"`
 	// Original search session identifier from the initial search
-	RequestID string `json:"request_id,required"`
+	RequestID      string            `json:"requestId,required"`
+	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
+	UserID         param.Opt[string] `json:"userId,omitzero"`
 	paramObj
 }
 
@@ -703,14 +709,16 @@ func (r *QueryGetPaginatedSearchParams) UnmarshalJSON(data []byte) error {
 type QuerySearchParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []BucketLocatorUnionParam `json:"bucket_locations,omitzero,required"`
+	BucketLocations []BucketLocatorUnionParam `json:"bucketLocations,omitzero,required"`
 	// Natural language search query that can include complex criteria. Supports
 	// queries like finding documents with specific content types, PII, or semantic
 	// meaning
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. Required for pagination and result
 	// tracking. We recommend using a UUID or ULID for this value
-	RequestID string `json:"request_id,required"`
+	RequestID      string            `json:"requestId,required"`
+	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
+	UserID         param.Opt[string] `json:"userId,omitzero"`
 	paramObj
 }
 
@@ -726,9 +734,11 @@ type QuerySumarizePageParams struct {
 	// Target page number (1-based)
 	Page int64 `json:"page,required"`
 	// Results per page. Affects summary granularity
-	PageSize int64 `json:"page_size,required"`
+	PageSize int64 `json:"pageSize,required"`
 	// Original search session identifier from the initial search
-	RequestID string `json:"request_id,required"`
+	RequestID      string            `json:"requestId,required"`
+	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
+	UserID         param.Opt[string] `json:"userId,omitzero"`
 	paramObj
 }
 

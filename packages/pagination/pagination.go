@@ -22,7 +22,7 @@ type paramObj = param.APIObject
 
 type PageNumberPagination struct {
 	Page       int64 `json:"page"`
-	PageSize   int64 `json:"pageSize"`
+	PageSize   int64 `json:"page_size"`
 	TotalPages int64 `json:"totalPages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
