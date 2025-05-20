@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestBucketListWithOptionalParams(t *testing.T) {
+func TestBucketList(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,7 +27,7 @@ func TestBucketListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.List(context.TODO(), raindrop.BucketListParams{
-		ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		ModuleID: "01jtgtrd37acrqf7k24dggg31s",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -38,7 +38,7 @@ func TestBucketListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestBucketDeleteWithOptionalParams(t *testing.T) {
+func TestBucketDelete(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -52,8 +52,8 @@ func TestBucketDeleteWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Delete(context.TODO(), raindrop.BucketDeleteParams{
-		Key:      raindrop.String("my-key"),
-		ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		Key:      "my-key",
+		ModuleID: "01jtgtrd37acrqf7k24dggg31s",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -64,7 +64,7 @@ func TestBucketDeleteWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestBucketGetWithOptionalParams(t *testing.T) {
+func TestBucketGet(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -78,8 +78,8 @@ func TestBucketGetWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Get(context.TODO(), raindrop.BucketGetParams{
-		Key:      raindrop.String("my-key"),
-		ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		Key:      "my-key",
+		ModuleID: "01jtgtrd37acrqf7k24dggg31s",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -90,7 +90,7 @@ func TestBucketGetWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestBucketPutWithOptionalParams(t *testing.T) {
+func TestBucketPut(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -105,9 +105,9 @@ func TestBucketPutWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Bucket.Put(context.TODO(), raindrop.BucketPutParams{
 		Content:     "U3RhaW5sZXNzIHJvY2tz",
-		ContentType: raindrop.String("application/pdf"),
-		Key:         raindrop.String("my-key"),
-		ModuleID:    raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		ContentType: "application/pdf",
+		Key:         "my-key",
+		ModuleID:    "01jtgtrd37acrqf7k24dggg31s",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
