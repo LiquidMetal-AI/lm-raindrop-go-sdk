@@ -27,9 +27,7 @@ func TestBucketListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.List(context.TODO(), raindrop.BucketListParams{
-		OrganizationID: "organizationId",
-		UserID:         "userId",
-		ModuleID:       raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -54,10 +52,8 @@ func TestBucketDeleteWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Delete(context.TODO(), raindrop.BucketDeleteParams{
-		OrganizationID: "organizationId",
-		UserID:         "userId",
-		Key:            raindrop.String("my-key"),
-		ModuleID:       raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		Key:      raindrop.String("my-key"),
+		ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -82,10 +78,8 @@ func TestBucketGetWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Get(context.TODO(), raindrop.BucketGetParams{
-		OrganizationID: "organizationId",
-		UserID:         "userId",
-		Key:            raindrop.String("my-key"),
-		ModuleID:       raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		Key:      raindrop.String("my-key"),
+		ModuleID: raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -110,12 +104,10 @@ func TestBucketPutWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Put(context.TODO(), raindrop.BucketPutParams{
-		Content:        "U3RhaW5sZXNzIHJvY2tz",
-		OrganizationID: "organizationId",
-		UserID:         "userId",
-		ContentType:    raindrop.String("application/pdf"),
-		Key:            raindrop.String("my-key"),
-		ModuleID:       raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
+		Content:     "U3RhaW5sZXNzIHJvY2tz",
+		ContentType: raindrop.String("application/pdf"),
+		Key:         raindrop.String("my-key"),
+		ModuleID:    raindrop.String("01jtgtrd37acrqf7k24dggg31s"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

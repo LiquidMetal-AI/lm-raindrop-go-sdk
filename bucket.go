@@ -223,10 +223,6 @@ func (r *BucketPutResponseBucket) UnmarshalJSON(data []byte) error {
 }
 
 type BucketListParams struct {
-	// Organization ID for access control
-	OrganizationID string `json:"organizationId,required"`
-	// User ID for access control
-	UserID string `json:"userId,required"`
 	// Module ID identifying the bucket
 	ModuleID param.Opt[string] `json:"moduleId,omitzero"`
 	paramObj
@@ -241,10 +237,6 @@ func (r *BucketListParams) UnmarshalJSON(data []byte) error {
 }
 
 type BucketDeleteParams struct {
-	// Organization ID for access control
-	OrganizationID string `json:"organizationId,required"`
-	// User ID for access control
-	UserID string `json:"userId,required"`
 	// Object key/path to delete
 	Key param.Opt[string] `json:"key,omitzero"`
 	// Module ID identifying the bucket
@@ -261,10 +253,6 @@ func (r *BucketDeleteParams) UnmarshalJSON(data []byte) error {
 }
 
 type BucketGetParams struct {
-	// Organization ID for access control
-	OrganizationID string `json:"organizationId,required"`
-	// User ID for access control
-	UserID string `json:"userId,required"`
 	// Object key/path to download
 	Key param.Opt[string] `json:"key,omitzero"`
 	// Module ID identifying the bucket
@@ -283,10 +271,6 @@ func (r *BucketGetParams) UnmarshalJSON(data []byte) error {
 type BucketPutParams struct {
 	// Binary content of the object
 	Content string `json:"content,required" format:"byte"`
-	// Organization ID for access control
-	OrganizationID string `json:"organizationId,required"`
-	// User ID for access control
-	UserID string `json:"userId,required"`
 	// MIME type of the object
 	ContentType param.Opt[string] `json:"contentType,omitzero"`
 	// Object key/path in the bucket
