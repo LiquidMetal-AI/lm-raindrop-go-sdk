@@ -21,13 +21,11 @@ type paramUnion = param.APIUnion
 type paramObj = param.APIObject
 
 type PageNumberPagination struct {
-	HasMore    bool  `json:"hasMore"`
 	Page       int64 `json:"page"`
 	PageSize   int64 `json:"pageSize"`
 	TotalPages int64 `json:"totalPages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		HasMore     respjson.Field
 		Page        respjson.Field
 		PageSize    respjson.Field
 		TotalPages  respjson.Field
