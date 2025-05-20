@@ -4,7 +4,6 @@ package raindrop_test
 
 import (
 	"context"
-	"errors"
 	"os"
 	"testing"
 
@@ -13,8 +12,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestChunkSearchFind(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
+func TestManualPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,24 +24,25 @@ func TestChunkSearchFind(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.ChunkSearch.Find(context.TODO(), raindrop.ChunkSearchFindParams{
-		BucketLocations: []raindrop.BucketLocatorUnionParam{{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					ApplicationName: raindrop.String("my-app"),
-					Name:            raindrop.String("my-bucket"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
-				},
-			},
-		}},
-		Input:     "Find documents about revenue in Q4 2023",
+	page, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
+		Page:      raindrop.Int(1),
+		PageSize:  raindrop.Int(15),
 		RequestID: "123e4567-e89b-12d3-a456-426614174000",
 	})
 	if err != nil {
-		var apierr *raindrop.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
 		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	for _, query := range page.Results {
+		t.Logf("%+v\n", query.ChunkSignature)
+	}
+	// Prism mock isn't going to give us real pagination
+	page, err = page.GetNextPage()
+	if err != nil {
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	if page != nil {
+		for _, query := range page.Results {
+			t.Logf("%+v\n", query.ChunkSignature)
+		}
 	}
 }

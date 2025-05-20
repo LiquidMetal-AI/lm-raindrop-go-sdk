@@ -38,10 +38,12 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -71,10 +73,12 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -115,10 +119,12 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -154,10 +160,12 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -192,10 +200,12 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.DocumentQuery.Ask(context.Background(), raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -224,10 +234,12 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.DocumentQuery.Ask(cancelCtx, raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(cancelCtx, raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -253,10 +265,12 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.DocumentQuery.Ask(cancelCtx, raindrop.DocumentQueryAskParams{
+	_, err := client.Query.DocumentQuery(cancelCtx, raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -288,10 +302,12 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.DocumentQuery.Ask(deadlineCtx, raindrop.DocumentQueryAskParams{
+		_, err := client.Query.DocumentQuery(deadlineCtx, raindrop.QueryDocumentQueryParams{
 			BucketLocation: raindrop.BucketLocatorUnionParam{
 				OfBucket: &raindrop.BucketLocatorBucketParam{
-					Bucket: raindrop.BucketLocatorBucketBucketParam{},
+					Bucket: raindrop.BucketLocatorBucketBucketParam{
+						Name: "my-bucket",
+					},
 				},
 			},
 			Input:     "What are the key points in this document?",

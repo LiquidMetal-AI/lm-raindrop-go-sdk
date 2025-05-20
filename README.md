@@ -2,7 +2,7 @@
 
 <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk"><img src="https://pkg.go.dev/badge/github.com/LiquidMetal-AI/lm-raindrop-go-sdk.svg" alt="Go Reference"></a>
 
-The Raindrop Go library provides convenient access to the Raindrop REST API
+The Raindrop Go library provides convenient access to the [Raindrop REST API](docs.liquidmetal.ai)
 from applications written in Go.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.4'
+go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.6'
 ```
 
 <!-- x-release-please-end -->
@@ -52,10 +52,12 @@ func main() {
 	client := raindrop.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
-	response, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
+	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -271,7 +273,7 @@ client := raindrop.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.DocumentQuery.Ask(context.TODO(), ...,
+client.Query.DocumentQuery(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -287,8 +289,41 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
+```go
+iter := client.Query.GetPaginatedSearchAutoPaging(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
+	Page:      raindrop.Int(1),
+	PageSize:  raindrop.Int(15),
+	RequestID: "123e4567-e89b-12d3-a456-426614174000",
+})
+// Automatically fetches more pages as needed.
+for iter.Next() {
+	queryGetPaginatedSearchResponse := iter.Current()
+	fmt.Printf("%+v\n", queryGetPaginatedSearchResponse)
+}
+if err := iter.Err(); err != nil {
+	panic(err.Error())
+}
+```
+
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
+
+```go
+page, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
+	Page:      raindrop.Int(1),
+	PageSize:  raindrop.Int(15),
+	RequestID: "123e4567-e89b-12d3-a456-426614174000",
+})
+for page != nil {
+	for _, query := range page.Results {
+		fmt.Printf("%+v\n", query)
+	}
+	page, err = page.GetNextPage()
+}
+if err != nil {
+	panic(err.Error())
+}
+```
 
 ### Errors
 
@@ -300,10 +335,12 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
+_, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
 	BucketLocation: raindrop.BucketLocatorUnionParam{
 		OfBucket: &raindrop.BucketLocatorBucketParam{
-			Bucket: raindrop.BucketLocatorBucketBucketParam{},
+			Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Name: "my-bucket",
+			},
 		},
 	},
 	Input:     "What are the key points in this document?",
@@ -334,12 +371,14 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.DocumentQuery.Ask(
+client.Query.DocumentQuery(
 	ctx,
-	raindrop.DocumentQueryAskParams{
+	raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -379,12 +418,14 @@ client := raindrop.NewClient(
 )
 
 // Override per-request:
-client.DocumentQuery.Ask(
+client.Query.DocumentQuery(
 	context.TODO(),
-	raindrop.DocumentQueryAskParams{
+	raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
@@ -403,12 +444,14 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-response, err := client.DocumentQuery.Ask(
+response, err := client.Query.DocumentQuery(
 	context.TODO(),
-	raindrop.DocumentQueryAskParams{
+	raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",

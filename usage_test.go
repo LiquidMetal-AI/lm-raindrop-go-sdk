@@ -24,10 +24,12 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	response, err := client.DocumentQuery.Ask(context.TODO(), raindrop.DocumentQueryAskParams{
+	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{},
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-bucket",
+				},
 			},
 		},
 		Input:     "What are the key points in this document?",
