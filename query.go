@@ -483,7 +483,7 @@ type QuerySearchResponsePagination struct {
 	PageSize int64 `json:"pageSize"`
 	// Total number of available results
 	Total int64 `json:"total"`
-	// Total available pages. Calculated as ceil(total/page_size)
+	// Total available pages. Calculated as ceil(total/pageSize)
 	TotalPages int64 `json:"totalPages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -615,9 +615,7 @@ type QueryChunkSearchParams struct {
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. Required for pagination and result
 	// tracking. We recommend using a UUID or ULID for this value
-	RequestID      string            `json:"requestId,required"`
-	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
-	UserID         param.Opt[string] `json:"userId,omitzero"`
+	RequestID string `json:"requestId,required"`
 	paramObj
 }
 
@@ -641,9 +639,7 @@ type QueryDocumentQueryParams struct {
 	ObjectID string `json:"objectId,required"`
 	// Client-provided conversation session identifier. Required for maintaining
 	// context in follow-up questions. We recommend using a UUID or ULID for this value
-	RequestID      string            `json:"requestId,required"`
-	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
-	UserID         param.Opt[string] `json:"userId,omitzero"`
+	RequestID string `json:"requestId,required"`
 	paramObj
 }
 
@@ -661,9 +657,7 @@ type QueryGetPaginatedSearchParams struct {
 	// Results per page
 	PageSize param.Opt[int64] `json:"pageSize,omitzero,required"`
 	// Original search session identifier from the initial search
-	RequestID      string            `json:"requestId,required"`
-	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
-	UserID         param.Opt[string] `json:"userId,omitzero"`
+	RequestID string `json:"requestId,required"`
 	paramObj
 }
 
@@ -685,9 +679,7 @@ type QuerySearchParams struct {
 	Input string `json:"input,required"`
 	// Client-provided search session identifier. Required for pagination and result
 	// tracking. We recommend using a UUID or ULID for this value
-	RequestID      string            `json:"requestId,required"`
-	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
-	UserID         param.Opt[string] `json:"userId,omitzero"`
+	RequestID string `json:"requestId,required"`
 	paramObj
 }
 
@@ -705,9 +697,7 @@ type QuerySumarizePageParams struct {
 	// Results per page. Affects summary granularity
 	PageSize int64 `json:"pageSize,required"`
 	// Original search session identifier from the initial search
-	RequestID      string            `json:"requestId,required"`
-	OrganizationID param.Opt[string] `json:"organizationId,omitzero"`
-	UserID         param.Opt[string] `json:"userId,omitzero"`
+	RequestID string `json:"requestId,required"`
 	paramObj
 }
 
