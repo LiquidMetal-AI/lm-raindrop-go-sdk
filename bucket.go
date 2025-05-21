@@ -74,7 +74,7 @@ func (r *BucketService) Put(ctx context.Context, body BucketPutParams, opts ...o
 }
 
 type BucketListResponse struct {
-	// List of objects in the bucket with their metadata
+	// List of objects in the bucket with their metadata.
 	Objects []BucketListResponseObject `json:"objects,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
