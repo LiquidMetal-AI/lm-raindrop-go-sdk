@@ -179,7 +179,7 @@ type BucketLocatorUnionParam struct {
 }
 
 func (u BucketLocatorUnionParam) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion[BucketLocatorUnionParam](u.OfBucket, u.OfModuleID)
+	return param.MarshalUnion(u, u.OfBucket, u.OfModuleID)
 }
 func (u *BucketLocatorUnionParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, u)
