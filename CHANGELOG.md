@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.7 (2025-06-05)
+
+Full Changelog: [v0.1.6...v0.1.7](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.6...v0.1.7)
+
+### Features
+
+* **api:** manual updates ([ae15e48](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/ae15e48aaf78051388559009c080585f8c32732d))
+* **client:** allow overriding unions ([43eebce](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/43eebce8b03f83e091a715a0c7cccde4a5ef3ca3))
+
+
+### Bug Fixes
+
+* fix error ([915e866](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/915e8666e23fe1623508e0dea66d24596a4fd9df))
+
+
+### Chores
+
+* **docs:** grammar improvements ([f610b95](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/f610b95acda7c6c560176258e75fb2675f5252d6))
+* improve devcontainer setup ([18cbb62](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/18cbb62905b316c1d397771314b7bd61d0087874))
+* make go mod tidy continue on error ([5f75128](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/5f751282a849afd86667ad41047fe1cad1106178))
+
 ## 0.1.6 (2025-05-20)
 
 Full Changelog: [v0.1.4...v0.1.6](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.4...v0.1.6)
