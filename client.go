@@ -18,6 +18,7 @@ type Client struct {
 	Options []option.RequestOption
 	Query   QueryService
 	Bucket  BucketService
+	Answer  AnswerService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -44,6 +45,7 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 
 	r.Query = NewQueryService(opts...)
 	r.Bucket = NewBucketService(opts...)
+	r.Answer = NewAnswerService(opts...)
 
 	return
 }

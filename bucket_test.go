@@ -27,7 +27,15 @@ func TestBucketList(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.List(context.TODO(), raindrop.BucketListParams{
-		ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-bucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+				},
+			},
+		},
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -52,8 +60,16 @@ func TestBucketDelete(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Delete(context.TODO(), raindrop.BucketDeleteParams{
-		Key:      "my-key",
-		ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-bucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+				},
+			},
+		},
+		Key: "my-key",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -78,8 +94,16 @@ func TestBucketGet(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Get(context.TODO(), raindrop.BucketGetParams{
-		Key:      "my-key",
-		ModuleID: "01jtgtrd37acrqf7k24dggg31s",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-bucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+				},
+			},
+		},
+		Key: "my-key",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -104,10 +128,18 @@ func TestBucketPut(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Put(context.TODO(), raindrop.BucketPutParams{
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-bucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+				},
+			},
+		},
 		Content:     "U3RhaW5sZXNzIHJvY2tz",
 		ContentType: "application/pdf",
 		Key:         "my-key",
-		ModuleID:    "01jtgtrd37acrqf7k24dggg31s",
 	})
 	if err != nil {
 		var apierr *raindrop.Error

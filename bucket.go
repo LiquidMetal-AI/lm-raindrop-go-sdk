@@ -223,8 +223,9 @@ func (r *BucketPutResponseBucket) UnmarshalJSON(data []byte) error {
 }
 
 type BucketListParams struct {
-	// Module ID identifying the bucket
-	ModuleID string `json:"moduleId,required"`
+	// The buckets to search. If provided, the search will only return results from
+	// these buckets
+	BucketLocation BucketLocatorUnionParam `json:"bucketLocation,omitzero,required"`
 	paramObj
 }
 
@@ -237,10 +238,11 @@ func (r *BucketListParams) UnmarshalJSON(data []byte) error {
 }
 
 type BucketDeleteParams struct {
+	// The buckets to search. If provided, the search will only return results from
+	// these buckets
+	BucketLocation BucketLocatorUnionParam `json:"bucketLocation,omitzero,required"`
 	// Object key/path to delete
 	Key string `json:"key,required"`
-	// Module ID identifying the bucket
-	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
@@ -253,10 +255,11 @@ func (r *BucketDeleteParams) UnmarshalJSON(data []byte) error {
 }
 
 type BucketGetParams struct {
+	// The buckets to search. If provided, the search will only return results from
+	// these buckets
+	BucketLocation BucketLocatorUnionParam `json:"bucketLocation,omitzero,required"`
 	// Object key/path to download
 	Key string `json:"key,required"`
-	// Module ID identifying the bucket
-	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
@@ -269,14 +272,15 @@ func (r *BucketGetParams) UnmarshalJSON(data []byte) error {
 }
 
 type BucketPutParams struct {
+	// The buckets to search. If provided, the search will only return results from
+	// these buckets
+	BucketLocation BucketLocatorUnionParam `json:"bucketLocation,omitzero,required"`
 	// Binary content of the object
 	Content string `json:"content,required" format:"byte"`
 	// MIME type of the object
 	ContentType string `json:"contentType,required"`
 	// Object key/path in the bucket
 	Key string `json:"key,required"`
-	// Module ID identifying the bucket
-	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
