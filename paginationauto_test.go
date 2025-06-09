@@ -27,7 +27,7 @@ func TestAutoPagination(t *testing.T) {
 	iter := client.Query.GetPaginatedSearchAutoPaging(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
 		Page:      raindrop.Int(1),
 		PageSize:  raindrop.Int(15),
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	// Prism mock isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
