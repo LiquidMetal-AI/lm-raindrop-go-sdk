@@ -56,13 +56,13 @@ func main() {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-bucket",
+					Name: "my-smartbucket",
 				},
 			},
 		},
 		Input:     "What are the key points in this document?",
 		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		panic(err.Error())
@@ -293,7 +293,7 @@ You can use `.ListAutoPaging()` methods to iterate through items across all page
 iter := client.Query.GetPaginatedSearchAutoPaging(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
 	Page:      raindrop.Int(1),
 	PageSize:  raindrop.Int(15),
-	RequestID: "123e4567-e89b-12d3-a456-426614174000",
+	RequestID: "<YOUR-REQUEST-ID>",
 })
 // Automatically fetches more pages as needed.
 for iter.Next() {
@@ -312,7 +312,7 @@ with additional helper methods like `.GetNextPage()`, e.g.:
 page, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
 	Page:      raindrop.Int(1),
 	PageSize:  raindrop.Int(15),
-	RequestID: "123e4567-e89b-12d3-a456-426614174000",
+	RequestID: "<YOUR-REQUEST-ID>",
 })
 for page != nil {
 	for _, query := range page.Results {
@@ -339,13 +339,13 @@ _, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQuery
 	BucketLocation: raindrop.BucketLocatorUnionParam{
 		OfBucket: &raindrop.BucketLocatorBucketParam{
 			Bucket: raindrop.BucketLocatorBucketBucketParam{
-				Name: "my-bucket",
+				Name: "my-smartbucket",
 			},
 		},
 	},
 	Input:     "What are the key points in this document?",
 	ObjectID:  "document.pdf",
-	RequestID: "123e4567-e89b-12d3-a456-426614174000",
+	RequestID: "<YOUR-REQUEST-ID>",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -377,13 +377,13 @@ client.Query.DocumentQuery(
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-bucket",
+					Name: "my-smartbucket",
 				},
 			},
 		},
 		Input:     "What are the key points in this document?",
 		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -424,13 +424,13 @@ client.Query.DocumentQuery(
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-bucket",
+					Name: "my-smartbucket",
 				},
 			},
 		},
 		Input:     "What are the key points in this document?",
 		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	option.WithMaxRetries(5),
 )
@@ -450,13 +450,13 @@ response, err := client.Query.DocumentQuery(
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-bucket",
+					Name: "my-smartbucket",
 				},
 			},
 		},
 		Input:     "What are the key points in this document?",
 		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	option.WithResponseInto(&response),
 )
