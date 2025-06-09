@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.8 (2025-06-09)
+
+Full Changelog: [v0.1.7...v0.1.8](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.7...v0.1.8)
+
+### Features
+
+* **api:** updating API spec with latest changes ([cc66a28](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/cc66a28b76ebe8da54086b5306ffbfe78a87e85c))
+* **api:** updating API spec with latest changes ([66af9f2](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/66af9f272c2dc0fe1be207c9a01865f6407c3293))
+
 ## 0.1.7 (2025-06-05)
 
 Full Changelog: [v0.1.6...v0.1.7](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.6...v0.1.7)
