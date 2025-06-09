@@ -30,14 +30,14 @@ func TestQueryChunkSearch(t *testing.T) {
 		BucketLocations: []raindrop.BucketLocatorUnionParam{{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-bucket",
+					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
 				},
 			},
 		}},
 		Input:     "Find documents about revenue in Q4 2023",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -65,15 +65,15 @@ func TestQueryDocumentQuery(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-bucket",
+					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
 				},
 			},
 		},
 		Input:     "What are the key points in this document?",
 		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -98,9 +98,9 @@ func TestQueryGetPaginatedSearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
-		Page:      raindrop.Int(2),
+		Page:      raindrop.Int(1),
 		PageSize:  raindrop.Int(10),
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -128,14 +128,14 @@ func TestQuerySearch(t *testing.T) {
 		BucketLocations: []raindrop.BucketLocatorUnionParam{{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-bucket",
+					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtgtraw3b5qbahrhvrj3ygbb"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
 				},
 			},
 		}},
-		Input:     "Show me documents containing credit card numbers or social security numbers",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		Input:     "All my files",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -162,7 +162,7 @@ func TestQuerySumarizePage(t *testing.T) {
 	_, err := client.Query.SumarizePage(context.TODO(), raindrop.QuerySumarizePageParams{
 		Page:      1,
 		PageSize:  10,
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error

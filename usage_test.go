@@ -28,13 +28,13 @@ func TestUsage(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-bucket",
+					Name: "my-smartbucket",
 				},
 			},
 		},
 		Input:     "What are the key points in this document?",
 		ObjectID:  "document.pdf",
-		RequestID: "123e4567-e89b-12d3-a456-426614174000",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())

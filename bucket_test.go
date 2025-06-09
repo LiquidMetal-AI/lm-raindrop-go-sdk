@@ -30,9 +30,9 @@ func TestBucketList(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-bucket",
+					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
 				},
 			},
 		},
@@ -63,9 +63,9 @@ func TestBucketDelete(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-bucket",
+					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
 				},
 			},
 		},
@@ -97,9 +97,9 @@ func TestBucketGet(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-bucket",
+					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
 				},
 			},
 		},
@@ -131,9 +131,9 @@ func TestBucketPut(t *testing.T) {
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
 				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-bucket",
+					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
 				},
 			},
 		},

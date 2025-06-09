@@ -475,21 +475,21 @@ func (r *QuerySearchResponse) UnmarshalJSON(data []byte) error {
 
 // Pagination details for result navigation
 type QuerySearchResponsePagination struct {
+	// Current page number (1-based)
+	Page int64 `json:"page,required"`
+	// Results per page. May be adjusted for performance
+	PageSize int64 `json:"pageSize,required"`
 	// Indicates more results available. Used for infinite scroll implementation
 	HasMore bool `json:"hasMore"`
-	// Current page number (1-based)
-	Page int64 `json:"page"`
-	// Results per page. May be adjusted for performance
-	PageSize int64 `json:"pageSize"`
 	// Total number of available results
 	Total int64 `json:"total"`
 	// Total available pages. Calculated as ceil(total/pageSize)
 	TotalPages int64 `json:"totalPages"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		HasMore     respjson.Field
 		Page        respjson.Field
 		PageSize    respjson.Field
+		HasMore     respjson.Field
 		Total       respjson.Field
 		TotalPages  respjson.Field
 		ExtraFields map[string]respjson.Field
