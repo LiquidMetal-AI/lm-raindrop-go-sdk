@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.7'
+go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.8'
 ```
 
 <!-- x-release-please-end -->
