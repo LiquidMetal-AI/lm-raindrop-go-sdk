@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.0 (2025-06-21)
+
+Full Changelog: [v0.1.8...v0.2.0](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.8...v0.2.0)
+
+### Features
+
+* **client:** add debug log helper ([70dfd2e](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/70dfd2ed2e3fd47a14133d49100c54aaf5f69871))
+* **client:** add escape hatch for null slice & maps ([48cc026](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/48cc026ad06e3bbea293020b8c774bd91b02f43e))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([967f570](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/967f5706240c859b7b93eb82e2da43cc8e7c52dc))
+* fix documentation of null map ([4670882](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/46708827459ae9adb2448582b2aaec4e821b255e))
+
 ## 0.1.8 (2025-06-09)
 
 Full Changelog: [v0.1.7...v0.1.8](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.7...v0.1.8)
