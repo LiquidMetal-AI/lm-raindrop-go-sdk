@@ -30,9 +30,9 @@ func TestDeleteMemoryNew(t *testing.T) {
 		AgentMemoryLocation: raindrop.DeleteMemoryNewParamsAgentMemoryLocationUnion{
 			OfAgentMemory: &raindrop.DeleteMemoryNewParamsAgentMemoryLocationAgentMemory{
 				AgentMemory: raindrop.DeleteMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory{
-					Name:            "my-agent-memory",
+					Name:            "memory-name",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+					Version:         raindrop.String("1234"),
 				},
 			},
 		},
