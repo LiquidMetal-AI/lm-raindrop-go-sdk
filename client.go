@@ -18,7 +18,6 @@ type Client struct {
 	Options          []option.RequestOption
 	Query            QueryService
 	Bucket           BucketService
-	Answer           AnswerService
 	PutMemory        PutMemoryService
 	GetMemory        GetMemoryService
 	DeleteMemory     DeleteMemoryService
@@ -52,7 +51,6 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 
 	r.Query = NewQueryService(opts...)
 	r.Bucket = NewBucketService(opts...)
-	r.Answer = NewAnswerService(opts...)
 	r.PutMemory = NewPutMemoryService(opts...)
 	r.GetMemory = NewGetMemoryService(opts...)
 	r.DeleteMemory = NewDeleteMemoryService(opts...)
