@@ -30,9 +30,9 @@ func TestEndSessionNewWithOptionalParams(t *testing.T) {
 		AgentMemoryLocation: raindrop.EndSessionNewParamsAgentMemoryLocationUnion{
 			OfAgentMemory: &raindrop.EndSessionNewParamsAgentMemoryLocationAgentMemory{
 				AgentMemory: raindrop.EndSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory{
-					Name:            "my-agent-memory",
+					Name:            "memory-name",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+					Version:         raindrop.String("1234"),
 				},
 			},
 		},

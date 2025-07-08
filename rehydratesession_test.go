@@ -30,9 +30,9 @@ func TestRehydrateSessionRehydrateWithOptionalParams(t *testing.T) {
 		AgentMemoryLocation: raindrop.RehydrateSessionRehydrateParamsAgentMemoryLocationUnion{
 			OfAgentMemory: &raindrop.RehydrateSessionRehydrateParamsAgentMemoryLocationAgentMemory{
 				AgentMemory: raindrop.RehydrateSessionRehydrateParamsAgentMemoryLocationAgentMemoryAgentMemory{
-					Name:            "my-agent-memory",
+					Name:            "memory-name",
 					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jtryx2f2f61ryk06vd8mr91p"),
+					Version:         raindrop.String("1234"),
 				},
 			},
 		},

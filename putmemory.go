@@ -117,7 +117,8 @@ func (u *PutMemoryNewParamsAgentMemoryLocationUnion) asAny() any {
 
 // The property AgentMemory is required.
 type PutMemoryNewParamsAgentMemoryLocationAgentMemory struct {
-	// **EXAMPLE** { name: 'my-agent-memory' } **REQUIRED** FALSE
+	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+	// **REQUIRED** FALSE
 	AgentMemory PutMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory `json:"agentMemory,omitzero,required"`
 	paramObj
 }
@@ -130,7 +131,8 @@ func (r *PutMemoryNewParamsAgentMemoryLocationAgentMemory) UnmarshalJSON(data []
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// **EXAMPLE** { name: 'my-agent-memory' } **REQUIRED** FALSE
+// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// **REQUIRED** FALSE
 //
 // The property Name is required.
 type PutMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory struct {
