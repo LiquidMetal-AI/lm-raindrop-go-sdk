@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.9 (2025-07-08)
+
+Full Changelog: [v0.1.8...v0.1.9](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.8...v0.1.9)
+
+### Features
+
+* **api:** manual updates ([1b22fa1](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/1b22fa171373325f9a92e7e2ecb04eff1d845edd))
+* **api:** updating API spec with latest changes ([1f966b3](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/1f966b3d1dc866416f0fa2b13b1c4d0427e7c2c8))
+* **api:** updating API spec with latest changes ([01760fe](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/01760fef3793dc17c6263a0a41ffa79f354aca88))
+* **api:** updating API spec with latest changes ([f782162](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/f7821621b73c9a210dade7abd33380fb90b1dbd3))
+* **client:** add debug log helper ([70dfd2e](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/70dfd2ed2e3fd47a14133d49100c54aaf5f69871))
+* **client:** add escape hatch for null slice & maps ([48cc026](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/48cc026ad06e3bbea293020b8c774bd91b02f43e))
+
+
+### Bug Fixes
+
+* don't try to deserialize as json when ResponseBodyInto is []byte ([892f164](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/892f16416b0cef881e6721c3eb5316e8967b7be7))
+* **pagination:** check if page data is empty in GetNextPage ([968cbf2](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/968cbf2c08e3e56e7c9086ca9fb6c8aebccdd1f9))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([967f570](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/967f5706240c859b7b93eb82e2da43cc8e7c52dc))
+* **ci:** only run for pushes and fork pull requests ([81d2737](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/81d273737e9019025874ca9a43350742d9c3979f))
+* fix documentation of null map ([4670882](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/46708827459ae9adb2448582b2aaec4e821b255e))
+* lint tests ([0e86734](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/0e86734342e0c77480253aadfa623275a21d9d51))
+
 ## 0.1.8 (2025-06-09)
 
 Full Changelog: [v0.1.7...v0.1.8](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.7...v0.1.8)
