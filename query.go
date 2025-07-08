@@ -22,6 +22,7 @@ import (
 // the [NewQueryService] method instead.
 type QueryService struct {
 	Options []option.RequestOption
+	Memory  QueryMemoryService
 }
 
 // NewQueryService generates a new service that applies the given options to each
@@ -30,6 +31,7 @@ type QueryService struct {
 func NewQueryService(opts ...option.RequestOption) (r QueryService) {
 	r = QueryService{}
 	r.Options = opts
+	r.Memory = NewQueryMemoryService(opts...)
 	return
 }
 
