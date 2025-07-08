@@ -198,7 +198,6 @@ func (r *QueryMemorySearchParamsAgentMemoryLocationAgentMemoryAgentMemory) Unmar
 
 // The property ModuleID is required.
 type QueryMemorySearchParamsAgentMemoryLocationModuleID struct {
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p" **REQUIRED** FALSE
 	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
