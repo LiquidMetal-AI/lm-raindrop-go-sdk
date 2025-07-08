@@ -152,7 +152,6 @@ func (r *SummarizeMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory) Unma
 
 // The property ModuleID is required.
 type SummarizeMemoryNewParamsAgentMemoryLocationModuleID struct {
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p" **REQUIRED** FALSE
 	ModuleID string `json:"moduleId,required"`
 	paramObj
 }

@@ -154,7 +154,6 @@ func (r *PutMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory) UnmarshalJ
 
 // The property ModuleID is required.
 type PutMemoryNewParamsAgentMemoryLocationModuleID struct {
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p" **REQUIRED** FALSE
 	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
