@@ -64,6 +64,9 @@ func (r *PageNumber[T]) UnmarshalJSON(data []byte) error {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *PageNumber[T]) GetNextPage() (res *PageNumber[T], err error) {
+	if len(r.Results) == 0 {
+		return nil, nil
+	}
 	u := r.cfg.Request.URL
 	currentPage, err := strconv.ParseInt(u.Query().Get("page"), 10, 64)
 	if err != nil {
