@@ -27,20 +27,16 @@ func TestPutMemoryNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PutMemory.New(context.TODO(), raindrop.PutMemoryNewParams{
-		AgentMemoryLocation: raindrop.PutMemoryNewParamsAgentMemoryLocationUnion{
-			OfAgentMemory: &raindrop.PutMemoryNewParamsAgentMemoryLocationAgentMemory{
-				AgentMemory: raindrop.PutMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory{
-					Name:            "memory-name",
-					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("1234"),
-				},
-			},
-		},
 		Content:   "User prefers dark theme for the interface",
 		SessionID: "01jxanr45haeswhay4n0q8340y",
-		Agent:     raindrop.String("assistant-v1"),
-		Key:       raindrop.String("user-preference-theme"),
-		Timeline:  raindrop.String("user-conversation-2024"),
+		SmartMemoryLocation: raindrop.PutMemoryNewParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.PutMemoryNewParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		Agent:    raindrop.String("assistant-v1"),
+		Key:      raindrop.String("user-preference-theme"),
+		Timeline: raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

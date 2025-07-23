@@ -21,8 +21,11 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewQueryService] method instead.
 type QueryService struct {
-	Options []option.RequestOption
-	Memory  QueryMemoryService
+	Options        []option.RequestOption
+	Memory         QueryMemoryService
+	EpisodicMemory QueryEpisodicMemoryService
+	Procedures     QueryProcedureService
+	SemanticMemory QuerySemanticMemoryService
 }
 
 // NewQueryService generates a new service that applies the given options to each
@@ -32,6 +35,9 @@ func NewQueryService(opts ...option.RequestOption) (r QueryService) {
 	r = QueryService{}
 	r.Options = opts
 	r.Memory = NewQueryMemoryService(opts...)
+	r.EpisodicMemory = NewQueryEpisodicMemoryService(opts...)
+	r.Procedures = NewQueryProcedureService(opts...)
+	r.SemanticMemory = NewQuerySemanticMemoryService(opts...)
 	return
 }
 

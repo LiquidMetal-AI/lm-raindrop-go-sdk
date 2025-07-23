@@ -27,16 +27,12 @@ func TestEndSessionNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EndSession.New(context.TODO(), raindrop.EndSessionNewParams{
-		AgentMemoryLocation: raindrop.EndSessionNewParamsAgentMemoryLocationUnion{
-			OfAgentMemory: &raindrop.EndSessionNewParamsAgentMemoryLocationAgentMemory{
-				AgentMemory: raindrop.EndSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory{
-					Name:            "memory-name",
-					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("1234"),
-				},
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.EndSessionNewParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.EndSessionNewParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
 			},
 		},
-		SessionID:    "01jxanr45haeswhay4n0q8340y",
 		Flush:        raindrop.Bool(true),
 		SystemPrompt: raindrop.String("Summarize the key decisions and action items from this session"),
 	})

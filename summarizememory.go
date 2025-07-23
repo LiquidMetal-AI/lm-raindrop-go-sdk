@@ -69,12 +69,12 @@ func (r *SummarizeMemoryNewResponse) UnmarshalJSON(data []byte) error {
 }
 
 type SummarizeMemoryNewParams struct {
-	// Agent memory locator for targeting the correct agent memory instance
-	AgentMemoryLocation SummarizeMemoryNewParamsAgentMemoryLocationUnion `json:"agentMemoryLocation,omitzero,required"`
 	// List of memory IDs to summarize
 	MemoryIDs []string `json:"memoryIds,omitzero,required"`
 	// Unique session identifier for the working memory instance
 	SessionID string `json:"sessionId,required"`
+	// Smart memory locator for targeting the correct smart memory instance
+	SmartMemoryLocation SummarizeMemoryNewParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
 	// Optional custom system prompt for summarization
 	SystemPrompt param.Opt[string] `json:"systemPrompt,omitzero"`
 	paramObj
@@ -91,41 +91,55 @@ func (r *SummarizeMemoryNewParams) UnmarshalJSON(data []byte) error {
 // Only one field can be non-zero.
 //
 // Use [param.IsOmitted] to confirm if a field is set.
-type SummarizeMemoryNewParamsAgentMemoryLocationUnion struct {
-	OfAgentMemory *SummarizeMemoryNewParamsAgentMemoryLocationAgentMemory `json:",omitzero,inline"`
-	OfModuleID    *SummarizeMemoryNewParamsAgentMemoryLocationModuleID    `json:",omitzero,inline"`
+type SummarizeMemoryNewParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *SummarizeMemoryNewParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
 	paramUnion
 }
 
-func (u SummarizeMemoryNewParamsAgentMemoryLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfAgentMemory, u.OfModuleID)
+func (u SummarizeMemoryNewParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
 }
-func (u *SummarizeMemoryNewParamsAgentMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+func (u *SummarizeMemoryNewParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, u)
 }
 
-func (u *SummarizeMemoryNewParamsAgentMemoryLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfAgentMemory) {
-		return u.OfAgentMemory
-	} else if !param.IsOmitted(u.OfModuleID) {
+func (u *SummarizeMemoryNewParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
 		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
 	}
 	return nil
 }
 
-// The property AgentMemory is required.
-type SummarizeMemoryNewParamsAgentMemoryLocationAgentMemory struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** FALSE
-	AgentMemory SummarizeMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory `json:"agentMemory,omitzero,required"`
+// The property ModuleID is required.
+type SummarizeMemoryNewParamsSmartMemoryLocationModuleID struct {
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
-func (r SummarizeMemoryNewParamsAgentMemoryLocationAgentMemory) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizeMemoryNewParamsAgentMemoryLocationAgentMemory
+func (r SummarizeMemoryNewParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizeMemoryNewParamsSmartMemoryLocationModuleID
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SummarizeMemoryNewParamsAgentMemoryLocationAgentMemory) UnmarshalJSON(data []byte) error {
+func (r *SummarizeMemoryNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property SmartMemory is required.
+type SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory struct {
+	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+	// **REQUIRED** FALSE
+	SmartMemory SummarizeMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smartMemory,omitzero,required"`
+	paramObj
+}
+
+func (r SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -133,35 +147,21 @@ func (r *SummarizeMemoryNewParamsAgentMemoryLocationAgentMemory) UnmarshalJSON(d
 // **REQUIRED** FALSE
 //
 // The property Name is required.
-type SummarizeMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory struct {
-	// The name of the agent memory **EXAMPLE** "my-agent-memory" **REQUIRED** TRUE
+type SummarizeMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory struct {
+	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
 	Name string `json:"name,required"`
 	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
 	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the agent memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
 	// **REQUIRED** FALSE
 	Version param.Opt[string] `json:"version,omitzero"`
 	paramObj
 }
 
-func (r SummarizeMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizeMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory
+func (r SummarizeMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizeMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SummarizeMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property ModuleID is required.
-type SummarizeMemoryNewParamsAgentMemoryLocationModuleID struct {
-	ModuleID string `json:"moduleId,required"`
-	paramObj
-}
-
-func (r SummarizeMemoryNewParamsAgentMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizeMemoryNewParamsAgentMemoryLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *SummarizeMemoryNewParamsAgentMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+func (r *SummarizeMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
