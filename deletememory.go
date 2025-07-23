@@ -59,12 +59,12 @@ func (r *DeleteMemoryNewResponse) UnmarshalJSON(data []byte) error {
 }
 
 type DeleteMemoryNewParams struct {
-	// Agent memory locator for targeting the correct agent memory instance
-	AgentMemoryLocation DeleteMemoryNewParamsAgentMemoryLocationUnion `json:"agentMemoryLocation,omitzero,required"`
 	// Unique identifier of the memory entry to delete
 	MemoryID string `json:"memoryId,required"`
 	// Unique session identifier for the working memory instance
 	SessionID string `json:"sessionId,required"`
+	// Smart memory locator for targeting the correct smart memory instance
+	SmartMemoryLocation DeleteMemoryNewParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
 	paramObj
 }
 
@@ -79,41 +79,55 @@ func (r *DeleteMemoryNewParams) UnmarshalJSON(data []byte) error {
 // Only one field can be non-zero.
 //
 // Use [param.IsOmitted] to confirm if a field is set.
-type DeleteMemoryNewParamsAgentMemoryLocationUnion struct {
-	OfAgentMemory *DeleteMemoryNewParamsAgentMemoryLocationAgentMemory `json:",omitzero,inline"`
-	OfModuleID    *DeleteMemoryNewParamsAgentMemoryLocationModuleID    `json:",omitzero,inline"`
+type DeleteMemoryNewParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *DeleteMemoryNewParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *DeleteMemoryNewParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
 	paramUnion
 }
 
-func (u DeleteMemoryNewParamsAgentMemoryLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfAgentMemory, u.OfModuleID)
+func (u DeleteMemoryNewParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
 }
-func (u *DeleteMemoryNewParamsAgentMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+func (u *DeleteMemoryNewParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, u)
 }
 
-func (u *DeleteMemoryNewParamsAgentMemoryLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfAgentMemory) {
-		return u.OfAgentMemory
-	} else if !param.IsOmitted(u.OfModuleID) {
+func (u *DeleteMemoryNewParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
 		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
 	}
 	return nil
 }
 
-// The property AgentMemory is required.
-type DeleteMemoryNewParamsAgentMemoryLocationAgentMemory struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** FALSE
-	AgentMemory DeleteMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory `json:"agentMemory,omitzero,required"`
+// The property ModuleID is required.
+type DeleteMemoryNewParamsSmartMemoryLocationModuleID struct {
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
-func (r DeleteMemoryNewParamsAgentMemoryLocationAgentMemory) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteMemoryNewParamsAgentMemoryLocationAgentMemory
+func (r DeleteMemoryNewParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteMemoryNewParamsSmartMemoryLocationModuleID
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DeleteMemoryNewParamsAgentMemoryLocationAgentMemory) UnmarshalJSON(data []byte) error {
+func (r *DeleteMemoryNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property SmartMemory is required.
+type DeleteMemoryNewParamsSmartMemoryLocationSmartMemory struct {
+	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+	// **REQUIRED** FALSE
+	SmartMemory DeleteMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smartMemory,omitzero,required"`
+	paramObj
+}
+
+func (r DeleteMemoryNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteMemoryNewParamsSmartMemoryLocationSmartMemory
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DeleteMemoryNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -121,35 +135,21 @@ func (r *DeleteMemoryNewParamsAgentMemoryLocationAgentMemory) UnmarshalJSON(data
 // **REQUIRED** FALSE
 //
 // The property Name is required.
-type DeleteMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory struct {
-	// The name of the agent memory **EXAMPLE** "my-agent-memory" **REQUIRED** TRUE
+type DeleteMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory struct {
+	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
 	Name string `json:"name,required"`
 	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
 	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the agent memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
 	// **REQUIRED** FALSE
 	Version param.Opt[string] `json:"version,omitzero"`
 	paramObj
 }
 
-func (r DeleteMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory
+func (r DeleteMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DeleteMemoryNewParamsAgentMemoryLocationAgentMemoryAgentMemory) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property ModuleID is required.
-type DeleteMemoryNewParamsAgentMemoryLocationModuleID struct {
-	ModuleID string `json:"moduleId,required"`
-	paramObj
-}
-
-func (r DeleteMemoryNewParamsAgentMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteMemoryNewParamsAgentMemoryLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *DeleteMemoryNewParamsAgentMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+func (r *DeleteMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

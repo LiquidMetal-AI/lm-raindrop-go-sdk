@@ -14,7 +14,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestGetMemoryGetWithOptionalParams(t *testing.T) {
+func TestQueryEpisodicMemorySearchWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,18 +27,16 @@ func TestGetMemoryGetWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.GetMemory.Get(context.TODO(), raindrop.GetMemoryGetParams{
-		SessionID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.GetMemoryGetParamsSmartMemoryLocationModuleID{
+	_, err := client.Query.EpisodicMemory.Search(context.TODO(), raindrop.QueryEpisodicMemorySearchParams{
+		SmartMemoryLocation: raindrop.QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.QueryEpisodicMemorySearchParamsSmartMemoryLocationModuleID{
 				ModuleID: "moduleId",
 			},
 		},
+		Terms:       "sessions about user interface preferences",
 		EndTime:     raindrop.Time(time.Now()),
-		Key:         raindrop.String("user-preference-theme"),
 		NMostRecent: raindrop.Int(10),
 		StartTime:   raindrop.Time(time.Now()),
-		Timeline:    raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

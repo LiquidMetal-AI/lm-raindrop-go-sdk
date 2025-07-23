@@ -7,14 +7,13 @@ import (
 	"errors"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestGetMemoryGetWithOptionalParams(t *testing.T) {
+func TestQueryProcedureSearchWithOptionalParams(t *testing.T) {
 	t.Skip("skipped: tests are disabled for the time being")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,18 +26,17 @@ func TestGetMemoryGetWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.GetMemory.Get(context.TODO(), raindrop.GetMemoryGetParams{
-		SessionID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.GetMemoryGetParamsSmartMemoryLocationModuleID{
+	_, err := client.Query.Procedures.Search(context.TODO(), raindrop.QueryProcedureSearchParams{
+		SmartMemoryLocation: raindrop.QueryProcedureSearchParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.QueryProcedureSearchParamsSmartMemoryLocationModuleID{
 				ModuleID: "moduleId",
 			},
 		},
-		EndTime:     raindrop.Time(time.Now()),
-		Key:         raindrop.String("user-preference-theme"),
-		NMostRecent: raindrop.Int(10),
-		StartTime:   raindrop.Time(time.Now()),
-		Timeline:    raindrop.String("user-conversation-2024"),
+		Terms:              "system prompt",
+		NMostRecent:        raindrop.Int(10),
+		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
+		SearchKeys:         raindrop.Bool(true),
+		SearchValues:       raindrop.Bool(true),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
