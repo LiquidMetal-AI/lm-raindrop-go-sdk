@@ -28,17 +28,13 @@ func TestGetMemoryGetWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.GetMemory.Get(context.TODO(), raindrop.GetMemoryGetParams{
-		SessionID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.GetMemoryGetParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
-		EndTime:     raindrop.Time(time.Now()),
-		Key:         raindrop.String("user-preference-theme"),
-		NMostRecent: raindrop.Int(10),
-		StartTime:   raindrop.Time(time.Now()),
-		Timeline:    raindrop.String("user-conversation-2024"),
+		SessionID:           "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocation{SmartMemory: raindrop.GetMemoryGetParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		EndTime:             raindrop.Time(time.Now()),
+		Key:                 raindrop.String("user-preference-theme"),
+		NMostRecent:         raindrop.Int(10),
+		StartTime:           raindrop.Time(time.Now()),
+		Timeline:            raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

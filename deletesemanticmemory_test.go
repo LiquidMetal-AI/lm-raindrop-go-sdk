@@ -27,12 +27,8 @@ func TestDeleteSemanticMemoryDelete(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeleteSemanticMemory.Delete(context.TODO(), raindrop.DeleteSemanticMemoryDeleteParams{
-		ObjectID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
+		ObjectID:            "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocation{SmartMemory: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

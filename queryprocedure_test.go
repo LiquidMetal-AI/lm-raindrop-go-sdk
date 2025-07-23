@@ -27,16 +27,12 @@ func TestQueryProcedureSearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Procedures.Search(context.TODO(), raindrop.QueryProcedureSearchParams{
-		SmartMemoryLocation: raindrop.QueryProcedureSearchParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.QueryProcedureSearchParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
-		Terms:              "system prompt",
-		NMostRecent:        raindrop.Int(10),
-		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
-		SearchKeys:         raindrop.Bool(true),
-		SearchValues:       raindrop.Bool(true),
+		SmartMemoryLocation: raindrop.QueryProcedureSearchParamsSmartMemoryLocation{SmartMemory: raindrop.QueryProcedureSearchParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		Terms:               "system prompt",
+		NMostRecent:         raindrop.Int(10),
+		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
+		SearchKeys:          raindrop.Bool(true),
+		SearchValues:        raindrop.Bool(true),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

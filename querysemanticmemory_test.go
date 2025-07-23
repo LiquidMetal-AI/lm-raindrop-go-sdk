@@ -27,12 +27,8 @@ func TestQuerySemanticMemorySearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.SemanticMemory.Search(context.TODO(), raindrop.QuerySemanticMemorySearchParams{
-		Needle: "AI development best practices",
-		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
+		Needle:              "AI development best practices",
+		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocation{SmartMemory: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

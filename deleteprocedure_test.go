@@ -27,13 +27,9 @@ func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeleteProcedure.New(context.TODO(), raindrop.DeleteProcedureNewParams{
-		Key: "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.DeleteProcedureNewParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.DeleteProcedureNewParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
-		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
+		Key:                 "TechnicalReportSystemPrompt",
+		SmartMemoryLocation: raindrop.DeleteProcedureNewParamsSmartMemoryLocation{SmartMemory: raindrop.DeleteProcedureNewParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
