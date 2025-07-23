@@ -27,12 +27,8 @@ func TestListProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ListProcedures.New(context.TODO(), raindrop.ListProcedureNewParams{
-		SmartMemoryLocation: raindrop.ListProcedureNewParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.ListProcedureNewParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
-		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
+		SmartMemoryLocation: raindrop.ListProcedureNewParamsSmartMemoryLocation{SmartMemory: raindrop.ListProcedureNewParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -27,12 +27,8 @@ func TestGetSemanticMemoryNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.GetSemanticMemory.New(context.TODO(), raindrop.GetSemanticMemoryNewParams{
-		ObjectID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.GetSemanticMemoryNewParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.GetSemanticMemoryNewParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
+		ObjectID:            "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.GetSemanticMemoryNewParamsSmartMemoryLocation{SmartMemory: raindrop.GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

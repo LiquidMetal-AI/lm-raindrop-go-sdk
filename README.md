@@ -53,16 +53,10 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-smartbucket",
-				},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		Input:          "What are the key points in this document?",
+		ObjectID:       "document.pdf",
+		RequestID:      "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		panic(err.Error())
@@ -338,16 +332,10 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-	BucketLocation: raindrop.BucketLocatorUnionParam{
-		OfBucket: &raindrop.BucketLocatorBucketParam{
-			Bucket: raindrop.BucketLocatorBucketBucketParam{
-				Name: "my-smartbucket",
-			},
-		},
-	},
-	Input:     "What are the key points in this document?",
-	ObjectID:  "document.pdf",
-	RequestID: "<YOUR-REQUEST-ID>",
+	BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+	Input:          "What are the key points in this document?",
+	ObjectID:       "document.pdf",
+	RequestID:      "<YOUR-REQUEST-ID>",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -376,16 +364,10 @@ defer cancel()
 client.Query.DocumentQuery(
 	ctx,
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-smartbucket",
-				},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		Input:          "What are the key points in this document?",
+		ObjectID:       "document.pdf",
+		RequestID:      "<YOUR-REQUEST-ID>",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -423,16 +405,10 @@ client := raindrop.NewClient(
 client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-smartbucket",
-				},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		Input:          "What are the key points in this document?",
+		ObjectID:       "document.pdf",
+		RequestID:      "<YOUR-REQUEST-ID>",
 	},
 	option.WithMaxRetries(5),
 )
@@ -449,16 +425,10 @@ var response *http.Response
 response, err := client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name: "my-smartbucket",
-				},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		Input:          "What are the key points in this document?",
+		ObjectID:       "document.pdf",
+		RequestID:      "<YOUR-REQUEST-ID>",
 	},
 	option.WithResponseInto(&response),
 )
