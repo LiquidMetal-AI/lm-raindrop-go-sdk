@@ -27,15 +27,7 @@ func TestStartSessionNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.StartSession.New(context.TODO(), raindrop.StartSessionNewParams{
-		AgentMemoryLocation: raindrop.StartSessionNewParamsAgentMemoryLocationUnion{
-			OfAgentMemory: &raindrop.StartSessionNewParamsAgentMemoryLocationAgentMemory{
-				AgentMemory: raindrop.StartSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory{
-					Name:            "memory-name",
-					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("1234"),
-				},
-			},
-		},
+		SmartMemoryLocation: raindrop.StartSessionNewParamsSmartMemoryLocation{SmartMemory: raindrop.StartSessionNewParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

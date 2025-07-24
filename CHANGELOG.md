@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.10 (2025-07-24)
+
+Full Changelog: [v0.1.9...v0.1.10](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.9...v0.1.10)
+
+### Features
+
+* **api:** updating API spec with latest changes ([0bebded](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/0bebded90e2dee44fb9ec37111d204e8f4b62b50))
+* **api:** updating API spec with latest changes ([9c1420b](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/9c1420b28a84fbef17866dedf96b306bec33f482))
+* **api:** updating API spec with latest changes ([57ea2a6](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/57ea2a6dc091d5ee56cb055abc3b8fbfe3128e19))
+
+
+### Bug Fixes
+
+* **client:** process custom base url ahead of time ([4da172d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/4da172df495622e98637e18030b20c9d2e4b8d1e))
+
+
+### Chores
+
+* **internal:** fix lint script for tests ([ade14fe](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/ade14fe14845f9912a8cf0c88b7c82b277049834))
+* lint tests in subpackages ([73b29e1](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/73b29e1a77395d4a7bbc4c6041f8b03dea192a60))
+
 ## 0.1.9 (2025-07-08)
 
 Full Changelog: [v0.1.8...v0.1.9](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.8...v0.1.9)

@@ -2,7 +2,7 @@
 
 Params Types:
 
-- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#BucketLocatorUnionParam">BucketLocatorUnionParam</a>
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#BucketLocatorParam">BucketLocatorParam</a>
 
 Response Types:
 
@@ -29,6 +29,36 @@ Response Types:
 Methods:
 
 - <code title="post /v1/search_memory">client.Query.Memory.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryMemoryService.Search">Search</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryMemorySearchParams">QueryMemorySearchParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryMemorySearchResponse">QueryMemorySearchResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## EpisodicMemory
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryEpisodicMemorySearchResponse">QueryEpisodicMemorySearchResponse</a>
+
+Methods:
+
+- <code title="post /v1/search_episodic_memory">client.Query.EpisodicMemory.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryEpisodicMemoryService.Search">Search</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryEpisodicMemorySearchParams">QueryEpisodicMemorySearchParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryEpisodicMemorySearchResponse">QueryEpisodicMemorySearchResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## Procedures
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryProcedureSearchResponse">QueryProcedureSearchResponse</a>
+
+Methods:
+
+- <code title="post /v1/search_procedures">client.Query.Procedures.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryProcedureService.Search">Search</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryProcedureSearchParams">QueryProcedureSearchParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryProcedureSearchResponse">QueryProcedureSearchResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+## SemanticMemory
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QuerySemanticMemorySearchResponse">QuerySemanticMemorySearchResponse</a>
+
+Methods:
+
+- <code title="post /v1/search_semantic_memory">client.Query.SemanticMemory.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QuerySemanticMemoryService.Search">Search</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QuerySemanticMemorySearchParams">QuerySemanticMemorySearchParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QuerySemanticMemorySearchResponse">QuerySemanticMemorySearchResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # Bucket
 
@@ -115,3 +145,73 @@ Response Types:
 Methods:
 
 - <code title="post /v1/rehydrate_session">client.RehydrateSession.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#RehydrateSessionService.Rehydrate">Rehydrate</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#RehydrateSessionRehydrateParams">RehydrateSessionRehydrateParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#RehydrateSessionRehydrateResponse">RehydrateSessionRehydrateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# PutProcedure
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutProcedureNewResponse">PutProcedureNewResponse</a>
+
+Methods:
+
+- <code title="post /v1/put_procedure">client.PutProcedure.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutProcedureService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutProcedureNewParams">PutProcedureNewParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutProcedureNewResponse">PutProcedureNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# GetProcedure
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetProcedureNewResponse">GetProcedureNewResponse</a>
+
+Methods:
+
+- <code title="post /v1/get_procedure">client.GetProcedure.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetProcedureService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetProcedureNewParams">GetProcedureNewParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetProcedureNewResponse">GetProcedureNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# DeleteProcedure
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteProcedureNewResponse">DeleteProcedureNewResponse</a>
+
+Methods:
+
+- <code title="post /v1/delete_procedure">client.DeleteProcedure.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteProcedureService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteProcedureNewParams">DeleteProcedureNewParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteProcedureNewResponse">DeleteProcedureNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# ListProcedures
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ListProcedureNewResponse">ListProcedureNewResponse</a>
+
+Methods:
+
+- <code title="post /v1/list_procedures">client.ListProcedures.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ListProcedureService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ListProcedureNewParams">ListProcedureNewParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ListProcedureNewResponse">ListProcedureNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# PutSemanticMemory
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutSemanticMemoryNewResponse">PutSemanticMemoryNewResponse</a>
+
+Methods:
+
+- <code title="post /v1/put_semantic_memory">client.PutSemanticMemory.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutSemanticMemoryService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutSemanticMemoryNewParams">PutSemanticMemoryNewParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#PutSemanticMemoryNewResponse">PutSemanticMemoryNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# GetSemanticMemory
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetSemanticMemoryNewResponse">GetSemanticMemoryNewResponse</a>
+
+Methods:
+
+- <code title="post /v1/get_semantic_memory">client.GetSemanticMemory.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetSemanticMemoryService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetSemanticMemoryNewParams">GetSemanticMemoryNewParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetSemanticMemoryNewResponse">GetSemanticMemoryNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# DeleteSemanticMemory
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteSemanticMemoryDeleteResponse">DeleteSemanticMemoryDeleteResponse</a>
+
+Methods:
+
+- <code title="post /v1/delete_semantic_memory">client.DeleteSemanticMemory.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteSemanticMemoryService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteSemanticMemoryDeleteParams">DeleteSemanticMemoryDeleteParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteSemanticMemoryDeleteResponse">DeleteSemanticMemoryDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

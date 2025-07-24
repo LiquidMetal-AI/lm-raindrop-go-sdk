@@ -15,16 +15,23 @@ import (
 // interacting with the raindrop API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options          []option.RequestOption
-	Query            QueryService
-	Bucket           BucketService
-	PutMemory        PutMemoryService
-	GetMemory        GetMemoryService
-	DeleteMemory     DeleteMemoryService
-	SummarizeMemory  SummarizeMemoryService
-	StartSession     StartSessionService
-	EndSession       EndSessionService
-	RehydrateSession RehydrateSessionService
+	Options              []option.RequestOption
+	Query                QueryService
+	Bucket               BucketService
+	PutMemory            PutMemoryService
+	GetMemory            GetMemoryService
+	DeleteMemory         DeleteMemoryService
+	SummarizeMemory      SummarizeMemoryService
+	StartSession         StartSessionService
+	EndSession           EndSessionService
+	RehydrateSession     RehydrateSessionService
+	PutProcedure         PutProcedureService
+	GetProcedure         GetProcedureService
+	DeleteProcedure      DeleteProcedureService
+	ListProcedures       ListProcedureService
+	PutSemanticMemory    PutSemanticMemoryService
+	GetSemanticMemory    GetSemanticMemoryService
+	DeleteSemanticMemory DeleteSemanticMemoryService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -58,6 +65,13 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.StartSession = NewStartSessionService(opts...)
 	r.EndSession = NewEndSessionService(opts...)
 	r.RehydrateSession = NewRehydrateSessionService(opts...)
+	r.PutProcedure = NewPutProcedureService(opts...)
+	r.GetProcedure = NewGetProcedureService(opts...)
+	r.DeleteProcedure = NewDeleteProcedureService(opts...)
+	r.ListProcedures = NewListProcedureService(opts...)
+	r.PutSemanticMemory = NewPutSemanticMemoryService(opts...)
+	r.GetSemanticMemory = NewGetSemanticMemoryService(opts...)
+	r.DeleteSemanticMemory = NewDeleteSemanticMemoryService(opts...)
 
 	return
 }

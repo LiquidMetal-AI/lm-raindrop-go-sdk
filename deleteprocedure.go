@@ -13,36 +13,36 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
 )
 
-// DeleteMemoryService contains methods and other services that help with
+// DeleteProcedureService contains methods and other services that help with
 // interacting with the raindrop API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
-// the [NewDeleteMemoryService] method instead.
-type DeleteMemoryService struct {
+// the [NewDeleteProcedureService] method instead.
+type DeleteProcedureService struct {
 	Options []option.RequestOption
 }
 
-// NewDeleteMemoryService generates a new service that applies the given options to
-// each request. These options are applied after the parent client's options (if
+// NewDeleteProcedureService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
 // there is one), and before any request-specific options.
-func NewDeleteMemoryService(opts ...option.RequestOption) (r DeleteMemoryService) {
-	r = DeleteMemoryService{}
+func NewDeleteProcedureService(opts ...option.RequestOption) (r DeleteProcedureService) {
+	r = DeleteProcedureService{}
 	r.Options = opts
 	return
 }
 
-// Removes a specific memory entry from storage. This operation is permanent and
-// cannot be undone.
-func (r *DeleteMemoryService) New(ctx context.Context, body DeleteMemoryNewParams, opts ...option.RequestOption) (res *DeleteMemoryNewResponse, err error) {
+// Removes a specific procedure from procedural memory. This operation is permanent
+// and affects all future sessions.
+func (r *DeleteProcedureService) New(ctx context.Context, body DeleteProcedureNewParams, opts ...option.RequestOption) (res *DeleteProcedureNewResponse, err error) {
 	opts = append(r.Options[:], opts...)
-	path := "v1/delete_memory"
+	path := "v1/delete_procedure"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-type DeleteMemoryNewResponse struct {
-	// Indicates whether the deletion was successful
+type DeleteProcedureNewResponse struct {
+	// Indicates whether the procedure was deleted successfully
 	Success bool `json:"success"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
@@ -53,42 +53,42 @@ type DeleteMemoryNewResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r DeleteMemoryNewResponse) RawJSON() string { return r.JSON.raw }
-func (r *DeleteMemoryNewResponse) UnmarshalJSON(data []byte) error {
+func (r DeleteProcedureNewResponse) RawJSON() string { return r.JSON.raw }
+func (r *DeleteProcedureNewResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type DeleteMemoryNewParams struct {
-	// Unique identifier of the memory entry to delete
-	MemoryID string `json:"memoryId,required"`
-	// Unique session identifier for the working memory instance
-	SessionID string `json:"sessionId,required"`
+type DeleteProcedureNewParams struct {
+	// Unique key of the procedure to delete
+	Key string `json:"key,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation DeleteMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	SmartMemoryLocation DeleteProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Optional procedural memory ID to use for actor isolation
+	ProceduralMemoryID param.Opt[string] `json:"proceduralMemoryId,omitzero"`
 	paramObj
 }
 
-func (r DeleteMemoryNewParams) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteMemoryNewParams
+func (r DeleteProcedureNewParams) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteProcedureNewParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DeleteMemoryNewParams) UnmarshalJSON(data []byte) error {
+func (r *DeleteProcedureNewParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // The property SmartMemory is required.
-type DeleteMemoryNewParamsSmartMemoryLocation struct {
+type DeleteProcedureNewParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** TRUE
-	SmartMemory DeleteMemoryNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	SmartMemory DeleteProcedureNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r DeleteMemoryNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteMemoryNewParamsSmartMemoryLocation
+func (r DeleteProcedureNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteProcedureNewParamsSmartMemoryLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DeleteMemoryNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *DeleteProcedureNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -96,7 +96,7 @@ func (r *DeleteMemoryNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) er
 // **REQUIRED** TRUE
 //
 // The property Name is required.
-type DeleteMemoryNewParamsSmartMemoryLocationSmartMemory struct {
+type DeleteProcedureNewParamsSmartMemoryLocationSmartMemory struct {
 	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
 	Name string `json:"name,required"`
 	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
@@ -107,10 +107,10 @@ type DeleteMemoryNewParamsSmartMemoryLocationSmartMemory struct {
 	paramObj
 }
 
-func (r DeleteMemoryNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteMemoryNewParamsSmartMemoryLocationSmartMemory
+func (r DeleteProcedureNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteProcedureNewParamsSmartMemoryLocationSmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DeleteMemoryNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+func (r *DeleteProcedureNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

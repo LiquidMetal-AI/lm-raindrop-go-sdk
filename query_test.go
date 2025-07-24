@@ -27,17 +27,9 @@ func TestQueryChunkSearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.ChunkSearch(context.TODO(), raindrop.QueryChunkSearchParams{
-		BucketLocations: []raindrop.BucketLocatorUnionParam{{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-smartbucket",
-					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
-				},
-			},
-		}},
-		Input:     "Find documents about revenue in Q4 2023",
-		RequestID: "<YOUR-REQUEST-ID>",
+		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
+		Input:           "Find documents about revenue in Q4 2023",
+		RequestID:       "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -62,18 +54,10 @@ func TestQueryDocumentQuery(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorUnionParam{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-smartbucket",
-					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
-				},
-			},
-		},
-		Input:     "What are the key points in this document?",
-		ObjectID:  "document.pdf",
-		RequestID: "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		Input:          "What are the key points in this document?",
+		ObjectID:       "document.pdf",
+		RequestID:      "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -125,17 +109,9 @@ func TestQuerySearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Search(context.TODO(), raindrop.QuerySearchParams{
-		BucketLocations: []raindrop.BucketLocatorUnionParam{{
-			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
-					Name:            "my-smartbucket",
-					ApplicationName: raindrop.String("my-app"),
-					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
-				},
-			},
-		}},
-		Input:     "All my files",
-		RequestID: "<YOUR-REQUEST-ID>",
+		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
+		Input:           "All my files",
+		RequestID:       "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		var apierr *raindrop.Error

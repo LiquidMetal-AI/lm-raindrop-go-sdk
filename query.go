@@ -21,8 +21,11 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewQueryService] method instead.
 type QueryService struct {
-	Options []option.RequestOption
-	Memory  QueryMemoryService
+	Options        []option.RequestOption
+	Memory         QueryMemoryService
+	EpisodicMemory QueryEpisodicMemoryService
+	Procedures     QueryProcedureService
+	SemanticMemory QuerySemanticMemoryService
 }
 
 // NewQueryService generates a new service that applies the given options to each
@@ -32,6 +35,9 @@ func NewQueryService(opts ...option.RequestOption) (r QueryService) {
 	r = QueryService{}
 	r.Options = opts
 	r.Memory = NewQueryMemoryService(opts...)
+	r.EpisodicMemory = NewQueryEpisodicMemoryService(opts...)
+	r.Procedures = NewQueryProcedureService(opts...)
+	r.SemanticMemory = NewQuerySemanticMemoryService(opts...)
 	return
 }
 
@@ -159,62 +165,25 @@ func (r *QueryService) SumarizePage(ctx context.Context, body QuerySumarizePageP
 	return
 }
 
-func BucketLocatorParamOfBucket(bucket BucketLocatorBucketBucketParam) BucketLocatorUnionParam {
-	var variant BucketLocatorBucketParam
-	variant.Bucket = bucket
-	return BucketLocatorUnionParam{OfBucket: &variant}
-}
-
-func BucketLocatorParamOfModuleID(moduleID string) BucketLocatorUnionParam {
-	var variant BucketLocatorModuleIDParam
-	variant.ModuleID = moduleID
-	return BucketLocatorUnionParam{OfModuleID: &variant}
-}
-
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type BucketLocatorUnionParam struct {
-	OfBucket   *BucketLocatorBucketParam   `json:",omitzero,inline"`
-	OfModuleID *BucketLocatorModuleIDParam `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u BucketLocatorUnionParam) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfBucket, u.OfModuleID)
-}
-func (u *BucketLocatorUnionParam) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *BucketLocatorUnionParam) asAny() any {
-	if !param.IsOmitted(u.OfBucket) {
-		return u.OfBucket
-	} else if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	}
-	return nil
-}
-
 // The property Bucket is required.
-type BucketLocatorBucketParam struct {
+type BucketLocatorParam struct {
 	// **EXAMPLE** { name: 'my-smartbucket' } **REQUIRED** FALSE
-	Bucket BucketLocatorBucketBucketParam `json:"bucket,omitzero,required"`
+	Bucket BucketLocatorBucketParam `json:"bucket,omitzero,required"`
 	paramObj
 }
 
-func (r BucketLocatorBucketParam) MarshalJSON() (data []byte, err error) {
-	type shadow BucketLocatorBucketParam
+func (r BucketLocatorParam) MarshalJSON() (data []byte, err error) {
+	type shadow BucketLocatorParam
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *BucketLocatorBucketParam) UnmarshalJSON(data []byte) error {
+func (r *BucketLocatorParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // **EXAMPLE** { name: 'my-smartbucket' } **REQUIRED** FALSE
 //
 // The property Name is required.
-type BucketLocatorBucketBucketParam struct {
+type BucketLocatorBucketParam struct {
 	// The name of the bucket **EXAMPLE** "my-bucket" **REQUIRED** TRUE
 	Name string `json:"name,required"`
 	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
@@ -225,26 +194,11 @@ type BucketLocatorBucketBucketParam struct {
 	paramObj
 }
 
-func (r BucketLocatorBucketBucketParam) MarshalJSON() (data []byte, err error) {
-	type shadow BucketLocatorBucketBucketParam
+func (r BucketLocatorBucketParam) MarshalJSON() (data []byte, err error) {
+	type shadow BucketLocatorBucketParam
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *BucketLocatorBucketBucketParam) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property ModuleID is required.
-type BucketLocatorModuleIDParam struct {
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p" **REQUIRED** FALSE
-	ModuleID string `json:"moduleId,required"`
-	paramObj
-}
-
-func (r BucketLocatorModuleIDParam) MarshalJSON() (data []byte, err error) {
-	type shadow BucketLocatorModuleIDParam
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *BucketLocatorModuleIDParam) UnmarshalJSON(data []byte) error {
+func (r *BucketLocatorBucketParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -332,14 +286,11 @@ type QueryChunkSearchResponseResultSourceBucket struct {
 	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
 	BucketName string `json:"bucketName"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"moduleId"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
 		ApplicationVersionID respjson.Field
 		BucketName           respjson.Field
-		ModuleID             respjson.Field
 		ExtraFields          map[string]respjson.Field
 		raw                  string
 	} `json:"-"`
@@ -436,14 +387,11 @@ type QueryGetPaginatedSearchResponseSourceBucket struct {
 	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
 	BucketName string `json:"bucketName"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"moduleId"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
 		ApplicationVersionID respjson.Field
 		BucketName           respjson.Field
-		ModuleID             respjson.Field
 		ExtraFields          map[string]respjson.Field
 		raw                  string
 	} `json:"-"`
@@ -571,14 +519,11 @@ type QuerySearchResponseResultSourceBucket struct {
 	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
 	BucketName string `json:"bucketName"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"moduleId"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
 		ApplicationVersionID respjson.Field
 		BucketName           respjson.Field
-		ModuleID             respjson.Field
 		ExtraFields          map[string]respjson.Field
 		raw                  string
 	} `json:"-"`
@@ -611,7 +556,7 @@ func (r *QuerySumarizePageResponse) UnmarshalJSON(data []byte) error {
 type QueryChunkSearchParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []BucketLocatorUnionParam `json:"bucketLocations,omitzero,required"`
+	BucketLocations []BucketLocatorParam `json:"bucketLocations,omitzero,required"`
 	// Natural language query or question. Can include complex criteria and
 	// relationships. The system will optimize the search strategy based on this input
 	Input string `json:"input,required"`
@@ -632,7 +577,7 @@ func (r *QueryChunkSearchParams) UnmarshalJSON(data []byte) error {
 type QueryDocumentQueryParams struct {
 	// The storage bucket containing the target document. Must be a valid, registered
 	// Smart Bucket. Used to identify which bucket to query against
-	BucketLocation BucketLocatorUnionParam `json:"bucketLocation,omitzero,required"`
+	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
 	// User's input or question about the document. Can be natural language questions,
 	// commands, or requests. The system will process this against the document content
 	Input string `json:"input,required"`
@@ -674,7 +619,7 @@ func (r *QueryGetPaginatedSearchParams) UnmarshalJSON(data []byte) error {
 type QuerySearchParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocations []BucketLocatorUnionParam `json:"bucketLocations,omitzero,required"`
+	BucketLocations []BucketLocatorParam `json:"bucketLocations,omitzero,required"`
 	// Natural language search query that can include complex criteria. Supports
 	// queries like finding documents with specific content types, PII, or semantic
 	// meaning

@@ -59,8 +59,8 @@ func (r *StartSessionNewResponse) UnmarshalJSON(data []byte) error {
 }
 
 type StartSessionNewParams struct {
-	// Agent memory locator for targeting the correct agent memory instance
-	AgentMemoryLocation StartSessionNewParamsAgentMemoryLocationUnion `json:"agentMemoryLocation,omitzero,required"`
+	// Smart memory locator for targeting the correct smart memory instance
+	SmartMemoryLocation StartSessionNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	paramObj
 }
 
@@ -72,80 +72,41 @@ func (r *StartSessionNewParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type StartSessionNewParamsAgentMemoryLocationUnion struct {
-	OfAgentMemory *StartSessionNewParamsAgentMemoryLocationAgentMemory `json:",omitzero,inline"`
-	OfModuleID    *StartSessionNewParamsAgentMemoryLocationModuleID    `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u StartSessionNewParamsAgentMemoryLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfAgentMemory, u.OfModuleID)
-}
-func (u *StartSessionNewParamsAgentMemoryLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *StartSessionNewParamsAgentMemoryLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfAgentMemory) {
-		return u.OfAgentMemory
-	} else if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	}
-	return nil
-}
-
-// The property AgentMemory is required.
-type StartSessionNewParamsAgentMemoryLocationAgentMemory struct {
+// The property SmartMemory is required.
+type StartSessionNewParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** FALSE
-	AgentMemory StartSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory `json:"agentMemory,omitzero,required"`
+	// **REQUIRED** TRUE
+	SmartMemory StartSessionNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r StartSessionNewParamsAgentMemoryLocationAgentMemory) MarshalJSON() (data []byte, err error) {
-	type shadow StartSessionNewParamsAgentMemoryLocationAgentMemory
+func (r StartSessionNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
+	type shadow StartSessionNewParamsSmartMemoryLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *StartSessionNewParamsAgentMemoryLocationAgentMemory) UnmarshalJSON(data []byte) error {
+func (r *StartSessionNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
+// **REQUIRED** TRUE
 //
 // The property Name is required.
-type StartSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory struct {
-	// The name of the agent memory **EXAMPLE** "my-agent-memory" **REQUIRED** TRUE
+type StartSessionNewParamsSmartMemoryLocationSmartMemory struct {
+	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
 	Name string `json:"name,required"`
 	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
 	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the agent memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
 	// **REQUIRED** FALSE
 	Version param.Opt[string] `json:"version,omitzero"`
 	paramObj
 }
 
-func (r StartSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory) MarshalJSON() (data []byte, err error) {
-	type shadow StartSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory
+func (r StartSessionNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow StartSessionNewParamsSmartMemoryLocationSmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *StartSessionNewParamsAgentMemoryLocationAgentMemoryAgentMemory) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The property ModuleID is required.
-type StartSessionNewParamsAgentMemoryLocationModuleID struct {
-	ModuleID string `json:"moduleId,required"`
-	paramObj
-}
-
-func (r StartSessionNewParamsAgentMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow StartSessionNewParamsAgentMemoryLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *StartSessionNewParamsAgentMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+func (r *StartSessionNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
