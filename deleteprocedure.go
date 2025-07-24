@@ -79,7 +79,7 @@ func (r *DeleteProcedureNewParams) UnmarshalJSON(data []byte) error {
 // The property SmartMemory is required.
 type DeleteProcedureNewParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** FALSE
+	// **REQUIRED** TRUE
 	SmartMemory DeleteProcedureNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
 	paramObj
 }
@@ -93,7 +93,7 @@ func (r *DeleteProcedureNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte)
 }
 
 // **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
+// **REQUIRED** TRUE
 //
 // The property Name is required.
 type DeleteProcedureNewParamsSmartMemoryLocationSmartMemory struct {
