@@ -139,7 +139,7 @@ func (r *QuerySemanticMemorySearchParams) UnmarshalJSON(data []byte) error {
 // The property SmartMemory is required.
 type QuerySemanticMemorySearchParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** FALSE
+	// **REQUIRED** TRUE
 	SmartMemory QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
 	paramObj
 }
@@ -153,7 +153,7 @@ func (r *QuerySemanticMemorySearchParamsSmartMemoryLocation) UnmarshalJSON(data 
 }
 
 // **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
+// **REQUIRED** TRUE
 //
 // The property Name is required.
 type QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory struct {

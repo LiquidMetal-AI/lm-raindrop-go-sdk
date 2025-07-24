@@ -75,7 +75,7 @@ func (r *StartSessionNewParams) UnmarshalJSON(data []byte) error {
 // The property SmartMemory is required.
 type StartSessionNewParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** FALSE
+	// **REQUIRED** TRUE
 	SmartMemory StartSessionNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
 	paramObj
 }
@@ -89,7 +89,7 @@ func (r *StartSessionNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) er
 }
 
 // **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
+// **REQUIRED** TRUE
 //
 // The property Name is required.
 type StartSessionNewParamsSmartMemoryLocationSmartMemory struct {
