@@ -1,6 +1,10 @@
 # Raindrop Go API Library
 
+<!-- x-release-please-start-version -->
+
 <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk"><img src="https://pkg.go.dev/badge/github.com/LiquidMetal-AI/lm-raindrop-go-sdk.svg" alt="Go Reference"></a>
+
+<!-- x-release-please-end -->
 
 The Raindrop Go library provides convenient access to the [Raindrop REST API](docs.liquidmetal.ai)
 from applications written in Go.
