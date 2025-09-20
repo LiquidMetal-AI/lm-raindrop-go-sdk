@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -43,7 +44,7 @@ func NewPutMemoryService(opts ...option.RequestOption) (r PutMemoryService) {
 // - Associate the memory with the specified timeline
 // - Enable future retrieval and search operations
 func (r *PutMemoryService) New(ctx context.Context, body PutMemoryNewParams, opts ...option.RequestOption) (res *PutMemoryNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/put_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

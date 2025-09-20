@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -36,7 +37,7 @@ func NewPutProcedureService(opts ...option.RequestOption) (r PutProcedureService
 // knowledge artifacts like system prompts, templates, workflows, or instructions
 // that can be retrieved and applied across different sessions and contexts.
 func (r *PutProcedureService) New(ctx context.Context, body PutProcedureNewParams, opts ...option.RequestOption) (res *PutProcedureNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/put_procedure"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

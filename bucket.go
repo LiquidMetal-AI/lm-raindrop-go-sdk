@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
@@ -37,7 +38,7 @@ func NewBucketService(opts ...option.RequestOption) (r BucketService) {
 // List all objects in a SmartBucket or regular bucket. The bucket parameter (ID)
 // is used to identify the bucket to list objects from.
 func (r *BucketService) List(ctx context.Context, body BucketListParams, opts ...option.RequestOption) (res *BucketListResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/list_objects"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +48,7 @@ func (r *BucketService) List(ctx context.Context, body BucketListParams, opts ..
 // used to identify the bucket to delete from. The key is the path to the object in
 // the bucket.
 func (r *BucketService) Delete(ctx context.Context, body BucketDeleteParams, opts ...option.RequestOption) (res *BucketDeleteResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/delete_object"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -57,7 +58,7 @@ func (r *BucketService) Delete(ctx context.Context, body BucketDeleteParams, opt
 // is used to identify the bucket to download from. The key is the path to the
 // object in the bucket.
 func (r *BucketService) Get(ctx context.Context, body BucketGetParams, opts ...option.RequestOption) (res *BucketGetResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/get_object"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -67,7 +68,7 @@ func (r *BucketService) Get(ctx context.Context, body BucketGetParams, opts ...o
 // used to identify the bucket to upload to. The key is the path to the object in
 // the bucket.
 func (r *BucketService) Put(ctx context.Context, body BucketPutParams, opts ...option.RequestOption) (res *BucketPutResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/put_object"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

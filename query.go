@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -49,7 +50,7 @@ func NewQueryService(opts ...option.RequestOption) (r QueryService) {
 // search the data. The system will then return the most relevant results from the
 // data ranked by relevance on the input query.
 func (r *QueryService) ChunkSearch(ctx context.Context, body QueryChunkSearchParams, opts ...option.RequestOption) (res *QueryChunkSearchResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/chunk_search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -75,7 +76,7 @@ func (r *QueryService) ChunkSearch(ctx context.Context, body QueryChunkSearchPar
 // Document query is supported for all file types, including PDFs, images, and
 // audio files.
 func (r *QueryService) DocumentQuery(ctx context.Context, body QueryDocumentQueryParams, opts ...option.RequestOption) (res *QueryDocumentQueryResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/document_query"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -87,7 +88,7 @@ func (r *QueryService) DocumentQuery(ctx context.Context, body QueryDocumentQuer
 // previously completed search.
 func (r *QueryService) GetPaginatedSearch(ctx context.Context, body QueryGetPaginatedSearchParams, opts ...option.RequestOption) (res *pagination.PageNumber[QueryGetPaginatedSearchResponse], err error) {
 	var raw *http.Response
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/search_get_page"
 	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodPost, path, body, &res, opts...)
@@ -133,7 +134,7 @@ func (r *QueryService) GetPaginatedSearchAutoPaging(ctx context.Context, body Qu
 // - Automatic PII detection
 // - Multi-modal search (text, images, audio)
 func (r *QueryService) Search(ctx context.Context, body QuerySearchParams, opts ...option.RequestOption) (res *QuerySearchResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/search"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -159,7 +160,7 @@ func (r *QueryService) Search(ctx context.Context, body QuerySearchParams, opts 
 // - Technical documentation
 // - Research materials
 func (r *QueryService) SumarizePage(ctx context.Context, body QuerySumarizePageParams, opts ...option.RequestOption) (res *QuerySumarizePageResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/summarize_page"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

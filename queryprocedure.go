@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
@@ -39,7 +40,7 @@ func NewQueryProcedureService(opts ...option.RequestOption) (r QueryProcedureSer
 //
 // TODO: Future enhancement will include vector search for semantic similarity.
 func (r *QueryProcedureService) Search(ctx context.Context, body QueryProcedureSearchParams, opts ...option.RequestOption) (res *QueryProcedureSearchResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/search_procedures"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

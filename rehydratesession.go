@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -36,7 +37,7 @@ func NewRehydrateSessionService(opts ...option.RequestOption) (r RehydrateSessio
 // from where a previous session left off by restoring either all memories or just
 // a summary of the previous session.
 func (r *RehydrateSessionService) Rehydrate(ctx context.Context, body RehydrateSessionRehydrateParams, opts ...option.RequestOption) (res *RehydrateSessionRehydrateResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/rehydrate_session"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

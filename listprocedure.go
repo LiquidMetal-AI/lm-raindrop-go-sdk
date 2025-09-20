@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
@@ -36,7 +37,7 @@ func NewListProcedureService(opts ...option.RequestOption) (r ListProcedureServi
 // Lists all procedures stored in procedural memory. Returns metadata about each
 // procedure including creation and modification times.
 func (r *ListProcedureService) New(ctx context.Context, body ListProcedureNewParams, opts ...option.RequestOption) (res *ListProcedureNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/list_procedures"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

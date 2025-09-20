@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
@@ -44,7 +45,7 @@ func NewGetMemoryService(opts ...option.RequestOption) (r GetMemoryService) {
 // - Temporal range queries
 // - Most recent N entries
 func (r *GetMemoryService) Get(ctx context.Context, body GetMemoryGetParams, opts ...option.RequestOption) (res *GetMemoryGetResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/get_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

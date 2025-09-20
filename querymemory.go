@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
@@ -44,7 +45,7 @@ func NewQueryMemoryService(opts ...option.RequestOption) (r QueryMemoryService) 
 // - Temporal filtering
 // - Relevance-based ranking
 func (r *QueryMemoryService) Search(ctx context.Context, body QueryMemorySearchParams, opts ...option.RequestOption) (res *QueryMemorySearchResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/search_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
