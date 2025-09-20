@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -35,7 +36,7 @@ func NewDeleteSemanticMemoryService(opts ...option.RequestOption) (r DeleteSeman
 // Removes a specific semantic memory document by its object ID. This operation
 // permanently deletes the document and is irreversible.
 func (r *DeleteSemanticMemoryService) Delete(ctx context.Context, body DeleteSemanticMemoryDeleteParams, opts ...option.RequestOption) (res *DeleteSemanticMemoryDeleteResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/delete_semantic_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

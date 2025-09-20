@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
@@ -38,7 +39,7 @@ func NewQueryEpisodicMemoryService(opts ...option.RequestOption) (r QueryEpisodi
 // finding relevant past sessions based on natural language queries. Returns
 // summaries and metadata from stored episodic memory sessions.
 func (r *QueryEpisodicMemoryService) Search(ctx context.Context, body QueryEpisodicMemorySearchParams, opts ...option.RequestOption) (res *QueryEpisodicMemorySearchResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/search_episodic_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

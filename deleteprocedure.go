@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -35,7 +36,7 @@ func NewDeleteProcedureService(opts ...option.RequestOption) (r DeleteProcedureS
 // Removes a specific procedure from procedural memory. This operation is permanent
 // and affects all future sessions.
 func (r *DeleteProcedureService) New(ctx context.Context, body DeleteProcedureNewParams, opts ...option.RequestOption) (res *DeleteProcedureNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/delete_procedure"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return

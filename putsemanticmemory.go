@@ -5,6 +5,7 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
@@ -36,7 +37,7 @@ func NewPutSemanticMemoryService(opts ...option.RequestOption) (r PutSemanticMem
 // memory is used for storing structured knowledge, facts, and information that can
 // be searched and retrieved across different sessions.
 func (r *PutSemanticMemoryService) New(ctx context.Context, body PutSemanticMemoryNewParams, opts ...option.RequestOption) (res *PutSemanticMemoryNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/put_semantic_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
