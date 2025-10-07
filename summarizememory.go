@@ -92,7 +92,7 @@ func (r *SummarizeMemoryNewParams) UnmarshalJSON(data []byte) error {
 // The property SmartMemory is required.
 type SummarizeMemoryNewParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** TRUE
+	// **REQUIRED** FALSE
 	SmartMemory SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
 	paramObj
 }
@@ -106,7 +106,7 @@ func (r *SummarizeMemoryNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte)
 }
 
 // **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** TRUE
+// **REQUIRED** FALSE
 //
 // The property Name is required.
 type SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory struct {

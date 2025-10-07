@@ -564,6 +564,9 @@ type QueryChunkSearchParams struct {
 	// Client-provided search session identifier. Required for pagination and result
 	// tracking. We recommend using a UUID or ULID for this value
 	RequestID string `json:"requestId,required"`
+	// Optional partition identifier for multi-tenant data isolation. Defaults to
+	// 'default' if not specified
+	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
@@ -588,6 +591,9 @@ type QueryDocumentQueryParams struct {
 	// Client-provided conversation session identifier. Required for maintaining
 	// context in follow-up questions. We recommend using a UUID or ULID for this value
 	RequestID string `json:"requestId,required"`
+	// Optional partition identifier for multi-tenant data isolation. Defaults to
+	// 'default' if not specified
+	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
@@ -606,6 +612,9 @@ type QueryGetPaginatedSearchParams struct {
 	PageSize param.Opt[int64] `json:"pageSize,omitzero,required"`
 	// Original search session identifier from the initial search
 	RequestID string `json:"requestId,required"`
+	// Optional partition identifier for multi-tenant data isolation. Defaults to
+	// 'default' if not specified
+	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
@@ -628,6 +637,9 @@ type QuerySearchParams struct {
 	// Client-provided search session identifier. Required for pagination and result
 	// tracking. We recommend using a UUID or ULID for this value
 	RequestID string `json:"requestId,required"`
+	// Optional partition identifier for multi-tenant data isolation. Defaults to
+	// 'default' if not specified
+	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
@@ -646,6 +658,9 @@ type QuerySumarizePageParams struct {
 	PageSize int64 `json:"pageSize,required"`
 	// Original search session identifier from the initial search
 	RequestID string `json:"requestId,required"`
+	// Optional partition identifier for multi-tenant data isolation. Defaults to
+	// 'default' if not specified
+	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
