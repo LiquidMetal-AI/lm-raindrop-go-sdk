@@ -215,3 +215,43 @@ Response Types:
 Methods:
 
 - <code title="post /v1/delete_semantic_memory">client.DeleteSemanticMemory.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteSemanticMemoryService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteSemanticMemoryDeleteParams">DeleteSemanticMemoryDeleteParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DeleteSemanticMemoryDeleteResponse">DeleteSemanticMemoryDeleteResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# ExecuteQuery
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ExecuteQueryExecuteResponseUnion">ExecuteQueryExecuteResponseUnion</a>
+
+Methods:
+
+- <code title="post /v1/execute_query">client.ExecuteQuery.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ExecuteQueryService.Execute">Execute</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ExecuteQueryExecuteParams">ExecuteQueryExecuteParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#ExecuteQueryExecuteResponseUnion">ExecuteQueryExecuteResponseUnion</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# GetMetadata
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetMetadataGetResponse">GetMetadataGetResponse</a>
+
+Methods:
+
+- <code title="post /v1/get_metadata">client.GetMetadata.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetMetadataService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetMetadataGetParams">GetMetadataGetParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetMetadataGetResponse">GetMetadataGetResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# UpdateMetadata
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#UpdateMetadataUpdateResponse">UpdateMetadataUpdateResponse</a>
+
+Methods:
+
+- <code title="post /v1/update_metadata">client.UpdateMetadata.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#UpdateMetadataService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#UpdateMetadataUpdateParams">UpdateMetadataUpdateParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#UpdateMetadataUpdateResponse">UpdateMetadataUpdateResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
+# GetPiiData
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetPiiDataGetResponse">GetPiiDataGetResponse</a>
+
+Methods:
+
+- <code title="post /v1/get_pii_data">client.GetPiiData.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetPiiDataService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetPiiDataGetParams">GetPiiDataGetParams</a>) (<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#GetPiiDataGetResponse">GetPiiDataGetResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
