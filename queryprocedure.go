@@ -116,7 +116,7 @@ func (r *QueryProcedureSearchParams) UnmarshalJSON(data []byte) error {
 // The property SmartMemory is required.
 type QueryProcedureSearchParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** TRUE
+	// **REQUIRED** FALSE
 	SmartMemory QueryProcedureSearchParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
 	paramObj
 }
@@ -130,7 +130,7 @@ func (r *QueryProcedureSearchParamsSmartMemoryLocation) UnmarshalJSON(data []byt
 }
 
 // **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** TRUE
+// **REQUIRED** FALSE
 //
 // The property Name is required.
 type QueryProcedureSearchParamsSmartMemoryLocationSmartMemory struct {
