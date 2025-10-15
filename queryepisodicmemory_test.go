@@ -28,11 +28,21 @@ func TestQueryEpisodicMemorySearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.EpisodicMemory.Search(context.TODO(), raindrop.QueryEpisodicMemorySearchParams{
-		SmartMemoryLocation: raindrop.QueryEpisodicMemorySearchParamsSmartMemoryLocation{SmartMemory: raindrop.QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
-		Terms:               "sessions about user interface preferences",
-		EndTime:             raindrop.Time(time.Now()),
-		NMostRecent:         raindrop.Int(10),
-		StartTime:           raindrop.Time(time.Now()),
+		SmartMemoryLocation: raindrop.QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion{
+			OfSmartMemory: &raindrop.QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemory{
+				SmartMemory: raindrop.QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory{
+					Name:            "memory-name",
+					ApplicationName: raindrop.String("demo"),
+					Version:         raindrop.String("1234"),
+				},
+			},
+		},
+		Terms:          "sessions about user interface preferences",
+		EndTime:        raindrop.Time(time.Now()),
+		NMostRecent:    raindrop.Int(10),
+		OrganizationID: raindrop.String("organization_id"),
+		StartTime:      raindrop.Time(time.Now()),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

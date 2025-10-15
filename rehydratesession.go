@@ -48,7 +48,7 @@ type RehydrateSessionRehydrateResponse struct {
 	// failure
 	Operation string `json:"operation"`
 	// Storage key for checking async operation status (optional)
-	StatusKey string `json:"statusKey,nullable"`
+	StatusKey string `json:"status_key,nullable"`
 	// Indicates whether the rehydration was successful
 	Success bool `json:"success"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -69,11 +69,13 @@ func (r *RehydrateSessionRehydrateResponse) UnmarshalJSON(data []byte) error {
 
 type RehydrateSessionRehydrateParams struct {
 	// Session identifier to restore from episodic memory
-	SessionID string `json:"sessionId,required"`
+	SessionID string `json:"session_id,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation RehydrateSessionRehydrateParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	SmartMemoryLocation RehydrateSessionRehydrateParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero,required"`
 	// If true, only restore a summary. If false, restore all memories
-	SummaryOnly param.Opt[bool] `json:"summaryOnly,omitzero"`
+	SummaryOnly    param.Opt[bool]   `json:"summary_only,omitzero"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	UserID         param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -85,34 +87,51 @@ func (r *RehydrateSessionRehydrateParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The property SmartMemory is required.
-type RehydrateSessionRehydrateParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type RehydrateSessionRehydrateParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *RehydrateSessionRehydrateParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u RehydrateSessionRehydrateParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *RehydrateSessionRehydrateParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *RehydrateSessionRehydrateParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type RehydrateSessionRehydrateParamsSmartMemoryLocationModuleID struct {
 	// **REQUIRED** FALSE
-	SmartMemory RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	ModuleID string `json:"module_id,required"`
 	paramObj
 }
 
-func (r RehydrateSessionRehydrateParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow RehydrateSessionRehydrateParamsSmartMemoryLocation
+func (r RehydrateSessionRehydrateParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow RehydrateSessionRehydrateParamsSmartMemoryLocationModuleID
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *RehydrateSessionRehydrateParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *RehydrateSessionRehydrateParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
-//
-// The property Name is required.
+// The property SmartMemory is required.
 type RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
+	SmartMemory RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smart_memory,omitzero,required"`
 	paramObj
 }
 
@@ -121,5 +140,28 @@ func (r RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory) MarshalJS
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// **REQUIRED** FALSE
+//
+// The property Name is required.
+type RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemorySmartMemory struct {
+	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
+	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **REQUIRED** FALSE
+	Version param.Opt[string] `json:"version,omitzero"`
+	paramObj
+}
+
+func (r RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemorySmartMemory
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

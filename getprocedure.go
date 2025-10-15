@@ -67,9 +67,11 @@ type GetProcedureNewParams struct {
 	// Unique key of the procedure to retrieve
 	Key string `json:"key,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation GetProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	SmartMemoryLocation GetProcedureNewParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero,required"`
 	// Optional procedural memory ID to use for actor isolation
-	ProceduralMemoryID param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	ProceduralMemoryID param.Opt[string] `json:"procedural_memory_id,omitzero"`
+	OrganizationID     param.Opt[string] `json:"organization_id,omitzero"`
+	UserID             param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -81,34 +83,51 @@ func (r *GetProcedureNewParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The property SmartMemory is required.
-type GetProcedureNewParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type GetProcedureNewParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *GetProcedureNewParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *GetProcedureNewParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u GetProcedureNewParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *GetProcedureNewParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *GetProcedureNewParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type GetProcedureNewParamsSmartMemoryLocationModuleID struct {
 	// **REQUIRED** FALSE
-	SmartMemory GetProcedureNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	ModuleID string `json:"module_id,required"`
 	paramObj
 }
 
-func (r GetProcedureNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow GetProcedureNewParamsSmartMemoryLocation
+func (r GetProcedureNewParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow GetProcedureNewParamsSmartMemoryLocationModuleID
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *GetProcedureNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *GetProcedureNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
-//
-// The property Name is required.
+// The property SmartMemory is required.
 type GetProcedureNewParamsSmartMemoryLocationSmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
+	SmartMemory GetProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smart_memory,omitzero,required"`
 	paramObj
 }
 
@@ -117,5 +136,28 @@ func (r GetProcedureNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *GetProcedureNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// **REQUIRED** FALSE
+//
+// The property Name is required.
+type GetProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory struct {
+	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
+	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **REQUIRED** FALSE
+	Version param.Opt[string] `json:"version,omitzero"`
+	paramObj
+}
+
+func (r GetProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow GetProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *GetProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

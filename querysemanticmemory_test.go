@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestQuerySemanticMemorySearch(t *testing.T) {
+func TestQuerySemanticMemorySearchWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,8 +27,18 @@ func TestQuerySemanticMemorySearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.SemanticMemory.Search(context.TODO(), raindrop.QuerySemanticMemorySearchParams{
-		Needle:              "AI development best practices",
-		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocation{SmartMemory: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		Needle: "AI development best practices",
+		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationUnion{
+			OfSmartMemory: &raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory{
+				SmartMemory: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory{
+					Name:            "memory-name",
+					ApplicationName: raindrop.String("demo"),
+					Version:         raindrop.String("1234"),
+				},
+			},
+		},
+		OrganizationID: raindrop.String("organization_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

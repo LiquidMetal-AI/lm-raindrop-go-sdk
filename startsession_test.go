@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestStartSessionNew(t *testing.T) {
+func TestStartSessionNewWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,7 +27,17 @@ func TestStartSessionNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.StartSession.New(context.TODO(), raindrop.StartSessionNewParams{
-		SmartMemoryLocation: raindrop.StartSessionNewParamsSmartMemoryLocation{SmartMemory: raindrop.StartSessionNewParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.StartSessionNewParamsSmartMemoryLocationUnion{
+			OfSmartMemory: &raindrop.StartSessionNewParamsSmartMemoryLocationSmartMemory{
+				SmartMemory: raindrop.StartSessionNewParamsSmartMemoryLocationSmartMemorySmartMemory{
+					Name:            "memory-name",
+					ApplicationName: raindrop.String("demo"),
+					Version:         raindrop.String("1234"),
+				},
+			},
+		},
+		OrganizationID: raindrop.String("organization_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

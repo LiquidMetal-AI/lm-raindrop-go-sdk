@@ -94,11 +94,11 @@ func (r *BucketListResponse) UnmarshalJSON(data []byte) error {
 // ObjectInfo represents metadata about a single object
 type BucketListResponseObject struct {
 	// MIME type of the object
-	ContentType string `json:"contentType,required"`
+	ContentType string `json:"content_type,required"`
 	// Object key/path in the bucket
 	Key string `json:"key,required"`
 	// Last modification timestamp
-	LastModified time.Time `json:"lastModified,required" format:"date-time"`
+	LastModified time.Time `json:"last_modified,required" format:"date-time"`
 	// Size of the object in bytes
 	Size BucketListResponseObjectSizeUnion `json:"size,required" format:"int64"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -160,7 +160,7 @@ type BucketGetResponse struct {
 	// No specific comments in original for these fields directly, but they were part
 	// of the original GetObjectResponse.
 	Content     string `json:"content" format:"byte"`
-	ContentType string `json:"contentType"`
+	ContentType string `json:"content_type"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Content     respjson.Field
@@ -199,16 +199,19 @@ func (r *BucketPutResponse) UnmarshalJSON(data []byte) error {
 // Information about the bucket where the object was uploaded
 type BucketPutResponseBucket struct {
 	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"applicationName"`
+	ApplicationName string `json:"application_name"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"applicationVersionId"`
+	ApplicationVersionID string `json:"application_version_id"`
 	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucketName"`
+	BucketName string `json:"bucket_name"`
+	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	ModuleID string `json:"module_id"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
 		ApplicationVersionID respjson.Field
 		BucketName           respjson.Field
+		ModuleID             respjson.Field
 		ExtraFields          map[string]respjson.Field
 		raw                  string
 	} `json:"-"`
@@ -223,7 +226,9 @@ func (r *BucketPutResponseBucket) UnmarshalJSON(data []byte) error {
 type BucketListParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
+	BucketLocation BucketLocatorUnionParam `json:"bucket_location,omitzero,required"`
+	OrganizationID param.Opt[string]       `json:"organization_id,omitzero"`
+	UserID         param.Opt[string]       `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -238,9 +243,11 @@ func (r *BucketListParams) UnmarshalJSON(data []byte) error {
 type BucketDeleteParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
+	BucketLocation BucketLocatorUnionParam `json:"bucket_location,omitzero,required"`
 	// Object key/path to delete
-	Key string `json:"key,required"`
+	Key            string            `json:"key,required"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	UserID         param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -255,9 +262,11 @@ func (r *BucketDeleteParams) UnmarshalJSON(data []byte) error {
 type BucketGetParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
+	BucketLocation BucketLocatorUnionParam `json:"bucket_location,omitzero,required"`
 	// Object key/path to download
-	Key string `json:"key,required"`
+	Key            string            `json:"key,required"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	UserID         param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -272,13 +281,15 @@ func (r *BucketGetParams) UnmarshalJSON(data []byte) error {
 type BucketPutParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
-	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
+	BucketLocation BucketLocatorUnionParam `json:"bucket_location,omitzero,required"`
 	// Binary content of the object
 	Content string `json:"content,required" format:"byte"`
 	// MIME type of the object
-	ContentType string `json:"contentType,required"`
+	ContentType string `json:"content_type,required"`
 	// Object key/path in the bucket
-	Key string `json:"key,required"`
+	Key            string            `json:"key,required"`
+	OrganizationID param.Opt[string] `json:"organization_id,omitzero"`
+	UserID         param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 

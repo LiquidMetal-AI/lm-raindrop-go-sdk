@@ -63,9 +63,11 @@ type DeleteProcedureNewParams struct {
 	// Unique key of the procedure to delete
 	Key string `json:"key,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation DeleteProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	SmartMemoryLocation DeleteProcedureNewParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero,required"`
 	// Optional procedural memory ID to use for actor isolation
-	ProceduralMemoryID param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	ProceduralMemoryID param.Opt[string] `json:"procedural_memory_id,omitzero"`
+	OrganizationID     param.Opt[string] `json:"organization_id,omitzero"`
+	UserID             param.Opt[string] `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -77,34 +79,51 @@ func (r *DeleteProcedureNewParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The property SmartMemory is required.
-type DeleteProcedureNewParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type DeleteProcedureNewParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *DeleteProcedureNewParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *DeleteProcedureNewParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u DeleteProcedureNewParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *DeleteProcedureNewParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *DeleteProcedureNewParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type DeleteProcedureNewParamsSmartMemoryLocationModuleID struct {
 	// **REQUIRED** FALSE
-	SmartMemory DeleteProcedureNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	ModuleID string `json:"module_id,required"`
 	paramObj
 }
 
-func (r DeleteProcedureNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteProcedureNewParamsSmartMemoryLocation
+func (r DeleteProcedureNewParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteProcedureNewParamsSmartMemoryLocationModuleID
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DeleteProcedureNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *DeleteProcedureNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
-//
-// The property Name is required.
+// The property SmartMemory is required.
 type DeleteProcedureNewParamsSmartMemoryLocationSmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
+	SmartMemory DeleteProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smart_memory,omitzero,required"`
 	paramObj
 }
 
@@ -113,5 +132,28 @@ func (r DeleteProcedureNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (d
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *DeleteProcedureNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// **REQUIRED** FALSE
+//
+// The property Name is required.
+type DeleteProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory struct {
+	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
+	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **REQUIRED** FALSE
+	Version param.Opt[string] `json:"version,omitzero"`
+	paramObj
+}
+
+func (r DeleteProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *DeleteProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

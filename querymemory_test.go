@@ -28,13 +28,23 @@ func TestQueryMemorySearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Memory.Search(context.TODO(), raindrop.QueryMemorySearchParams{
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.QueryMemorySearchParamsSmartMemoryLocation{SmartMemory: raindrop.QueryMemorySearchParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
-		Terms:               "user interface preferences",
-		EndTime:             raindrop.Time(time.Now()),
-		NMostRecent:         raindrop.Int(10),
-		StartTime:           raindrop.Time(time.Now()),
-		Timeline:            raindrop.String("user-conversation-2024"),
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.QueryMemorySearchParamsSmartMemoryLocationUnion{
+			OfSmartMemory: &raindrop.QueryMemorySearchParamsSmartMemoryLocationSmartMemory{
+				SmartMemory: raindrop.QueryMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory{
+					Name:            "memory-name",
+					ApplicationName: raindrop.String("demo"),
+					Version:         raindrop.String("1234"),
+				},
+			},
+		},
+		Terms:          "user interface preferences",
+		EndTime:        raindrop.Time(time.Now()),
+		NMostRecent:    raindrop.Int(10),
+		OrganizationID: raindrop.String("organization_id"),
+		StartTime:      raindrop.Time(time.Now()),
+		Timeline:       raindrop.String("user-conversation-2024"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

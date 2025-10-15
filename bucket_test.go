@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestBucketList(t *testing.T) {
+func TestBucketListWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,7 +27,17 @@ func TestBucketList(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.List(context.TODO(), raindrop.BucketListParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-smartbucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
+				},
+			},
+		},
+		OrganizationID: raindrop.String("organization_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -38,7 +48,7 @@ func TestBucketList(t *testing.T) {
 	}
 }
 
-func TestBucketDelete(t *testing.T) {
+func TestBucketDeleteWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -52,8 +62,18 @@ func TestBucketDelete(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Delete(context.TODO(), raindrop.BucketDeleteParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-smartbucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
+				},
+			},
+		},
 		Key:            "my-key",
+		OrganizationID: raindrop.String("organization_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -64,7 +84,7 @@ func TestBucketDelete(t *testing.T) {
 	}
 }
 
-func TestBucketGet(t *testing.T) {
+func TestBucketGetWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -78,8 +98,18 @@ func TestBucketGet(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Get(context.TODO(), raindrop.BucketGetParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-smartbucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
+				},
+			},
+		},
 		Key:            "my-key",
+		OrganizationID: raindrop.String("organization_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -90,7 +120,7 @@ func TestBucketGet(t *testing.T) {
 	}
 }
 
-func TestBucketPut(t *testing.T) {
+func TestBucketPutWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -104,10 +134,20 @@ func TestBucketPut(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Put(context.TODO(), raindrop.BucketPutParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name:            "my-smartbucket",
+					ApplicationName: raindrop.String("my-app"),
+					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
+				},
+			},
+		},
 		Content:        "U3RhaW5sZXNzIHJvY2tz",
 		ContentType:    "application/pdf",
 		Key:            "my-key",
+		OrganizationID: raindrop.String("organization_id"),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -27,9 +27,19 @@ func TestRehydrateSessionRehydrateWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RehydrateSession.Rehydrate(context.TODO(), raindrop.RehydrateSessionRehydrateParams{
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocation{SmartMemory: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
-		SummaryOnly:         raindrop.Bool(false),
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationUnion{
+			OfSmartMemory: &raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory{
+				SmartMemory: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemorySmartMemory{
+					Name:            "memory-name",
+					ApplicationName: raindrop.String("demo"),
+					Version:         raindrop.String("1234"),
+				},
+			},
+		},
+		OrganizationID: raindrop.String("organization_id"),
+		SummaryOnly:    raindrop.Bool(false),
+		UserID:         raindrop.String("user_id"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
