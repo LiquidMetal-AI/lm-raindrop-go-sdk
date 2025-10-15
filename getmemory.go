@@ -13,6 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // GetMemoryService contains methods and other services that help with interacting
@@ -181,7 +182,7 @@ func (r *GetMemoryGetParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byt
 type GetMemoryGetParamsSmartMemoryLocationSmartMemory struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	SmartMemory GetMemoryGetParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smart_memory,omitzero,required"`
+	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smart_memory,omitzero,required"`
 	paramObj
 }
 
@@ -190,28 +191,5 @@ func (r GetMemoryGetParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *GetMemoryGetParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
-//
-// The property Name is required.
-type GetMemoryGetParamsSmartMemoryLocationSmartMemorySmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r GetMemoryGetParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow GetMemoryGetParamsSmartMemoryLocationSmartMemorySmartMemory
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *GetMemoryGetParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

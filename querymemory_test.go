@@ -12,6 +12,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestQueryMemorySearchWithOptionalParams(t *testing.T) {
@@ -31,7 +32,7 @@ func TestQueryMemorySearchWithOptionalParams(t *testing.T) {
 		SessionID: "01jxanr45haeswhay4n0q8340y",
 		SmartMemoryLocation: raindrop.QueryMemorySearchParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.QueryMemorySearchParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: raindrop.QueryMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory{
+				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
 					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
 					Version:         raindrop.String("1234"),

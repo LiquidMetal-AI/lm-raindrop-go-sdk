@@ -59,7 +59,7 @@ func main() {
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -311,7 +311,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 _, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
 	BucketLocation: raindrop.BucketLocatorUnionParam{
 		OfBucket: &raindrop.BucketLocatorBucketParam{
-			Bucket: raindrop.BucketLocatorBucketBucketParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 				Name: "my-smartbucket",
 			},
 		},
@@ -349,7 +349,7 @@ client.Query.DocumentQuery(
 	raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -396,7 +396,7 @@ client.Query.DocumentQuery(
 	raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -422,7 +422,7 @@ response, err := client.Query.DocumentQuery(
 	raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},

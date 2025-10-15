@@ -11,6 +11,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestRehydrateSessionRehydrateWithOptionalParams(t *testing.T) {
@@ -30,7 +31,7 @@ func TestRehydrateSessionRehydrateWithOptionalParams(t *testing.T) {
 		SessionID: "01jxanr45haeswhay4n0q8340y",
 		SmartMemoryLocation: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationSmartMemorySmartMemory{
+				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
 					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
 					Version:         raindrop.String("1234"),

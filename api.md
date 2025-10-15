@@ -1,11 +1,22 @@
+# Shared Params Types
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared">shared</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared#LiquidmetalV1alpha1SmartMemoryNameParam">LiquidmetalV1alpha1SmartMemoryNameParam</a>
+
+# Shared Response Types
+
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared">shared</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared#LiquidmetalV1alpha1BucketResponse">LiquidmetalV1alpha1BucketResponse</a>
+
 # Query
 
 Params Types:
 
 - <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#BucketLocatorUnionParam">BucketLocatorUnionParam</a>
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#LiquidmetalV1alpha1BucketNameParam">LiquidmetalV1alpha1BucketNameParam</a>
 
 Response Types:
 
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#LiquidmetalV1alpha1SourceResult">LiquidmetalV1alpha1SourceResult</a>
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#LiquidmetalV1alpha1TextResult">LiquidmetalV1alpha1TextResult</a>
 - <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryChunkSearchResponse">QueryChunkSearchResponse</a>
 - <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryDocumentQueryResponse">QueryDocumentQueryResponse</a>
 - <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#QueryGetPaginatedSearchResponse">QueryGetPaginatedSearchResponse</a>
