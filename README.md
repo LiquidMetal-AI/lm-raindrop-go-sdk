@@ -57,10 +57,16 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-smartbucket",
+				},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		panic(err.Error())
@@ -289,41 +295,8 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
-```go
-iter := client.Query.GetPaginatedSearchAutoPaging(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
-	Page:      raindrop.Int(1),
-	PageSize:  raindrop.Int(15),
-	RequestID: "<YOUR-REQUEST-ID>",
-})
-// Automatically fetches more pages as needed.
-for iter.Next() {
-	queryGetPaginatedSearchResponse := iter.Current()
-	fmt.Printf("%+v\n", queryGetPaginatedSearchResponse)
-}
-if err := iter.Err(); err != nil {
-	panic(err.Error())
-}
-```
-
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
-
-```go
-page, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
-	Page:      raindrop.Int(1),
-	PageSize:  raindrop.Int(15),
-	RequestID: "<YOUR-REQUEST-ID>",
-})
-for page != nil {
-	for _, query := range page.Results {
-		fmt.Printf("%+v\n", query)
-	}
-	page, err = page.GetNextPage()
-}
-if err != nil {
-	panic(err.Error())
-}
-```
 
 ### Errors
 
@@ -336,10 +309,16 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-	BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-	Input:          "What are the key points in this document?",
-	ObjectID:       "document.pdf",
-	RequestID:      "<YOUR-REQUEST-ID>",
+	BucketLocation: raindrop.BucketLocatorUnionParam{
+		OfBucket: &raindrop.BucketLocatorBucketParam{
+			Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Name: "my-smartbucket",
+			},
+		},
+	},
+	Input:     "What are the key points in this document?",
+	ObjectID:  "document.pdf",
+	RequestID: "<YOUR-REQUEST-ID>",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -368,10 +347,16 @@ defer cancel()
 client.Query.DocumentQuery(
 	ctx,
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-smartbucket",
+				},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -409,10 +394,16 @@ client := raindrop.NewClient(
 client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-smartbucket",
+				},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	option.WithMaxRetries(5),
 )
@@ -429,10 +420,16 @@ var response *http.Response
 response, err := client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-smartbucket",
+				},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	option.WithResponseInto(&response),
 )

@@ -45,7 +45,7 @@ func (r *QuerySemanticMemoryService) Search(ctx context.Context, body QuerySeman
 
 type QuerySemanticMemorySearchResponse struct {
 	// Search results with matching documents
-	DocumentSearchResponse QuerySemanticMemorySearchResponseDocumentSearchResponse `json:"documentSearchResponse,nullable"`
+	DocumentSearchResponse QuerySemanticMemorySearchResponseDocumentSearchResponse `json:"document_search_response,nullable"`
 	// Error message if the search failed
 	Error string `json:"error,nullable"`
 	// Indicates whether the search was performed successfully
@@ -86,11 +86,11 @@ func (r *QuerySemanticMemorySearchResponseDocumentSearchResponse) UnmarshalJSON(
 
 type QuerySemanticMemorySearchResponseDocumentSearchResponseResult struct {
 	// Unique signature for this search result chunk
-	ChunkSignature string `json:"chunkSignature,nullable"`
+	ChunkSignature string `json:"chunk_signature,nullable"`
 	// Embedding vector information (if available)
 	Embed string `json:"embed,nullable"`
 	// Payload signature for the original document
-	PayloadSignature string `json:"payloadSignature,nullable"`
+	PayloadSignature string `json:"payload_signature,nullable"`
 	// Relevance score for this search result
 	Score float64 `json:"score,nullable"`
 	// Source reference for the matched content
@@ -125,7 +125,9 @@ type QuerySemanticMemorySearchParams struct {
 	// Natural language search query to find relevant documents
 	Needle string `json:"needle,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation QuerySemanticMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	SmartMemoryLocation QuerySemanticMemorySearchParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero,required"`
+	OrganizationID      param.Opt[string]                                       `json:"organization_id,omitzero"`
+	UserID              param.Opt[string]                                       `json:"user_id,omitzero"`
 	paramObj
 }
 
@@ -137,34 +139,51 @@ func (r *QuerySemanticMemorySearchParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The property SmartMemory is required.
-type QuerySemanticMemorySearchParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type QuerySemanticMemorySearchParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u QuerySemanticMemorySearchParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *QuerySemanticMemorySearchParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *QuerySemanticMemorySearchParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID struct {
 	// **REQUIRED** FALSE
-	SmartMemory QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	ModuleID string `json:"module_id,required"`
 	paramObj
 }
 
-func (r QuerySemanticMemorySearchParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow QuerySemanticMemorySearchParamsSmartMemoryLocation
+func (r QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *QuerySemanticMemorySearchParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
-//
-// The property Name is required.
+// The property SmartMemory is required.
 type QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
+	SmartMemory QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smart_memory,omitzero,required"`
 	paramObj
 }
 
@@ -173,5 +192,28 @@ func (r QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory) MarshalJS
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+// **REQUIRED** FALSE
+//
+// The property Name is required.
+type QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory struct {
+	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
+	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **REQUIRED** FALSE
+	Version param.Opt[string] `json:"version,omitzero"`
+	paramObj
+}
+
+func (r QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

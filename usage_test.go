@@ -25,10 +25,16 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorUnionParam{
+			OfBucket: &raindrop.BucketLocatorBucketParam{
+				Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Name: "my-smartbucket",
+				},
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
