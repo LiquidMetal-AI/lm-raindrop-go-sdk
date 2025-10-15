@@ -11,6 +11,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestListProcedureNewWithOptionalParams(t *testing.T) {
@@ -29,7 +30,7 @@ func TestListProcedureNewWithOptionalParams(t *testing.T) {
 	_, err := client.ListProcedures.New(context.TODO(), raindrop.ListProcedureNewParams{
 		SmartMemoryLocation: raindrop.ListProcedureNewParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.ListProcedureNewParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: raindrop.ListProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory{
+				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
 					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
 					Version:         raindrop.String("1234"),

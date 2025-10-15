@@ -29,7 +29,7 @@ func TestBucketListWithOptionalParams(t *testing.T) {
 	_, err := client.Bucket.List(context.TODO(), raindrop.BucketListParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
 					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
@@ -64,7 +64,7 @@ func TestBucketDeleteWithOptionalParams(t *testing.T) {
 	_, err := client.Bucket.Delete(context.TODO(), raindrop.BucketDeleteParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
 					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
@@ -100,7 +100,7 @@ func TestBucketGetWithOptionalParams(t *testing.T) {
 	_, err := client.Bucket.Get(context.TODO(), raindrop.BucketGetParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
 					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),
@@ -136,7 +136,7 @@ func TestBucketPutWithOptionalParams(t *testing.T) {
 	_, err := client.Bucket.Put(context.TODO(), raindrop.BucketPutParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name:            "my-smartbucket",
 					ApplicationName: raindrop.String("my-app"),
 					Version:         raindrop.String("01jxanr45haeswhay4n0q8340y"),

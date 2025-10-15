@@ -41,7 +41,7 @@ func TestUserAgentHeader(t *testing.T) {
 	client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -76,7 +76,7 @@ func TestRetryAfter(t *testing.T) {
 	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -122,7 +122,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -163,7 +163,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -203,7 +203,7 @@ func TestRetryAfterMs(t *testing.T) {
 	_, err := client.Query.DocumentQuery(context.Background(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -237,7 +237,7 @@ func TestContextCancel(t *testing.T) {
 	_, err := client.Query.DocumentQuery(cancelCtx, raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -268,7 +268,7 @@ func TestContextCancelDelay(t *testing.T) {
 	_, err := client.Query.DocumentQuery(cancelCtx, raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},
@@ -305,7 +305,7 @@ func TestContextDeadline(t *testing.T) {
 		_, err := client.Query.DocumentQuery(deadlineCtx, raindrop.QueryDocumentQueryParams{
 			BucketLocation: raindrop.BucketLocatorUnionParam{
 				OfBucket: &raindrop.BucketLocatorBucketParam{
-					Bucket: raindrop.BucketLocatorBucketBucketParam{
+					Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 						Name: "my-smartbucket",
 					},
 				},

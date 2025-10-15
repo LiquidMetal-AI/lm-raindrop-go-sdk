@@ -27,7 +27,7 @@ func TestUsage(t *testing.T) {
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorUnionParam{
 			OfBucket: &raindrop.BucketLocatorBucketParam{
-				Bucket: raindrop.BucketLocatorBucketBucketParam{
+				Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
 					Name: "my-smartbucket",
 				},
 			},

@@ -12,6 +12,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // PutProcedureService contains methods and other services that help with
@@ -126,7 +127,7 @@ func (r *PutProcedureNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []
 type PutProcedureNewParamsSmartMemoryLocationSmartMemory struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	SmartMemory PutProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory `json:"smart_memory,omitzero,required"`
+	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smart_memory,omitzero,required"`
 	paramObj
 }
 
@@ -135,28 +136,5 @@ func (r PutProcedureNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *PutProcedureNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** FALSE
-//
-// The property Name is required.
-type PutProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r PutProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow PutProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *PutProcedureNewParamsSmartMemoryLocationSmartMemorySmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

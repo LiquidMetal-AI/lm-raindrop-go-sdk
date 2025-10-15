@@ -12,6 +12,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // QueryService contains methods and other services that help with interacting with
@@ -147,7 +148,7 @@ func (r *QueryService) SumarizePage(ctx context.Context, body QuerySumarizePageP
 	return
 }
 
-func BucketLocatorParamOfBucket(bucket BucketLocatorBucketBucketParam) BucketLocatorUnionParam {
+func BucketLocatorParamOfBucket(bucket LiquidmetalV1alpha1BucketNameParam) BucketLocatorUnionParam {
 	var variant BucketLocatorBucketParam
 	variant.Bucket = bucket
 	return BucketLocatorUnionParam{OfBucket: &variant}
@@ -187,7 +188,7 @@ func (u *BucketLocatorUnionParam) asAny() any {
 // The property Bucket is required.
 type BucketLocatorBucketParam struct {
 	// **EXAMPLE** { name: 'my-smartbucket' } **REQUIRED** FALSE
-	Bucket BucketLocatorBucketBucketParam `json:"bucket,omitzero,required"`
+	Bucket LiquidmetalV1alpha1BucketNameParam `json:"bucket,omitzero,required"`
 	paramObj
 }
 
@@ -196,28 +197,6 @@ func (r BucketLocatorBucketParam) MarshalJSON() (data []byte, err error) {
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *BucketLocatorBucketParam) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// **EXAMPLE** { name: 'my-smartbucket' } **REQUIRED** FALSE
-//
-// The property Name is required.
-type BucketLocatorBucketBucketParam struct {
-	// The name of the bucket **EXAMPLE** "my-bucket" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional version of the bucket **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r BucketLocatorBucketBucketParam) MarshalJSON() (data []byte, err error) {
-	type shadow BucketLocatorBucketBucketParam
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *BucketLocatorBucketBucketParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -236,25 +215,49 @@ func (r *BucketLocatorModuleIDParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type QueryChunkSearchResponse struct {
-	// Ordered list of relevant text segments. Each result includes full context and
-	// metadata
-	Results []QueryChunkSearchResponseResult `json:"results"`
+// BucketName represents a bucket name with an optional version
+//
+// The property Name is required.
+type LiquidmetalV1alpha1BucketNameParam struct {
+	// The name of the bucket **EXAMPLE** "my-bucket" **REQUIRED** TRUE
+	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
+	// Optional version of the bucket **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **REQUIRED** FALSE
+	Version param.Opt[string] `json:"version,omitzero"`
+	paramObj
+}
+
+func (r LiquidmetalV1alpha1BucketNameParam) MarshalJSON() (data []byte, err error) {
+	type shadow LiquidmetalV1alpha1BucketNameParam
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LiquidmetalV1alpha1BucketNameParam) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type LiquidmetalV1alpha1SourceResult struct {
+	// The bucket information containing this result
+	Bucket shared.LiquidmetalV1alpha1BucketResponse `json:"bucket"`
+	// The object key within the bucket
+	Object string `json:"object"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		Results     respjson.Field
+		Bucket      respjson.Field
+		Object      respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
 }
 
 // Returns the unmodified JSON received from the API
-func (r QueryChunkSearchResponse) RawJSON() string { return r.JSON.raw }
-func (r *QueryChunkSearchResponse) UnmarshalJSON(data []byte) error {
+func (r LiquidmetalV1alpha1SourceResult) RawJSON() string { return r.JSON.raw }
+func (r *LiquidmetalV1alpha1SourceResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type QueryChunkSearchResponseResult struct {
+type LiquidmetalV1alpha1TextResult struct {
 	// Unique identifier for this text segment. Used for deduplication and result
 	// tracking
 	ChunkSignature string `json:"chunk_signature,nullable"`
@@ -266,7 +269,7 @@ type QueryChunkSearchResponseResult struct {
 	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
 	Score float64 `json:"score,nullable"`
 	// Source document references. Contains bucket and object information
-	Source QueryChunkSearchResponseResultSource `json:"source"`
+	Source LiquidmetalV1alpha1SourceResult `json:"source"`
 	// The actual content of the result. May be a document excerpt or full content
 	Text string `json:"text,nullable"`
 	// Content MIME type. Helps with proper result rendering
@@ -286,56 +289,26 @@ type QueryChunkSearchResponseResult struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r QueryChunkSearchResponseResult) RawJSON() string { return r.JSON.raw }
-func (r *QueryChunkSearchResponseResult) UnmarshalJSON(data []byte) error {
+func (r LiquidmetalV1alpha1TextResult) RawJSON() string { return r.JSON.raw }
+func (r *LiquidmetalV1alpha1TextResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Source document references. Contains bucket and object information
-type QueryChunkSearchResponseResultSource struct {
-	// The bucket information containing this result
-	Bucket QueryChunkSearchResponseResultSourceBucket `json:"bucket"`
-	// The object key within the bucket
-	Object string `json:"object"`
+type QueryChunkSearchResponse struct {
+	// Ordered list of relevant text segments. Each result includes full context and
+	// metadata
+	Results []LiquidmetalV1alpha1TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		Bucket      respjson.Field
-		Object      respjson.Field
+		Results     respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
 }
 
 // Returns the unmodified JSON received from the API
-func (r QueryChunkSearchResponseResultSource) RawJSON() string { return r.JSON.raw }
-func (r *QueryChunkSearchResponseResultSource) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The bucket information containing this result
-type QueryChunkSearchResponseResultSourceBucket struct {
-	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
-	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ModuleID             respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QueryChunkSearchResponseResultSourceBucket) RawJSON() string { return r.JSON.raw }
-func (r *QueryChunkSearchResponseResultSourceBucket) UnmarshalJSON(data []byte) error {
+func (r QueryChunkSearchResponse) RawJSON() string { return r.JSON.raw }
+func (r *QueryChunkSearchResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -362,7 +335,7 @@ type QueryGetPaginatedSearchResponse struct {
 	// Updated pagination information
 	Pagination QueryGetPaginatedSearchResponsePagination `json:"pagination"`
 	// Page results with full metadata
-	Results []QueryGetPaginatedSearchResponseResult `json:"results"`
+	Results []LiquidmetalV1alpha1TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Pagination  respjson.Field
@@ -408,96 +381,11 @@ func (r *QueryGetPaginatedSearchResponsePagination) UnmarshalJSON(data []byte) e
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type QueryGetPaginatedSearchResponseResult struct {
-	// Unique identifier for this text segment. Used for deduplication and result
-	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
-	// Vector representation for similarity matching. Used in semantic search
-	// operations
-	Embed string `json:"embed,nullable"`
-	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
-	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
-	Score float64 `json:"score,nullable"`
-	// Source document references. Contains bucket and object information
-	Source QueryGetPaginatedSearchResponseResultSource `json:"source"`
-	// The actual content of the result. May be a document excerpt or full content
-	Text string `json:"text,nullable"`
-	// Content MIME type. Helps with proper result rendering
-	Type string `json:"type,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ChunkSignature   respjson.Field
-		Embed            respjson.Field
-		PayloadSignature respjson.Field
-		Score            respjson.Field
-		Source           respjson.Field
-		Text             respjson.Field
-		Type             respjson.Field
-		ExtraFields      map[string]respjson.Field
-		raw              string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponseResult) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponseResult) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Source document references. Contains bucket and object information
-type QueryGetPaginatedSearchResponseResultSource struct {
-	// The bucket information containing this result
-	Bucket QueryGetPaginatedSearchResponseResultSourceBucket `json:"bucket"`
-	// The object key within the bucket
-	Object string `json:"object"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Bucket      respjson.Field
-		Object      respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponseResultSource) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponseResultSource) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The bucket information containing this result
-type QueryGetPaginatedSearchResponseResultSourceBucket struct {
-	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
-	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ModuleID             respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QueryGetPaginatedSearchResponseResultSourceBucket) RawJSON() string { return r.JSON.raw }
-func (r *QueryGetPaginatedSearchResponseResultSourceBucket) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 type QuerySearchResponse struct {
 	// Pagination details for result navigation
 	Pagination QuerySearchResponsePagination `json:"pagination"`
 	// Matched results with metadata
-	Results []QuerySearchResponseResult `json:"results"`
+	Results []LiquidmetalV1alpha1TextResult `json:"results"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Pagination  respjson.Field
@@ -540,91 +428,6 @@ type QuerySearchResponsePagination struct {
 // Returns the unmodified JSON received from the API
 func (r QuerySearchResponsePagination) RawJSON() string { return r.JSON.raw }
 func (r *QuerySearchResponsePagination) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type QuerySearchResponseResult struct {
-	// Unique identifier for this text segment. Used for deduplication and result
-	// tracking
-	ChunkSignature string `json:"chunk_signature,nullable"`
-	// Vector representation for similarity matching. Used in semantic search
-	// operations
-	Embed string `json:"embed,nullable"`
-	// Parent document identifier. Links related content chunks together
-	PayloadSignature string `json:"payload_signature,nullable"`
-	// Relevance score (0.0 to 1.0). Higher scores indicate better matches
-	Score float64 `json:"score,nullable"`
-	// Source document references. Contains bucket and object information
-	Source QuerySearchResponseResultSource `json:"source"`
-	// The actual content of the result. May be a document excerpt or full content
-	Text string `json:"text,nullable"`
-	// Content MIME type. Helps with proper result rendering
-	Type string `json:"type,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ChunkSignature   respjson.Field
-		Embed            respjson.Field
-		PayloadSignature respjson.Field
-		Score            respjson.Field
-		Source           respjson.Field
-		Text             respjson.Field
-		Type             respjson.Field
-		ExtraFields      map[string]respjson.Field
-		raw              string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QuerySearchResponseResult) RawJSON() string { return r.JSON.raw }
-func (r *QuerySearchResponseResult) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Source document references. Contains bucket and object information
-type QuerySearchResponseResultSource struct {
-	// The bucket information containing this result
-	Bucket QuerySearchResponseResultSourceBucket `json:"bucket"`
-	// The object key within the bucket
-	Object string `json:"object"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Bucket      respjson.Field
-		Object      respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QuerySearchResponseResultSource) RawJSON() string { return r.JSON.raw }
-func (r *QuerySearchResponseResultSource) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// The bucket information containing this result
-type QuerySearchResponseResultSourceBucket struct {
-	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
-	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ModuleID             respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r QuerySearchResponseResultSourceBucket) RawJSON() string { return r.JSON.raw }
-func (r *QuerySearchResponseResultSourceBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

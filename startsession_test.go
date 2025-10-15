@@ -11,6 +11,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestStartSessionNewWithOptionalParams(t *testing.T) {
@@ -29,7 +30,7 @@ func TestStartSessionNewWithOptionalParams(t *testing.T) {
 	_, err := client.StartSession.New(context.TODO(), raindrop.StartSessionNewParams{
 		SmartMemoryLocation: raindrop.StartSessionNewParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.StartSessionNewParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: raindrop.StartSessionNewParamsSmartMemoryLocationSmartMemorySmartMemory{
+				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
 					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
 					Version:         raindrop.String("1234"),

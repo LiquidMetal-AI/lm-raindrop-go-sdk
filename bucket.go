@@ -14,6 +14,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // BucketService contains methods and other services that help with interacting
@@ -178,7 +179,7 @@ func (r *BucketGetResponse) UnmarshalJSON(data []byte) error {
 
 type BucketPutResponse struct {
 	// Information about the bucket where the object was uploaded
-	Bucket BucketPutResponseBucket `json:"bucket"`
+	Bucket shared.LiquidmetalV1alpha1BucketResponse `json:"bucket"`
 	// Key/path of the uploaded object
 	Key string `json:"key"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -193,33 +194,6 @@ type BucketPutResponse struct {
 // Returns the unmodified JSON received from the API
 func (r BucketPutResponse) RawJSON() string { return r.JSON.raw }
 func (r *BucketPutResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Information about the bucket where the object was uploaded
-type BucketPutResponseBucket struct {
-	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
-	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ModuleID             respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r BucketPutResponseBucket) RawJSON() string { return r.JSON.raw }
-func (r *BucketPutResponseBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

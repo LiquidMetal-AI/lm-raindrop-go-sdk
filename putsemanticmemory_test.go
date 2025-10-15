@@ -11,6 +11,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestPutSemanticMemoryNewWithOptionalParams(t *testing.T) {
@@ -30,7 +31,7 @@ func TestPutSemanticMemoryNewWithOptionalParams(t *testing.T) {
 		Document: "document",
 		SmartMemoryLocation: raindrop.PutSemanticMemoryNewParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.PutSemanticMemoryNewParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: raindrop.PutSemanticMemoryNewParamsSmartMemoryLocationSmartMemorySmartMemory{
+				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
 					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
 					Version:         raindrop.String("1234"),
