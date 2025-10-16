@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
@@ -13,6 +14,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // BucketService contains methods and other services that help with interacting
@@ -37,7 +39,7 @@ func NewBucketService(opts ...option.RequestOption) (r BucketService) {
 // List all objects in a SmartBucket or regular bucket. The bucket parameter (ID)
 // is used to identify the bucket to list objects from.
 func (r *BucketService) List(ctx context.Context, body BucketListParams, opts ...option.RequestOption) (res *BucketListResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/list_objects"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -47,7 +49,7 @@ func (r *BucketService) List(ctx context.Context, body BucketListParams, opts ..
 // used to identify the bucket to delete from. The key is the path to the object in
 // the bucket.
 func (r *BucketService) Delete(ctx context.Context, body BucketDeleteParams, opts ...option.RequestOption) (res *BucketDeleteResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/delete_object"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -57,7 +59,7 @@ func (r *BucketService) Delete(ctx context.Context, body BucketDeleteParams, opt
 // is used to identify the bucket to download from. The key is the path to the
 // object in the bucket.
 func (r *BucketService) Get(ctx context.Context, body BucketGetParams, opts ...option.RequestOption) (res *BucketGetResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/get_object"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -67,7 +69,7 @@ func (r *BucketService) Get(ctx context.Context, body BucketGetParams, opts ...o
 // used to identify the bucket to upload to. The key is the path to the object in
 // the bucket.
 func (r *BucketService) Put(ctx context.Context, body BucketPutParams, opts ...option.RequestOption) (res *BucketPutResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/put_object"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -177,7 +179,7 @@ func (r *BucketGetResponse) UnmarshalJSON(data []byte) error {
 
 type BucketPutResponse struct {
 	// Information about the bucket where the object was uploaded
-	Bucket BucketPutResponseBucket `json:"bucket"`
+	Bucket shared.LiquidmetalV1alpha1BucketResponse `json:"bucket"`
 	// Key/path of the uploaded object
 	Key string `json:"key"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -192,30 +194,6 @@ type BucketPutResponse struct {
 // Returns the unmodified JSON received from the API
 func (r BucketPutResponse) RawJSON() string { return r.JSON.raw }
 func (r *BucketPutResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Information about the bucket where the object was uploaded
-type BucketPutResponseBucket struct {
-	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"applicationName"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"applicationVersionId"`
-	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucketName"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ApplicationName      respjson.Field
-		ApplicationVersionID respjson.Field
-		BucketName           respjson.Field
-		ExtraFields          map[string]respjson.Field
-		raw                  string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r BucketPutResponseBucket) RawJSON() string { return r.JSON.raw }
-func (r *BucketPutResponseBucket) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.6.42 (2025-10-16)
+
+Full Changelog: [v0.1.10...v0.6.42](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.10...v0.6.42)
+
+### Features
+
+* **api:** manual updates ([69eb3a9](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/69eb3a9ac554aacc06b886cf326addab2c2de9ca))
+* **api:** manual updates ([03060e4](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/03060e4b5d0a1df19b937a96174bb45fabf39d14))
+* **api:** updating API spec with latest changes ([87fe533](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/87fe53369052dbc1061904137078a53c19a0e60d))
+* **api:** updating API spec with latest changes ([edfaea5](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/edfaea5263f3c0fac4bf76654d937863611d2a7b))
+* **api:** updating API spec with latest changes ([93c56ab](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/93c56ab1676512b40b7cc4956c0eab85202fd7ba))
+* **api:** updating API spec with latest changes ([cd016d1](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/cd016d132d42f40e39d1aec79a9cbfd182b1a247))
+* **api:** updating API spec with latest changes ([1b84aae](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/1b84aae91a49a3ab281d3353a8e386792e720ce3))
+* **api:** updating API spec with latest changes ([d886694](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/d886694de100ae55b002fea809eff1d852ffa4a0))
+* **api:** updating API spec with latest changes ([83e5288](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/83e5288aa07ee94a9b39a92e2b61f9da9611d6dc))
+* **client:** support optional json html escaping ([f203b32](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/f203b32b1e6694c699256a281a1c6b426ad24729))
+
+
+### Bug Fixes
+
+* bugfix for setting JSON keys with special characters ([2782966](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/2782966c3ad783f45cea2ddc4f20b58fcabc46d1))
+* close body before retrying ([7043e3d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/7043e3d833f95892a21f65e94a2db1dcd59e6fd6))
+* use slices.Concat instead of sometimes modifying r.Options ([f42112d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/f42112d3e1d2637ab2c1237cd095ca9447873596))
+
+
+### Chores
+
+* bump minimum go version to 1.22 ([98b484e](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/98b484e6b97a2d6de7d08adde8d1077f751b341e))
+* do not install brew dependencies in ./scripts/bootstrap by default ([64cbf37](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/64cbf377f35ccf2b6fb743fe59d4abbb38b80751))
+* **internal:** codegen related update ([13abab3](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/13abab39b83df8a725fea9d4eca3d1e8b937b569))
+* **internal:** codegen related update ([e2db6dd](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/e2db6dd7edb7cfe36866c6ebe59429919e464120))
+* **internal:** codegen related update ([1128118](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/1128118e9655ea5dfc8456cc12332f7e7340a3ff))
+* **internal:** update comment in script ([fe44e1c](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/fe44e1c24b584ad65cfbca0b2d85b1a8935c2bbe))
+* update @stainless-api/prism-cli to v5.15.0 ([6f7a9d9](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/6f7a9d906016ba8144ccbd76f9dd06cc85708d9d))
+* update more docs for 1.22 ([4a26053](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/4a260538be0f87c1ba9b4ca62f302091a1fba897))
+
 ## 0.1.10 (2025-07-24)
 
 Full Changelog: [v0.1.9...v0.1.10](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.9...v0.1.10)

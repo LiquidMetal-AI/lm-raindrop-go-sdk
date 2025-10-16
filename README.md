@@ -1,6 +1,10 @@
 # Raindrop Go API Library
 
+<!-- x-release-please-start-version -->
+
 <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk"><img src="https://pkg.go.dev/badge/github.com/LiquidMetal-AI/lm-raindrop-go-sdk.svg" alt="Go Reference"></a>
+
+<!-- x-release-please-end -->
 
 The Raindrop Go library provides convenient access to the [Raindrop REST API](docs.liquidmetal.ai)
 from applications written in Go.
@@ -24,14 +28,14 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.1.10'
+go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.6.42'
 ```
 
 <!-- x-release-please-end -->
 
 ## Requirements
 
-This library requires Go 1.18+.
+This library requires Go 1.22+.
 
 ## Usage
 
@@ -53,7 +57,7 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
 		Input:          "What are the key points in this document?",
 		ObjectID:       "document.pdf",
 		RequestID:      "<YOUR-REQUEST-ID>",
@@ -288,13 +292,13 @@ You can use `.ListAutoPaging()` methods to iterate through items across all page
 ```go
 iter := client.Query.GetPaginatedSearchAutoPaging(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
 	Page:      raindrop.Int(1),
-	PageSize:  raindrop.Int(15),
+	PageSize:  raindrop.Int(10),
 	RequestID: "<YOUR-REQUEST-ID>",
 })
 // Automatically fetches more pages as needed.
 for iter.Next() {
-	queryGetPaginatedSearchResponse := iter.Current()
-	fmt.Printf("%+v\n", queryGetPaginatedSearchResponse)
+	liquidmetalV1alpha1TextResult := iter.Current()
+	fmt.Printf("%+v\n", liquidmetalV1alpha1TextResult)
 }
 if err := iter.Err(); err != nil {
 	panic(err.Error())
@@ -307,7 +311,7 @@ with additional helper methods like `.GetNextPage()`, e.g.:
 ```go
 page, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
 	Page:      raindrop.Int(1),
-	PageSize:  raindrop.Int(15),
+	PageSize:  raindrop.Int(10),
 	RequestID: "<YOUR-REQUEST-ID>",
 })
 for page != nil {
@@ -332,7 +336,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-	BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+	BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
 	Input:          "What are the key points in this document?",
 	ObjectID:       "document.pdf",
 	RequestID:      "<YOUR-REQUEST-ID>",
@@ -364,7 +368,7 @@ defer cancel()
 client.Query.DocumentQuery(
 	ctx,
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
 		Input:          "What are the key points in this document?",
 		ObjectID:       "document.pdf",
 		RequestID:      "<YOUR-REQUEST-ID>",
@@ -405,7 +409,7 @@ client := raindrop.NewClient(
 client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
 		Input:          "What are the key points in this document?",
 		ObjectID:       "document.pdf",
 		RequestID:      "<YOUR-REQUEST-ID>",
@@ -425,7 +429,7 @@ var response *http.Response
 response, err := client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
 		Input:          "What are the key points in this document?",
 		ObjectID:       "document.pdf",
 		RequestID:      "<YOUR-REQUEST-ID>",

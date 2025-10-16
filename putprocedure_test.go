@@ -11,10 +11,11 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestPutProcedureNewWithOptionalParams(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -28,7 +29,7 @@ func TestPutProcedureNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.PutProcedure.New(context.TODO(), raindrop.PutProcedureNewParams{
 		Key:                 "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.PutProcedureNewParamsSmartMemoryLocation{SmartMemory: raindrop.PutProcedureNewParamsSmartMemoryLocationSmartMemory{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.PutProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("demo"), Name: "memory-name", Version: raindrop.String("1234")}},
 		Value:               "You are a technical documentation assistant...",
 		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
 	})

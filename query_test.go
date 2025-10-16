@@ -13,8 +13,8 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestQueryChunkSearch(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
+func TestQueryChunkSearchWithOptionalParams(t *testing.T) {
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -27,9 +27,10 @@ func TestQueryChunkSearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.ChunkSearch(context.TODO(), raindrop.QueryChunkSearchParams{
-		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
+		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
 		Input:           "Find documents about revenue in Q4 2023",
 		RequestID:       "<YOUR-REQUEST-ID>",
+		Partition:       raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -40,8 +41,8 @@ func TestQueryChunkSearch(t *testing.T) {
 	}
 }
 
-func TestQueryDocumentQuery(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
+func TestQueryDocumentQueryWithOptionalParams(t *testing.T) {
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -54,10 +55,11 @@ func TestQueryDocumentQuery(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
 		Input:          "What are the key points in this document?",
 		ObjectID:       "document.pdf",
 		RequestID:      "<YOUR-REQUEST-ID>",
+		Partition:      raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -68,8 +70,8 @@ func TestQueryDocumentQuery(t *testing.T) {
 	}
 }
 
-func TestQueryGetPaginatedSearch(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
+func TestQueryGetPaginatedSearchWithOptionalParams(t *testing.T) {
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -85,6 +87,7 @@ func TestQueryGetPaginatedSearch(t *testing.T) {
 		Page:      raindrop.Int(1),
 		PageSize:  raindrop.Int(10),
 		RequestID: "<YOUR-REQUEST-ID>",
+		Partition: raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -95,8 +98,8 @@ func TestQueryGetPaginatedSearch(t *testing.T) {
 	}
 }
 
-func TestQuerySearch(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
+func TestQuerySearchWithOptionalParams(t *testing.T) {
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -109,9 +112,10 @@ func TestQuerySearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Search(context.TODO(), raindrop.QuerySearchParams{
-		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.BucketLocatorBucketParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
+		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
 		Input:           "All my files",
 		RequestID:       "<YOUR-REQUEST-ID>",
+		Partition:       raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -122,8 +126,8 @@ func TestQuerySearch(t *testing.T) {
 	}
 }
 
-func TestQuerySumarizePage(t *testing.T) {
-	t.Skip("skipped: tests are disabled for the time being")
+func TestQuerySumarizePageWithOptionalParams(t *testing.T) {
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -139,6 +143,7 @@ func TestQuerySumarizePage(t *testing.T) {
 		Page:      1,
 		PageSize:  10,
 		RequestID: "<YOUR-REQUEST-ID>",
+		Partition: raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -26,7 +26,7 @@ func TestManualPagination(t *testing.T) {
 	)
 	page, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
 		Page:      raindrop.Int(1),
-		PageSize:  raindrop.Int(15),
+		PageSize:  raindrop.Int(10),
 		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {

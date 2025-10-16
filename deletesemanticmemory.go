@@ -5,12 +5,14 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // DeleteSemanticMemoryService contains methods and other services that help with
@@ -35,7 +37,7 @@ func NewDeleteSemanticMemoryService(opts ...option.RequestOption) (r DeleteSeman
 // Removes a specific semantic memory document by its object ID. This operation
 // permanently deletes the document and is irreversible.
 func (r *DeleteSemanticMemoryService) Delete(ctx context.Context, body DeleteSemanticMemoryDeleteParams, opts ...option.RequestOption) (res *DeleteSemanticMemoryDeleteResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/delete_semantic_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -79,9 +81,9 @@ func (r *DeleteSemanticMemoryDeleteParams) UnmarshalJSON(data []byte) error {
 
 // The property SmartMemory is required.
 type DeleteSemanticMemoryDeleteParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** TRUE
-	SmartMemory DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	// **EXAMPLE** {"name":"memory-name","applicationName":"demo","version":"1234"}
+	// **REQUIRED** FALSE
+	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
@@ -90,28 +92,5 @@ func (r DeleteSemanticMemoryDeleteParamsSmartMemoryLocation) MarshalJSON() (data
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *DeleteSemanticMemoryDeleteParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** TRUE
-//
-// The property Name is required.
-type DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

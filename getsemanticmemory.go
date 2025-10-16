@@ -5,12 +5,14 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // GetSemanticMemoryService contains methods and other services that help with
@@ -35,7 +37,7 @@ func NewGetSemanticMemoryService(opts ...option.RequestOption) (r GetSemanticMem
 // Retrieves a specific semantic memory document by its object ID. Returns the
 // complete document with all its stored properties and metadata.
 func (r *GetSemanticMemoryService) New(ctx context.Context, body GetSemanticMemoryNewParams, opts ...option.RequestOption) (res *GetSemanticMemoryNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/get_semantic_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -82,9 +84,9 @@ func (r *GetSemanticMemoryNewParams) UnmarshalJSON(data []byte) error {
 
 // The property SmartMemory is required.
 type GetSemanticMemoryNewParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** TRUE
-	SmartMemory GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	// **EXAMPLE** {"name":"memory-name","applicationName":"demo","version":"1234"}
+	// **REQUIRED** FALSE
+	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
@@ -93,28 +95,5 @@ func (r GetSemanticMemoryNewParamsSmartMemoryLocation) MarshalJSON() (data []byt
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *GetSemanticMemoryNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** TRUE
-//
-// The property Name is required.
-type GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

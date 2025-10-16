@@ -5,12 +5,14 @@ package raindrop
 import (
 	"context"
 	"net/http"
+	"slices"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/apijson"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/requestconfig"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/param"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/packages/respjson"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 // SummarizeMemoryService contains methods and other services that help with
@@ -42,7 +44,7 @@ func NewSummarizeMemoryService(opts ...option.RequestOption) (r SummarizeMemoryS
 // - Maintains temporal context
 // - Supports custom summarization instructions
 func (r *SummarizeMemoryService) New(ctx context.Context, body SummarizeMemoryNewParams, opts ...option.RequestOption) (res *SummarizeMemoryNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/summarize_memory"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
@@ -90,9 +92,9 @@ func (r *SummarizeMemoryNewParams) UnmarshalJSON(data []byte) error {
 
 // The property SmartMemory is required.
 type SummarizeMemoryNewParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-	// **REQUIRED** TRUE
-	SmartMemory SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory `json:"smartMemory,omitzero,required"`
+	// **EXAMPLE** {"name":"memory-name","applicationName":"demo","version":"1234"}
+	// **REQUIRED** FALSE
+	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
@@ -101,28 +103,5 @@ func (r SummarizeMemoryNewParamsSmartMemoryLocation) MarshalJSON() (data []byte,
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *SummarizeMemoryNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
-// **REQUIRED** TRUE
-//
-// The property Name is required.
-type SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory struct {
-	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
-	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
