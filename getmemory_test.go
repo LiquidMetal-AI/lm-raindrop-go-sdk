@@ -30,7 +30,7 @@ func TestGetMemoryGetWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.GetMemory.Get(context.TODO(), raindrop.GetMemoryGetParams{
 		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("demo"), Name: "memory-name", Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
 		EndTime:             raindrop.Time(time.Now()),
 		Key:                 raindrop.String("user-preference-theme"),
 		NMostRecent:         raindrop.Int(10),
