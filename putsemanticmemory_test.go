@@ -29,7 +29,7 @@ func TestPutSemanticMemoryNew(t *testing.T) {
 	)
 	_, err := client.PutSemanticMemory.New(context.TODO(), raindrop.PutSemanticMemoryNewParams{
 		Document:            "document",
-		SmartMemoryLocation: raindrop.PutSemanticMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.PutSemanticMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("demo"), Name: "memory-name", Version: raindrop.String("1234")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error
