@@ -28,22 +28,12 @@ func TestPutMemoryNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PutMemory.New(context.TODO(), raindrop.PutMemoryNewParams{
-		Content:   "User prefers dark theme for the interface",
-		SessionID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.PutMemoryNewParamsSmartMemoryLocationUnion{
-			OfSmartMemory: &raindrop.PutMemoryNewParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					ApplicationName: raindrop.String("demo"),
-					Name:            "memory-name",
-					Version:         raindrop.String("1234"),
-				},
-			},
-		},
-		Agent:          raindrop.String("assistant-v1"),
-		Key:            raindrop.String("user-preference-theme"),
-		OrganizationID: raindrop.String("organization_id"),
-		Timeline:       raindrop.String("user-conversation-2024"),
-		UserID:         raindrop.String("user_id"),
+		Content:             "User prefers dark theme for the interface",
+		SessionID:           "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.PutMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		Agent:               raindrop.String("assistant-v1"),
+		Key:                 raindrop.String("user-preference-theme"),
+		Timeline:            raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

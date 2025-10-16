@@ -63,11 +63,11 @@ func (r *ListProcedureNewResponse) UnmarshalJSON(data []byte) error {
 
 type ListProcedureNewResponseProcedure struct {
 	// When this procedure was first created
-	CreatedAt time.Time `json:"created_at" format:"date-time"`
+	CreatedAt time.Time `json:"createdAt" format:"date-time"`
 	// Unique key for this procedure
 	Key string `json:"key"`
 	// When this procedure was last updated
-	UpdatedAt time.Time `json:"updated_at" format:"date-time"`
+	UpdatedAt time.Time `json:"updatedAt" format:"date-time"`
 	// The procedure content
 	Value string `json:"value"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -89,11 +89,9 @@ func (r *ListProcedureNewResponseProcedure) UnmarshalJSON(data []byte) error {
 
 type ListProcedureNewParams struct {
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation ListProcedureNewParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero,required"`
+	SmartMemoryLocation ListProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// Optional procedural memory ID to use for actor isolation
-	ProceduralMemoryID param.Opt[string] `json:"procedural_memory_id,omitzero"`
-	OrganizationID     param.Opt[string] `json:"organization_id,omitzero"`
-	UserID             param.Opt[string] `json:"user_id,omitzero"`
+	ProceduralMemoryID param.Opt[string] `json:"proceduralMemoryId,omitzero"`
 	paramObj
 }
 
@@ -105,58 +103,18 @@ func (r *ListProcedureNewParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type ListProcedureNewParamsSmartMemoryLocationUnion struct {
-	OfModuleID    *ListProcedureNewParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
-	OfSmartMemory *ListProcedureNewParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u ListProcedureNewParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
-}
-func (u *ListProcedureNewParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *ListProcedureNewParamsSmartMemoryLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	} else if !param.IsOmitted(u.OfSmartMemory) {
-		return u.OfSmartMemory
-	}
-	return nil
-}
-
-// The property ModuleID is required.
-type ListProcedureNewParamsSmartMemoryLocationModuleID struct {
-	// **REQUIRED** FALSE
-	ModuleID string `json:"module_id,required"`
-	paramObj
-}
-
-func (r ListProcedureNewParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow ListProcedureNewParamsSmartMemoryLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *ListProcedureNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // The property SmartMemory is required.
-type ListProcedureNewParamsSmartMemoryLocationSmartMemory struct {
+type ListProcedureNewParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smart_memory,omitzero,required"`
+	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r ListProcedureNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow ListProcedureNewParamsSmartMemoryLocationSmartMemory
+func (r ListProcedureNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
+	type shadow ListProcedureNewParamsSmartMemoryLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *ListProcedureNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+func (r *ListProcedureNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

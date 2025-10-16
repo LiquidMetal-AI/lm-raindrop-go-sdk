@@ -4,18 +4,15 @@ package raindrop_test
 
 import (
 	"context"
-	"errors"
 	"os"
 	"testing"
 
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
-func TestListProcedureNewWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+func TestManualPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -27,15 +24,25 @@ func TestListProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.ListProcedures.New(context.TODO(), raindrop.ListProcedureNewParams{
-		SmartMemoryLocation: raindrop.ListProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
+	page, err := client.Query.GetPaginatedSearch(context.TODO(), raindrop.QueryGetPaginatedSearchParams{
+		Page:      raindrop.Int(1),
+		PageSize:  raindrop.Int(10),
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
-		var apierr *raindrop.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
 		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	for _, query := range page.Results {
+		t.Logf("%+v\n", query.ChunkSignature)
+	}
+	// Prism mock isn't going to give us real pagination
+	page, err = page.GetNextPage()
+	if err != nil {
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	if page != nil {
+		for _, query := range page.Results {
+			t.Logf("%+v\n", query.ChunkSignature)
+		}
 	}
 }

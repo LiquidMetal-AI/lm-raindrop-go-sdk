@@ -28,20 +28,10 @@ func TestSummarizeMemoryNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.SummarizeMemory.New(context.TODO(), raindrop.SummarizeMemoryNewParams{
-		MemoryIDs: []string{"01jxanr45haeswhay4n0q8340y", "01jxanr45haeswhay4n0q8341z"},
-		SessionID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.SummarizeMemoryNewParamsSmartMemoryLocationUnion{
-			OfSmartMemory: &raindrop.SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					ApplicationName: raindrop.String("demo"),
-					Name:            "memory-name",
-					Version:         raindrop.String("1234"),
-				},
-			},
-		},
-		OrganizationID: raindrop.String("organization_id"),
-		SystemPrompt:   raindrop.String("Summarize the key decisions and action items"),
-		UserID:         raindrop.String("user_id"),
+		MemoryIDs:           []string{"01jxanr45haeswhay4n0q8340y", "01jxanr45haeswhay4n0q8341z"},
+		SessionID:           "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.SummarizeMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		SystemPrompt:        raindrop.String("Summarize the key decisions and action items"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
