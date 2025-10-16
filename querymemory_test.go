@@ -33,8 +33,8 @@ func TestQueryMemorySearchWithOptionalParams(t *testing.T) {
 		SmartMemoryLocation: raindrop.QueryMemorySearchParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.QueryMemorySearchParamsSmartMemoryLocationSmartMemory{
 				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
+					Name:            "memory-name",
 					Version:         raindrop.String("1234"),
 				},
 			},

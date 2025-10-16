@@ -32,8 +32,8 @@ func TestEndSessionNewWithOptionalParams(t *testing.T) {
 		SmartMemoryLocation: raindrop.EndSessionNewParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.EndSessionNewParamsSmartMemoryLocationSmartMemory{
 				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
+					Name:            "memory-name",
 					Version:         raindrop.String("1234"),
 				},
 			},

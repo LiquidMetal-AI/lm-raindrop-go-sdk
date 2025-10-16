@@ -32,8 +32,8 @@ func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
 		SmartMemoryLocation: raindrop.DeleteProcedureNewParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.DeleteProcedureNewParamsSmartMemoryLocationSmartMemory{
 				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
+					Name:            "memory-name",
 					Version:         raindrop.String("1234"),
 				},
 			},

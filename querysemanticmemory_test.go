@@ -32,8 +32,8 @@ func TestQuerySemanticMemorySearchWithOptionalParams(t *testing.T) {
 		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory{
 				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
+					Name:            "memory-name",
 					Version:         raindrop.String("1234"),
 				},
 			},

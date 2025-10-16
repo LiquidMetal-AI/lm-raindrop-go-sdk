@@ -33,8 +33,8 @@ func TestGetMemoryGetWithOptionalParams(t *testing.T) {
 		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocationUnion{
 			OfSmartMemory: &raindrop.GetMemoryGetParamsSmartMemoryLocationSmartMemory{
 				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					Name:            "memory-name",
 					ApplicationName: raindrop.String("demo"),
+					Name:            "memory-name",
 					Version:         raindrop.String("1234"),
 				},
 			},
