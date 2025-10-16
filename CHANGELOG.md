@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.43 (2025-10-16)
+
+Full Changelog: [v0.6.42...v0.6.43](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.6.42...v0.6.43)
+
+### Features
+
+* **api:** updating API spec with latest changes ([fb0f7dc](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/fb0f7dcd43ebd0ef706bc0dd0244f6e484f4c135))
+
 ## 0.6.42 (2025-10-16)
 
 Full Changelog: [v0.1.10...v0.6.42](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.1.10...v0.6.42)
