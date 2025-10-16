@@ -16,19 +16,16 @@ type paramObj = param.APIObject
 
 type LiquidmetalV1alpha1BucketResponse struct {
 	// **EXAMPLE** "my-app"
-	ApplicationName string `json:"application_name"`
+	ApplicationName string `json:"applicationName"`
 	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ApplicationVersionID string `json:"application_version_id"`
+	ApplicationVersionID string `json:"applicationVersionId"`
 	// **EXAMPLE** "my-smartbucket"
-	BucketName string `json:"bucket_name"`
-	// **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	ModuleID string `json:"module_id"`
+	BucketName string `json:"bucketName"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ApplicationName      respjson.Field
 		ApplicationVersionID respjson.Field
 		BucketName           respjson.Field
-		ModuleID             respjson.Field
 		ExtraFields          map[string]respjson.Field
 		raw                  string
 	} `json:"-"`
@@ -45,7 +42,7 @@ func (r *LiquidmetalV1alpha1BucketResponse) UnmarshalJSON(data []byte) error {
 // The properties ApplicationName, Name, Version are required.
 type LiquidmetalV1alpha1SmartMemoryNameParam struct {
 	// Optional Application **EXAMPLE** "my-app" **REQUIRED** TRUE
-	ApplicationName param.Opt[string] `json:"application_name,omitzero,required"`
+	ApplicationName param.Opt[string] `json:"applicationName,omitzero,required"`
 	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
 	// **REQUIRED** TRUE
 	Version param.Opt[string] `json:"version,omitzero,required"`

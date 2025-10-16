@@ -68,11 +68,9 @@ func (r *GetSemanticMemoryNewResponse) UnmarshalJSON(data []byte) error {
 
 type GetSemanticMemoryNewParams struct {
 	// Unique object identifier of the document to retrieve
-	ObjectID string `json:"object_id,required"`
+	ObjectID string `json:"objectId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation GetSemanticMemoryNewParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero,required"`
-	OrganizationID      param.Opt[string]                                  `json:"organization_id,omitzero"`
-	UserID              param.Opt[string]                                  `json:"user_id,omitzero"`
+	SmartMemoryLocation GetSemanticMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	paramObj
 }
 
@@ -84,58 +82,18 @@ func (r *GetSemanticMemoryNewParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type GetSemanticMemoryNewParamsSmartMemoryLocationUnion struct {
-	OfModuleID    *GetSemanticMemoryNewParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
-	OfSmartMemory *GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u GetSemanticMemoryNewParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
-}
-func (u *GetSemanticMemoryNewParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *GetSemanticMemoryNewParamsSmartMemoryLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	} else if !param.IsOmitted(u.OfSmartMemory) {
-		return u.OfSmartMemory
-	}
-	return nil
-}
-
-// The property ModuleID is required.
-type GetSemanticMemoryNewParamsSmartMemoryLocationModuleID struct {
-	// **REQUIRED** FALSE
-	ModuleID string `json:"module_id,required"`
-	paramObj
-}
-
-func (r GetSemanticMemoryNewParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow GetSemanticMemoryNewParamsSmartMemoryLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *GetSemanticMemoryNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // The property SmartMemory is required.
-type GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory struct {
+type GetSemanticMemoryNewParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
-	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smart_memory,omitzero,required"`
+	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory
+func (r GetSemanticMemoryNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
+	type shadow GetSemanticMemoryNewParamsSmartMemoryLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *GetSemanticMemoryNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+func (r *GetSemanticMemoryNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

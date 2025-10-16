@@ -14,7 +14,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
-func TestDeleteSemanticMemoryDeleteWithOptionalParams(t *testing.T) {
+func TestDeleteSemanticMemoryDelete(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -28,18 +28,8 @@ func TestDeleteSemanticMemoryDeleteWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeleteSemanticMemory.Delete(context.TODO(), raindrop.DeleteSemanticMemoryDeleteParams{
-		ObjectID: "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion{
-			OfSmartMemory: &raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory{
-				SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-					ApplicationName: raindrop.String("demo"),
-					Name:            "memory-name",
-					Version:         raindrop.String("1234"),
-				},
-			},
-		},
-		OrganizationID: raindrop.String("organization_id"),
-		UserID:         raindrop.String("user_id"),
+		ObjectID:            "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error
