@@ -81,7 +81,7 @@ func (r *DeleteSemanticMemoryDeleteParams) UnmarshalJSON(data []byte) error {
 
 // The property SmartMemory is required.
 type DeleteSemanticMemoryDeleteParamsSmartMemoryLocation struct {
-	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
+	// **EXAMPLE** {"name":"memory-name","applicationName":"demo","version":"1234"}
 	// **REQUIRED** FALSE
 	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
