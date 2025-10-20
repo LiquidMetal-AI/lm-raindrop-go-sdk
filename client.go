@@ -33,6 +33,10 @@ type Client struct {
 	PutSemanticMemory    PutSemanticMemoryService
 	GetSemanticMemory    GetSemanticMemoryService
 	DeleteSemanticMemory DeleteSemanticMemoryService
+	ExecuteQuery         ExecuteQueryService
+	GetMetadata          GetMetadataService
+	UpdateMetadata       UpdateMetadataService
+	GetPiiData           GetPiiDataService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -73,6 +77,10 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.PutSemanticMemory = NewPutSemanticMemoryService(opts...)
 	r.GetSemanticMemory = NewGetSemanticMemoryService(opts...)
 	r.DeleteSemanticMemory = NewDeleteSemanticMemoryService(opts...)
+	r.ExecuteQuery = NewExecuteQueryService(opts...)
+	r.GetMetadata = NewGetMetadataService(opts...)
+	r.UpdateMetadata = NewUpdateMetadataService(opts...)
+	r.GetPiiData = NewGetPiiDataService(opts...)
 
 	return
 }

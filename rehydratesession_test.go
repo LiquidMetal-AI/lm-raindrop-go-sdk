@@ -29,7 +29,7 @@ func TestRehydrateSessionRehydrateWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.RehydrateSession.Rehydrate(context.TODO(), raindrop.RehydrateSessionRehydrateParams{
 		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
 		SummaryOnly:         raindrop.Bool(false),
 	})
 	if err != nil {

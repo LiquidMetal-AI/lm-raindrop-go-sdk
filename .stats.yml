@@ -1,4 +1,4 @@
-configured_endpoints: 27
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/liquidmetal-ai%2Fraindrop-ed25b942116773db529b434ba4c6abb795db546c2d2a8ee6b6bee0e6365bbcd1.yml
-openapi_spec_hash: 62b640c720a402ad73f44dd28e72440c
-config_hash: 5f331f84beb1a8b8e9db4088909d4533
+configured_endpoints: 31
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/liquidmetal-ai%2Fraindrop-f3f97a5c55c782dc13132ede1be08530e5069dd5aa08c72d43fe021b47882214.yml
+openapi_spec_hash: 3324c0b81f4b6bc97764f21d0a5222bc
+config_hash: 47c3cceef19877166d0e73b3a534d913

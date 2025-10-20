@@ -28,7 +28,7 @@ func TestQueryProcedureSearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Procedures.Search(context.TODO(), raindrop.QueryProcedureSearchParams{
-		SmartMemoryLocation: raindrop.QueryProcedureSearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.QueryProcedureSearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
 		Terms:               "system prompt",
 		NMostRecent:         raindrop.Int(10),
 		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),

@@ -39,15 +39,15 @@ func (r *LiquidmetalV1alpha1BucketResponse) UnmarshalJSON(data []byte) error {
 
 // SmartMemoryName represents a smart memory name with an optional version
 //
-// The properties ApplicationName, Name, Version are required.
+// The property Name is required.
 type LiquidmetalV1alpha1SmartMemoryNameParam struct {
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** TRUE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero,required"`
-	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** TRUE
-	Version param.Opt[string] `json:"version,omitzero,required"`
 	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
 	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
+	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
+	// Optional version of the smart memory **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
+	// **REQUIRED** FALSE
+	Version param.Opt[string] `json:"version,omitzero"`
 	paramObj
 }
 
