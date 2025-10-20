@@ -29,7 +29,7 @@ func TestGetProcedureNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.GetProcedure.New(context.TODO(), raindrop.GetProcedureNewParams{
 		Key:                 "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.GetProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.GetProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
 		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
