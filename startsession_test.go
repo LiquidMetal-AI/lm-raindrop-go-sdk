@@ -28,7 +28,7 @@ func TestStartSessionNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.StartSession.New(context.TODO(), raindrop.StartSessionNewParams{
-		SmartMemoryLocation: raindrop.StartSessionNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{Name: "memory-name", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("1234")}},
+		SmartMemoryLocation: raindrop.StartSessionNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error
