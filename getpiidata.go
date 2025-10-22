@@ -149,7 +149,7 @@ func (r *GetPiiDataGetParams) UnmarshalJSON(data []byte) error {
 
 // The property SmartSql is required.
 type GetPiiDataGetParamsSmartSqlLocation struct {
-	// Name-based smart SQL instance identifier
+	// Name-based smart SQL instance identifier (recommended)
 	SmartSql GetPiiDataGetParamsSmartSqlLocationSmartSql `json:"smartSql,omitzero,required"`
 	paramObj
 }
@@ -162,7 +162,7 @@ func (r *GetPiiDataGetParamsSmartSqlLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Name-based smart SQL instance identifier
+// Name-based smart SQL instance identifier (recommended)
 //
 // The property Name is required.
 type GetPiiDataGetParamsSmartSqlLocationSmartSql struct {
