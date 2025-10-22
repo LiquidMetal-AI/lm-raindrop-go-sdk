@@ -93,7 +93,7 @@ func (r *UpdateMetadataUpdateParams) UnmarshalJSON(data []byte) error {
 
 // The property SmartSql is required.
 type UpdateMetadataUpdateParamsSmartSqlLocation struct {
-	// Name-based smart SQL instance identifier
+	// Name-based smart SQL instance identifier (recommended)
 	SmartSql UpdateMetadataUpdateParamsSmartSqlLocationSmartSql `json:"smartSql,omitzero,required"`
 	paramObj
 }
@@ -106,7 +106,7 @@ func (r *UpdateMetadataUpdateParamsSmartSqlLocation) UnmarshalJSON(data []byte) 
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Name-based smart SQL instance identifier
+// Name-based smart SQL instance identifier (recommended)
 //
 // The property Name is required.
 type UpdateMetadataUpdateParamsSmartSqlLocationSmartSql struct {

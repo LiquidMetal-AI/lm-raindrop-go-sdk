@@ -169,7 +169,7 @@ func (r *ExecuteQueryExecuteParams) UnmarshalJSON(data []byte) error {
 
 // The property SmartSql is required.
 type ExecuteQueryExecuteParamsSmartSqlLocation struct {
-	// Name-based smart SQL instance identifier
+	// Name-based smart SQL instance identifier (recommended)
 	SmartSql ExecuteQueryExecuteParamsSmartSqlLocationSmartSql `json:"smartSql,omitzero,required"`
 	paramObj
 }
@@ -182,7 +182,7 @@ func (r *ExecuteQueryExecuteParamsSmartSqlLocation) UnmarshalJSON(data []byte) e
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Name-based smart SQL instance identifier
+// Name-based smart SQL instance identifier (recommended)
 //
 // The property Name is required.
 type ExecuteQueryExecuteParamsSmartSqlLocationSmartSql struct {
