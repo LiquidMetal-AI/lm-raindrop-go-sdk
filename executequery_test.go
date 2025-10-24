@@ -27,10 +27,13 @@ func TestExecuteQueryExecuteWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ExecuteQuery.Execute(context.TODO(), raindrop.ExecuteQueryExecuteParams{
-		SmartSqlLocation: raindrop.ExecuteQueryExecuteParamsSmartSqlLocation{SmartSql: raindrop.ExecuteQueryExecuteParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
-		Format:           raindrop.ExecuteQueryExecuteParamsFormatOutputFormatUnspecified,
-		SqlQuery:         raindrop.String("SELECT * FROM users WHERE active = true"),
-		TextQuery:        raindrop.String("Show me all active users from the last month"),
+		BodySmartSqlLocation1: raindrop.ExecuteQueryExecuteParamsSmartSqlLocation{SmartSql: raindrop.ExecuteQueryExecuteParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
+		Format:                raindrop.ExecuteQueryExecuteParamsFormatOutputFormatUnspecified,
+		BodySmartSqlLocation2: raindrop.ExecuteQueryExecuteParamsSmartSqlLocation{SmartSql: raindrop.ExecuteQueryExecuteParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
+		BodySqlQuery1:         raindrop.String("SELECT * FROM users WHERE active = true"),
+		BodySqlQuery2:         raindrop.String("SELECT * FROM users WHERE active = true"),
+		BodyTextQuery1:        raindrop.String("Show me all active users from the last month"),
+		BodyTextQuery2:        raindrop.String("Show me all active users from the last month"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -147,15 +147,24 @@ func (r *ExecuteQueryExecuteResponseJsonResults) UnmarshalJSON(data []byte) erro
 
 type ExecuteQueryExecuteParams struct {
 	// Smart SQL locator for targeting the correct smart SQL instance
-	SmartSqlLocation ExecuteQueryExecuteParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
+	BodySmartSqlLocation1 ExecuteQueryExecuteParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
+	// Direct SQL query to execute (mutually exclusive with text_query) (Alias: accepts
+	// both 'sqlQuery' and 'sql_query')
+	BodySqlQuery1 param.Opt[string] `json:"sql_query,omitzero"`
 	// Direct SQL query to execute (mutually exclusive with text_query)
-	SqlQuery param.Opt[string] `json:"sqlQuery,omitzero"`
+	BodySqlQuery2 param.Opt[string] `json:"sqlQuery,omitzero"`
 	// Natural language query to convert to SQL (mutually exclusive with sql_query)
-	TextQuery param.Opt[string] `json:"textQuery,omitzero"`
+	// (Alias: accepts both 'textQuery' and 'text_query')
+	BodyTextQuery1 param.Opt[string] `json:"text_query,omitzero"`
+	// Natural language query to convert to SQL (mutually exclusive with sql_query)
+	BodyTextQuery2 param.Opt[string] `json:"textQuery,omitzero"`
 	// Desired output format for query results
 	//
 	// Any of "OUTPUT_FORMAT_UNSPECIFIED", "OUTPUT_FORMAT_JSON", "OUTPUT_FORMAT_CSV".
 	Format ExecuteQueryExecuteParamsFormat `json:"format,omitzero"`
+	// Smart SQL locator for targeting the correct smart SQL instance (Alias: accepts
+	// both 'smartSqlLocation' and 'smart_sql_location')
+	BodySmartSqlLocation2 ExecuteQueryExecuteParamsSmartSqlLocation `json:"smart_sql_location,omitzero"`
 	paramObj
 }
 
@@ -188,6 +197,9 @@ func (r *ExecuteQueryExecuteParamsSmartSqlLocation) UnmarshalJSON(data []byte) e
 type ExecuteQueryExecuteParamsSmartSqlLocationSmartSql struct {
 	// The name of the smart SQL instance
 	Name string `json:"name,required"`
+	// Optional application name that owns this smart SQL instance (Alias: accepts both
+	// 'applicationName' and 'application_name')
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
 	// Optional application name that owns this smart SQL instance
 	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
 	// Optional version identifier for the smart SQL instance
