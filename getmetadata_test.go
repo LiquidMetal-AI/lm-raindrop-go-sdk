@@ -27,8 +27,10 @@ func TestGetMetadataGetWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.GetMetadata.Get(context.TODO(), raindrop.GetMetadataGetParams{
-		SmartSqlLocation: raindrop.GetMetadataGetParamsSmartSqlLocation{SmartSql: raindrop.GetMetadataGetParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
-		TableName:        raindrop.String("users"),
+		BodySmartSqlLocation1: raindrop.GetMetadataGetParamsSmartSqlLocation{SmartSql: raindrop.GetMetadataGetParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
+		BodySmartSqlLocation2: raindrop.GetMetadataGetParamsSmartSqlLocation{SmartSql: raindrop.GetMetadataGetParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
+		BodyTableName1:        raindrop.String("users"),
+		BodyTableName2:        raindrop.String("users"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
