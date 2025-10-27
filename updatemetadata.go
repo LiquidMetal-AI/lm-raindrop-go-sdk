@@ -71,7 +71,7 @@ func (r *UpdateMetadataUpdateResponse) UnmarshalJSON(data []byte) error {
 
 type UpdateMetadataUpdateParams struct {
 	// Smart SQL locator for targeting the correct smart SQL instance
-	BodySmartSqlLocation1 UpdateMetadataUpdateParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
+	SmartSqlLocation UpdateMetadataUpdateParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
 	// Table metadata to update or create
 	Tables []UpdateMetadataUpdateParamsTable `json:"tables,omitzero,required"`
 	// Update mode: replace (overwrite), merge (preserve existing), or append (only new
@@ -80,9 +80,6 @@ type UpdateMetadataUpdateParams struct {
 	// Any of "UPDATE_MODE_UNSPECIFIED", "UPDATE_MODE_REPLACE", "UPDATE_MODE_MERGE",
 	// "UPDATE_MODE_APPEND".
 	Mode UpdateMetadataUpdateParamsMode `json:"mode,omitzero"`
-	// Smart SQL locator for targeting the correct smart SQL instance (Alias: accepts
-	// both 'smartSqlLocation' and 'smart_sql_location')
-	BodySmartSqlLocation2 UpdateMetadataUpdateParamsSmartSqlLocation `json:"smart_sql_location,omitzero"`
 	paramObj
 }
 
@@ -115,9 +112,6 @@ func (r *UpdateMetadataUpdateParamsSmartSqlLocation) UnmarshalJSON(data []byte) 
 type UpdateMetadataUpdateParamsSmartSqlLocationSmartSql struct {
 	// The name of the smart SQL instance
 	Name string `json:"name,required"`
-	// Optional application name that owns this smart SQL instance (Alias: accepts both
-	// 'applicationName' and 'application_name')
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
 	// Optional application name that owns this smart SQL instance
 	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
 	// Optional version identifier for the smart SQL instance

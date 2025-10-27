@@ -131,20 +131,11 @@ func (r *GetPiiDataGetResponsePiiDetectionEntity) UnmarshalJSON(data []byte) err
 
 type GetPiiDataGetParams struct {
 	// Smart SQL locator for targeting the correct smart SQL instance
-	BodySmartSqlLocation1 GetPiiDataGetParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
+	SmartSqlLocation GetPiiDataGetParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
 	// Table name to retrieve PII data from
-	BodyTableName1 string `json:"tableName,required"`
-	// Optional record identifier to filter PII data (Alias: accepts both 'recordId'
-	// and 'record_id')
-	BodyRecordID1 param.Opt[string] `json:"record_id,omitzero"`
+	TableName string `json:"tableName,required"`
 	// Optional record identifier to filter PII data
-	BodyRecordID2 param.Opt[string] `json:"recordId,omitzero"`
-	// Table name to retrieve PII data from (Alias: accepts both 'tableName' and
-	// 'table_name')
-	BodyTableName2 param.Opt[string] `json:"table_name,omitzero"`
-	// Smart SQL locator for targeting the correct smart SQL instance (Alias: accepts
-	// both 'smartSqlLocation' and 'smart_sql_location')
-	BodySmartSqlLocation2 GetPiiDataGetParamsSmartSqlLocation `json:"smart_sql_location,omitzero"`
+	RecordID param.Opt[string] `json:"recordId,omitzero"`
 	paramObj
 }
 
@@ -177,9 +168,6 @@ func (r *GetPiiDataGetParamsSmartSqlLocation) UnmarshalJSON(data []byte) error {
 type GetPiiDataGetParamsSmartSqlLocationSmartSql struct {
 	// The name of the smart SQL instance
 	Name string `json:"name,required"`
-	// Optional application name that owns this smart SQL instance (Alias: accepts both
-	// 'applicationName' and 'application_name')
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
 	// Optional application name that owns this smart SQL instance
 	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
 	// Optional version identifier for the smart SQL instance
