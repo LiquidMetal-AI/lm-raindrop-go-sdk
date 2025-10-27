@@ -28,7 +28,7 @@ func TestUpdateMetadataUpdateWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.UpdateMetadata.Update(context.TODO(), raindrop.UpdateMetadataUpdateParams{
-		BodySmartSqlLocation1: raindrop.UpdateMetadataUpdateParamsSmartSqlLocation{SmartSql: raindrop.UpdateMetadataUpdateParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
+		SmartSqlLocation: raindrop.UpdateMetadataUpdateParamsSmartSqlLocation{SmartSql: raindrop.UpdateMetadataUpdateParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
 		Tables: []raindrop.UpdateMetadataUpdateParamsTable{{
 			Columns: []raindrop.UpdateMetadataUpdateParamsTableColumn{{
 				ColumnName:   raindrop.String("user_id"),
@@ -41,8 +41,7 @@ func TestUpdateMetadataUpdateWithOptionalParams(t *testing.T) {
 			TableName: raindrop.String("users"),
 			UpdatedAt: raindrop.Time(time.Now()),
 		}},
-		Mode:                  raindrop.UpdateMetadataUpdateParamsModeUpdateModeMerge,
-		BodySmartSqlLocation2: raindrop.UpdateMetadataUpdateParamsSmartSqlLocation{SmartSql: raindrop.UpdateMetadataUpdateParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
+		Mode: raindrop.UpdateMetadataUpdateParamsModeUpdateModeMerge,
 	})
 	if err != nil {
 		var apierr *raindrop.Error
