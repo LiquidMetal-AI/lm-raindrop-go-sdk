@@ -62,11 +62,20 @@ func (r *DeleteMemoryNewResponse) UnmarshalJSON(data []byte) error {
 
 type DeleteMemoryNewParams struct {
 	// Unique identifier of the memory entry to delete
-	MemoryID string `json:"memoryId,required"`
+	BodyMemoryID1 string `json:"memoryId,required"`
 	// Unique session identifier for the working memory instance
-	SessionID string `json:"sessionId,required"`
+	BodySessionID1 string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation DeleteMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 DeleteMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Unique identifier of the memory entry to delete (Alias: accepts both 'memoryId'
+	// and 'memory_id')
+	BodyMemoryID2 param.Opt[string] `json:"memory_id,omitzero"`
+	// Unique session identifier for the working memory instance (Alias: accepts both
+	// 'sessionId' and 'session_id')
+	BodySessionID2 param.Opt[string] `json:"session_id,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 DeleteMemoryNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

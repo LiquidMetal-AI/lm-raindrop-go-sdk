@@ -14,7 +14,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
-func TestQuerySemanticMemorySearch(t *testing.T) {
+func TestQuerySemanticMemorySearchWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -28,8 +28,9 @@ func TestQuerySemanticMemorySearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.SemanticMemory.Search(context.TODO(), raindrop.QuerySemanticMemorySearchParams{
-		Needle:              "AI development best practices",
-		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		Needle:                   "AI development best practices",
+		BodySmartMemoryLocation1: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodySmartMemoryLocation2: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

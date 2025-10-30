@@ -126,7 +126,10 @@ type QuerySemanticMemorySearchParams struct {
 	// Natural language search query to find relevant documents
 	Needle string `json:"needle,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation QuerySemanticMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 QuerySemanticMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 QuerySemanticMemorySearchParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

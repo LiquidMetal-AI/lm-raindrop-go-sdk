@@ -28,10 +28,14 @@ func TestSummarizeMemoryNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.SummarizeMemory.New(context.TODO(), raindrop.SummarizeMemoryNewParams{
-		MemoryIDs:           []string{"01jxanr45haeswhay4n0q8340y", "01jxanr45haeswhay4n0q8341z"},
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.SummarizeMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		SystemPrompt:        raindrop.String("Summarize the key decisions and action items"),
+		BodyMemoryIDs1:           []string{"01jxanr45haeswhay4n0q8340y", "01jxanr45haeswhay4n0q8341z"},
+		BodySessionID1:           "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.SummarizeMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodyMemoryIDs2:           []string{"01jxanr45haeswhay4n0q8340y", "01jxanr45haeswhay4n0q8341z"},
+		BodySessionID2:           raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.SummarizeMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodySystemPrompt1:        raindrop.String("Summarize the key decisions and action items"),
+		BodySystemPrompt2:        raindrop.String("Summarize the key decisions and action items"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -71,7 +71,10 @@ type PutSemanticMemoryNewParams struct {
 	// JSON-encoded document content to store in semantic memory
 	Document string `json:"document,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation PutSemanticMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 PutSemanticMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 PutSemanticMemoryNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

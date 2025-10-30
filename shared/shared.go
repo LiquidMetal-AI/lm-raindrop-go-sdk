@@ -48,6 +48,9 @@ type LiquidmetalV1alpha1SmartMemoryNameParam struct {
 	Version param.Opt[string] `json:"version,omitzero,required"`
 	// The name of the smart memory **EXAMPLE** "my-smartmemory" **REQUIRED** TRUE
 	Name string `json:"name,required"`
+	// Optional Application **EXAMPLE** "my-app" **REQUIRED** TRUE (Alias: accepts both
+	// 'applicationName' and 'application_name')
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
 	paramObj
 }
 

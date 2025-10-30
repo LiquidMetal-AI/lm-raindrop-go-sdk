@@ -63,13 +63,22 @@ func (r *EndSessionNewResponse) UnmarshalJSON(data []byte) error {
 
 type EndSessionNewParams struct {
 	// Unique session identifier to end
-	SessionID string `json:"sessionId,required"`
+	BodySessionID1 string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation EndSessionNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 EndSessionNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// Whether to flush working memory to long-term storage
 	Flush param.Opt[bool] `json:"flush,omitzero"`
+	// Optional custom system prompt for memory summarization during flush (Alias:
+	// accepts both 'systemPrompt' and 'system_prompt')
+	BodySystemPrompt1 param.Opt[string] `json:"system_prompt,omitzero"`
 	// Optional custom system prompt for memory summarization during flush
-	SystemPrompt param.Opt[string] `json:"systemPrompt,omitzero"`
+	BodySystemPrompt2 param.Opt[string] `json:"systemPrompt,omitzero"`
+	// Unique session identifier to end (Alias: accepts both 'sessionId' and
+	// 'session_id')
+	BodySessionID2 param.Opt[string] `json:"session_id,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 EndSessionNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

@@ -89,9 +89,15 @@ func (r *ListProcedureNewResponseProcedure) UnmarshalJSON(data []byte) error {
 
 type ListProcedureNewParams struct {
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation ListProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 ListProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Optional procedural memory ID to use for actor isolation (Alias: accepts both
+	// 'proceduralMemoryId' and 'procedural_memory_id')
+	BodyProceduralMemoryID1 param.Opt[string] `json:"procedural_memory_id,omitzero"`
 	// Optional procedural memory ID to use for actor isolation
-	ProceduralMemoryID param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	BodyProceduralMemoryID2 param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 ListProcedureNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

@@ -112,19 +112,33 @@ func (r *QueryMemorySearchResponseMemory) UnmarshalJSON(data []byte) error {
 
 type QueryMemorySearchParams struct {
 	// Unique session identifier for the working memory instance
-	SessionID string `json:"sessionId,required"`
+	BodySessionID1 string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation QueryMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 QueryMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// Natural language search query
 	Terms string `json:"terms,required"`
+	// End time for temporal filtering (Alias: accepts both 'endTime' and 'end_time')
+	BodyEndTime1 param.Opt[time.Time] `json:"end_time,omitzero" format:"date-time"`
 	// End time for temporal filtering
-	EndTime param.Opt[time.Time] `json:"endTime,omitzero" format:"date-time"`
+	BodyEndTime2 param.Opt[time.Time] `json:"endTime,omitzero" format:"date-time"`
+	// Maximum number of most recent results to return (Alias: accepts both
+	// 'nMostRecent' and 'n_most_recent')
+	BodyNMostRecent1 param.Opt[int64] `json:"n_most_recent,omitzero"`
 	// Maximum number of most recent results to return
-	NMostRecent param.Opt[int64] `json:"nMostRecent,omitzero"`
+	BodyNMostRecent2 param.Opt[int64] `json:"nMostRecent,omitzero"`
+	// Start time for temporal filtering (Alias: accepts both 'startTime' and
+	// 'start_time')
+	BodyStartTime1 param.Opt[time.Time] `json:"start_time,omitzero" format:"date-time"`
 	// Start time for temporal filtering
-	StartTime param.Opt[time.Time] `json:"startTime,omitzero" format:"date-time"`
+	BodyStartTime2 param.Opt[time.Time] `json:"startTime,omitzero" format:"date-time"`
 	// Timeline to filter search results
 	Timeline param.Opt[string] `json:"timeline,omitzero"`
+	// Unique session identifier for the working memory instance (Alias: accepts both
+	// 'sessionId' and 'session_id')
+	BodySessionID2 param.Opt[string] `json:"session_id,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 QueryMemorySearchParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

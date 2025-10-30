@@ -65,9 +65,15 @@ func (r *DeleteSemanticMemoryDeleteResponse) UnmarshalJSON(data []byte) error {
 
 type DeleteSemanticMemoryDeleteParams struct {
 	// Unique object identifier of the document to delete
-	ObjectID string `json:"objectId,required"`
+	BodyObjectID1 string `json:"objectId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation DeleteSemanticMemoryDeleteParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 DeleteSemanticMemoryDeleteParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Unique object identifier of the document to delete (Alias: accepts both
+	// 'objectId' and 'object_id')
+	BodyObjectID2 param.Opt[string] `json:"object_id,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 DeleteSemanticMemoryDeleteParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

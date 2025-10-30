@@ -29,13 +29,18 @@ func TestGetMemoryGetWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.GetMemory.Get(context.TODO(), raindrop.GetMemoryGetParams{
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.GetMemoryGetParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		EndTime:             raindrop.Time(time.Now()),
-		Key:                 raindrop.String("user-preference-theme"),
-		NMostRecent:         raindrop.Int(10),
-		StartTime:           raindrop.Time(time.Now()),
-		Timeline:            raindrop.String("user-conversation-2024"),
+		BodySessionID1:           "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.GetMemoryGetParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodyEndTime1:             raindrop.Time(time.Now()),
+		BodyEndTime2:             raindrop.Time(time.Now()),
+		Key:                      raindrop.String("user-preference-theme"),
+		BodyNMostRecent1:         raindrop.Int(10),
+		BodyNMostRecent2:         raindrop.Int(10),
+		BodySessionID2:           raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.GetMemoryGetParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodyStartTime1:           raindrop.Time(time.Now()),
+		BodyStartTime2:           raindrop.Time(time.Now()),
+		Timeline:                 raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

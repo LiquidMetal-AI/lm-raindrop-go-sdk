@@ -68,9 +68,15 @@ func (r *GetSemanticMemoryNewResponse) UnmarshalJSON(data []byte) error {
 
 type GetSemanticMemoryNewParams struct {
 	// Unique object identifier of the document to retrieve
-	ObjectID string `json:"objectId,required"`
+	BodyObjectID1 string `json:"objectId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation GetSemanticMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 GetSemanticMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Unique object identifier of the document to retrieve (Alias: accepts both
+	// 'objectId' and 'object_id')
+	BodyObjectID2 param.Opt[string] `json:"object_id,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 GetSemanticMemoryNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

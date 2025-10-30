@@ -128,9 +128,15 @@ func (r *GetMetadataGetResponseTableColumn) UnmarshalJSON(data []byte) error {
 
 type GetMetadataGetParams struct {
 	// Smart SQL locator for targeting the correct smart SQL instance
-	SmartSqlLocation GetMetadataGetParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
+	BodySmartSqlLocation1 GetMetadataGetParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
+	// Optional table name to filter metadata (Alias: accepts both 'tableName' and
+	// 'table_name')
+	BodyTableName1 param.Opt[string] `json:"table_name,omitzero"`
 	// Optional table name to filter metadata
-	TableName param.Opt[string] `json:"tableName,omitzero"`
+	BodyTableName2 param.Opt[string] `json:"tableName,omitzero"`
+	// Smart SQL locator for targeting the correct smart SQL instance (Alias: accepts
+	// both 'smartSqlLocation' and 'smart_sql_location')
+	BodySmartSqlLocation2 GetMetadataGetParamsSmartSqlLocation `json:"smart_sql_location,omitzero"`
 	paramObj
 }
 
@@ -163,6 +169,9 @@ func (r *GetMetadataGetParamsSmartSqlLocation) UnmarshalJSON(data []byte) error 
 type GetMetadataGetParamsSmartSqlLocationSmartSql struct {
 	// The name of the smart SQL instance
 	Name string `json:"name,required"`
+	// Optional application name that owns this smart SQL instance (Alias: accepts both
+	// 'applicationName' and 'application_name')
+	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
 	// Optional application name that owns this smart SQL instance
 	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
 	// Optional version identifier for the smart SQL instance

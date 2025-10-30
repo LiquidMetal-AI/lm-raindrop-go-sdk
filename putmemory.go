@@ -72,15 +72,21 @@ type PutMemoryNewParams struct {
 	// The actual memory content to store
 	Content string `json:"content,required"`
 	// Unique session identifier for the working memory instance
-	SessionID string `json:"sessionId,required"`
+	BodySessionID1 string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation PutMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 PutMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// Agent identifier responsible for this memory
 	Agent param.Opt[string] `json:"agent,omitzero"`
 	// Optional key for direct memory retrieval
 	Key param.Opt[string] `json:"key,omitzero"`
 	// Timeline identifier for organizing related memories
 	Timeline param.Opt[string] `json:"timeline,omitzero"`
+	// Unique session identifier for the working memory instance (Alias: accepts both
+	// 'sessionId' and 'session_id')
+	BodySessionID2 param.Opt[string] `json:"session_id,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 PutMemoryNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 
