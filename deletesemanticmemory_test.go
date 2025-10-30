@@ -11,7 +11,6 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestDeleteSemanticMemoryDeleteWithOptionalParams(t *testing.T) {
@@ -28,10 +27,18 @@ func TestDeleteSemanticMemoryDeleteWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeleteSemanticMemory.Delete(context.TODO(), raindrop.DeleteSemanticMemoryDeleteParams{
-		BodyObjectID1:            "01jxanr45haeswhay4n0q8340y",
-		BodySmartMemoryLocation1: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
-		BodyObjectID2:            raindrop.String("01jxanr45haeswhay4n0q8340y"),
-		BodySmartMemoryLocation2: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodyObjectID1: "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		BodyObjectID2: raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

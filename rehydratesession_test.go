@@ -11,7 +11,6 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestRehydrateSessionRehydrateWithOptionalParams(t *testing.T) {
@@ -28,12 +27,20 @@ func TestRehydrateSessionRehydrateWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RehydrateSession.Rehydrate(context.TODO(), raindrop.RehydrateSessionRehydrateParams{
-		BodySessionID1:           "01jxanr45haeswhay4n0q8340y",
-		BodySmartMemoryLocation1: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
-		BodySessionID2:           raindrop.String("01jxanr45haeswhay4n0q8340y"),
-		BodySmartMemoryLocation2: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
-		BodySummaryOnly1:         raindrop.Bool(false),
-		BodySummaryOnly2:         raindrop.Bool(false),
+		BodySessionID1: "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		BodySessionID2: raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.RehydrateSessionRehydrateParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		BodySummaryOnly1: raindrop.Bool(false),
+		BodySummaryOnly2: raindrop.Bool(false),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

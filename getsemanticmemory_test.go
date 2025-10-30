@@ -11,7 +11,6 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestGetSemanticMemoryNewWithOptionalParams(t *testing.T) {
@@ -28,10 +27,18 @@ func TestGetSemanticMemoryNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.GetSemanticMemory.New(context.TODO(), raindrop.GetSemanticMemoryNewParams{
-		BodyObjectID1:            "01jxanr45haeswhay4n0q8340y",
-		BodySmartMemoryLocation1: raindrop.GetSemanticMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
-		BodyObjectID2:            raindrop.String("01jxanr45haeswhay4n0q8340y"),
-		BodySmartMemoryLocation2: raindrop.GetSemanticMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodyObjectID1: "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.GetSemanticMemoryNewParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.GetSemanticMemoryNewParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		BodyObjectID2: raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.GetSemanticMemoryNewParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.GetSemanticMemoryNewParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -71,7 +71,7 @@ func (r *UpdateMetadataUpdateResponse) UnmarshalJSON(data []byte) error {
 
 type UpdateMetadataUpdateParams struct {
 	// Smart SQL locator for targeting the correct smart SQL instance
-	BodySmartSqlLocation1 UpdateMetadataUpdateParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
+	BodySmartSqlLocation1 UpdateMetadataUpdateParamsSmartSqlLocationUnion `json:"smartSqlLocation,omitzero,required"`
 	// Table metadata to update or create
 	Tables []UpdateMetadataUpdateParamsTable `json:"tables,omitzero,required"`
 	// Update mode: replace (overwrite), merge (preserve existing), or append (only new
@@ -82,7 +82,7 @@ type UpdateMetadataUpdateParams struct {
 	Mode UpdateMetadataUpdateParamsMode `json:"mode,omitzero"`
 	// Smart SQL locator for targeting the correct smart SQL instance (Alias: accepts
 	// both 'smartSqlLocation' and 'smart_sql_location')
-	BodySmartSqlLocation2 UpdateMetadataUpdateParamsSmartSqlLocation `json:"smart_sql_location,omitzero"`
+	BodySmartSqlLocation2 UpdateMetadataUpdateParamsSmartSqlLocationUnion `json:"smart_sql_location,omitzero"`
 	paramObj
 }
 
@@ -94,25 +94,65 @@ func (r *UpdateMetadataUpdateParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The property SmartSql is required.
-type UpdateMetadataUpdateParamsSmartSqlLocation struct {
-	// Name-based smart SQL instance identifier (recommended)
-	SmartSql UpdateMetadataUpdateParamsSmartSqlLocationSmartSql `json:"smartSql,omitzero,required"`
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type UpdateMetadataUpdateParamsSmartSqlLocationUnion struct {
+	OfModuleID *UpdateMetadataUpdateParamsSmartSqlLocationModuleID `json:",omitzero,inline"`
+	OfSmartSql *UpdateMetadataUpdateParamsSmartSqlLocationSmartSql `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u UpdateMetadataUpdateParamsSmartSqlLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartSql)
+}
+func (u *UpdateMetadataUpdateParamsSmartSqlLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *UpdateMetadataUpdateParamsSmartSqlLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartSql) {
+		return u.OfSmartSql
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type UpdateMetadataUpdateParamsSmartSqlLocationModuleID struct {
+	// Direct module ID for smart SQL instance (fallback, prefer name-based resolution)
+	ModuleID string `json:"moduleId,required"`
 	paramObj
 }
 
-func (r UpdateMetadataUpdateParamsSmartSqlLocation) MarshalJSON() (data []byte, err error) {
-	type shadow UpdateMetadataUpdateParamsSmartSqlLocation
+func (r UpdateMetadataUpdateParamsSmartSqlLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow UpdateMetadataUpdateParamsSmartSqlLocationModuleID
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *UpdateMetadataUpdateParamsSmartSqlLocation) UnmarshalJSON(data []byte) error {
+func (r *UpdateMetadataUpdateParamsSmartSqlLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property SmartSql is required.
+type UpdateMetadataUpdateParamsSmartSqlLocationSmartSql struct {
+	// Name-based smart SQL instance identifier (recommended)
+	SmartSql UpdateMetadataUpdateParamsSmartSqlLocationSmartSqlSmartSql `json:"smartSql,omitzero,required"`
+	paramObj
+}
+
+func (r UpdateMetadataUpdateParamsSmartSqlLocationSmartSql) MarshalJSON() (data []byte, err error) {
+	type shadow UpdateMetadataUpdateParamsSmartSqlLocationSmartSql
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *UpdateMetadataUpdateParamsSmartSqlLocationSmartSql) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 // Name-based smart SQL instance identifier (recommended)
 //
 // The property Name is required.
-type UpdateMetadataUpdateParamsSmartSqlLocationSmartSql struct {
+type UpdateMetadataUpdateParamsSmartSqlLocationSmartSqlSmartSql struct {
 	// The name of the smart SQL instance
 	Name string `json:"name,required"`
 	// Optional application name that owns this smart SQL instance (Alias: accepts both
@@ -125,11 +165,11 @@ type UpdateMetadataUpdateParamsSmartSqlLocationSmartSql struct {
 	paramObj
 }
 
-func (r UpdateMetadataUpdateParamsSmartSqlLocationSmartSql) MarshalJSON() (data []byte, err error) {
-	type shadow UpdateMetadataUpdateParamsSmartSqlLocationSmartSql
+func (r UpdateMetadataUpdateParamsSmartSqlLocationSmartSqlSmartSql) MarshalJSON() (data []byte, err error) {
+	type shadow UpdateMetadataUpdateParamsSmartSqlLocationSmartSqlSmartSql
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *UpdateMetadataUpdateParamsSmartSqlLocationSmartSql) UnmarshalJSON(data []byte) error {
+func (r *UpdateMetadataUpdateParamsSmartSqlLocationSmartSqlSmartSql) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

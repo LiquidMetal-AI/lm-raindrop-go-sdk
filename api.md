@@ -10,7 +10,7 @@
 
 Params Types:
 
-- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#BucketLocatorParam">BucketLocatorParam</a>
+- <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#BucketLocatorUnionParam">BucketLocatorUnionParam</a>
 - <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#LiquidmetalV1alpha1BucketNameParam">LiquidmetalV1alpha1BucketNameParam</a>
 
 Response Types:

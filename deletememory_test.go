@@ -11,7 +11,6 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestDeleteMemoryNewWithOptionalParams(t *testing.T) {
@@ -28,12 +27,20 @@ func TestDeleteMemoryNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeleteMemory.New(context.TODO(), raindrop.DeleteMemoryNewParams{
-		BodyMemoryID1:            "01jxanr45haeswhay4n0q8340y",
-		BodySessionID1:           "01jxanr45haeswhay4n0q8340y",
-		BodySmartMemoryLocation1: raindrop.DeleteMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
-		BodyMemoryID2:            raindrop.String("01jxanr45haeswhay4n0q8340y"),
-		BodySessionID2:           raindrop.String("01jxanr45haeswhay4n0q8340y"),
-		BodySmartMemoryLocation2: raindrop.DeleteMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		BodyMemoryID1:  "01jxanr45haeswhay4n0q8340y",
+		BodySessionID1: "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.DeleteMemoryNewParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.DeleteMemoryNewParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		BodyMemoryID2:  raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySessionID2: raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.DeleteMemoryNewParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.DeleteMemoryNewParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

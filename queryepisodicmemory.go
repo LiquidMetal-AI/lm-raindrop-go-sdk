@@ -172,7 +172,7 @@ func (r *QueryEpisodicMemorySearchResponsePagination) UnmarshalJSON(data []byte)
 
 type QueryEpisodicMemorySearchParams struct {
 	// Smart memory locator for targeting the correct smart memory instance
-	BodySmartMemoryLocation1 QueryEpisodicMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
 	// Natural language search query to find relevant episodic memory sessions
 	Terms string `json:"terms,required"`
 	// End time for temporal filtering (Alias: accepts both 'endTime' and 'end_time')
@@ -191,7 +191,7 @@ type QueryEpisodicMemorySearchParams struct {
 	BodyStartTime2 param.Opt[time.Time] `json:"startTime,omitzero" format:"date-time"`
 	// Smart memory locator for targeting the correct smart memory instance (Alias:
 	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
-	BodySmartMemoryLocation2 QueryEpisodicMemorySearchParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
+	BodySmartMemoryLocation2 QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 
@@ -203,18 +203,58 @@ func (r *QueryEpisodicMemorySearchParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *QueryEpisodicMemorySearchParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *QueryEpisodicMemorySearchParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type QueryEpisodicMemorySearchParamsSmartMemoryLocationModuleID struct {
+	// **REQUIRED** FALSE
+	ModuleID string `json:"moduleId,required"`
+	paramObj
+}
+
+func (r QueryEpisodicMemorySearchParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow QueryEpisodicMemorySearchParamsSmartMemoryLocationModuleID
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *QueryEpisodicMemorySearchParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // The property SmartMemory is required.
-type QueryEpisodicMemorySearchParamsSmartMemoryLocation struct {
+type QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemory struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
 	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r QueryEpisodicMemorySearchParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow QueryEpisodicMemorySearchParamsSmartMemoryLocation
+func (r QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *QueryEpisodicMemorySearchParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *QueryEpisodicMemorySearchParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

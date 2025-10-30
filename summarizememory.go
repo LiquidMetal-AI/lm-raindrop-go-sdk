@@ -76,7 +76,7 @@ type SummarizeMemoryNewParams struct {
 	// Unique session identifier for the working memory instance
 	BodySessionID1 string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	BodySmartMemoryLocation1 SummarizeMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 SummarizeMemoryNewParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
 	// Optional custom system prompt for summarization (Alias: accepts both
 	// 'systemPrompt' and 'system_prompt')
 	BodySystemPrompt1 param.Opt[string] `json:"system_prompt,omitzero"`
@@ -90,7 +90,7 @@ type SummarizeMemoryNewParams struct {
 	BodyMemoryIDs2 []string `json:"memory_ids,omitzero"`
 	// Smart memory locator for targeting the correct smart memory instance (Alias:
 	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
-	BodySmartMemoryLocation2 SummarizeMemoryNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
+	BodySmartMemoryLocation2 SummarizeMemoryNewParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 
@@ -102,18 +102,58 @@ func (r *SummarizeMemoryNewParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type SummarizeMemoryNewParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *SummarizeMemoryNewParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u SummarizeMemoryNewParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *SummarizeMemoryNewParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *SummarizeMemoryNewParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type SummarizeMemoryNewParamsSmartMemoryLocationModuleID struct {
+	// **REQUIRED** FALSE
+	ModuleID string `json:"moduleId,required"`
+	paramObj
+}
+
+func (r SummarizeMemoryNewParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizeMemoryNewParamsSmartMemoryLocationModuleID
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *SummarizeMemoryNewParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // The property SmartMemory is required.
-type SummarizeMemoryNewParamsSmartMemoryLocation struct {
+type SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
 	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r SummarizeMemoryNewParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow SummarizeMemoryNewParamsSmartMemoryLocation
+func (r SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *SummarizeMemoryNewParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *SummarizeMemoryNewParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
