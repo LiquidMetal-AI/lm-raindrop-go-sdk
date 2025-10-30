@@ -126,10 +126,10 @@ type QuerySemanticMemorySearchParams struct {
 	// Natural language search query to find relevant documents
 	Needle string `json:"needle,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	BodySmartMemoryLocation1 QuerySemanticMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 QuerySemanticMemorySearchParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
 	// Smart memory locator for targeting the correct smart memory instance (Alias:
 	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
-	BodySmartMemoryLocation2 QuerySemanticMemorySearchParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
+	BodySmartMemoryLocation2 QuerySemanticMemorySearchParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 
@@ -141,18 +141,58 @@ func (r *QuerySemanticMemorySearchParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type QuerySemanticMemorySearchParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u QuerySemanticMemorySearchParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *QuerySemanticMemorySearchParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *QuerySemanticMemorySearchParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID struct {
+	// **REQUIRED** FALSE
+	ModuleID string `json:"moduleId,required"`
+	paramObj
+}
+
+func (r QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *QuerySemanticMemorySearchParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // The property SmartMemory is required.
-type QuerySemanticMemorySearchParamsSmartMemoryLocation struct {
+type QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
 	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r QuerySemanticMemorySearchParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow QuerySemanticMemorySearchParamsSmartMemoryLocation
+func (r QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *QuerySemanticMemorySearchParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *QuerySemanticMemorySearchParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

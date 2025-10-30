@@ -92,7 +92,7 @@ func (r *QueryProcedureSearchResponseProcedure) UnmarshalJSON(data []byte) error
 
 type QueryProcedureSearchParams struct {
 	// Smart memory locator for targeting the correct smart memory instance
-	BodySmartMemoryLocation1 QueryProcedureSearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 QueryProcedureSearchParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
 	// Search terms to match against procedure keys and values
 	Terms string `json:"terms,required"`
 	// Maximum number of results to return (Alias: accepts both 'nMostRecent' and
@@ -117,7 +117,7 @@ type QueryProcedureSearchParams struct {
 	BodySearchValues2 param.Opt[bool] `json:"searchValues,omitzero"`
 	// Smart memory locator for targeting the correct smart memory instance (Alias:
 	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
-	BodySmartMemoryLocation2 QueryProcedureSearchParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
+	BodySmartMemoryLocation2 QueryProcedureSearchParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 
@@ -129,18 +129,58 @@ func (r *QueryProcedureSearchParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+// Only one field can be non-zero.
+//
+// Use [param.IsOmitted] to confirm if a field is set.
+type QueryProcedureSearchParamsSmartMemoryLocationUnion struct {
+	OfModuleID    *QueryProcedureSearchParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
+	OfSmartMemory *QueryProcedureSearchParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
+	paramUnion
+}
+
+func (u QueryProcedureSearchParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
+}
+func (u *QueryProcedureSearchParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, u)
+}
+
+func (u *QueryProcedureSearchParamsSmartMemoryLocationUnion) asAny() any {
+	if !param.IsOmitted(u.OfModuleID) {
+		return u.OfModuleID
+	} else if !param.IsOmitted(u.OfSmartMemory) {
+		return u.OfSmartMemory
+	}
+	return nil
+}
+
+// The property ModuleID is required.
+type QueryProcedureSearchParamsSmartMemoryLocationModuleID struct {
+	// **REQUIRED** FALSE
+	ModuleID string `json:"moduleId,required"`
+	paramObj
+}
+
+func (r QueryProcedureSearchParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
+	type shadow QueryProcedureSearchParamsSmartMemoryLocationModuleID
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *QueryProcedureSearchParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 // The property SmartMemory is required.
-type QueryProcedureSearchParamsSmartMemoryLocation struct {
+type QueryProcedureSearchParamsSmartMemoryLocationSmartMemory struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
 	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r QueryProcedureSearchParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
-	type shadow QueryProcedureSearchParamsSmartMemoryLocation
+func (r QueryProcedureSearchParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
+	type shadow QueryProcedureSearchParamsSmartMemoryLocationSmartMemory
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *QueryProcedureSearchParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
+func (r *QueryProcedureSearchParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

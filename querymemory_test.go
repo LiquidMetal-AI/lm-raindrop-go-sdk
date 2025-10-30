@@ -12,7 +12,6 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestQueryMemorySearchWithOptionalParams(t *testing.T) {
@@ -29,18 +28,26 @@ func TestQueryMemorySearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Memory.Search(context.TODO(), raindrop.QueryMemorySearchParams{
-		BodySessionID1:           "01jxanr45haeswhay4n0q8340y",
-		BodySmartMemoryLocation1: raindrop.QueryMemorySearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
-		Terms:                    "user interface preferences",
-		BodyEndTime1:             raindrop.Time(time.Now()),
-		BodyEndTime2:             raindrop.Time(time.Now()),
-		BodyNMostRecent1:         raindrop.Int(10),
-		BodyNMostRecent2:         raindrop.Int(10),
-		BodySessionID2:           raindrop.String("01jxanr45haeswhay4n0q8340y"),
-		BodySmartMemoryLocation2: raindrop.QueryMemorySearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
-		BodyStartTime1:           raindrop.Time(time.Now()),
-		BodyStartTime2:           raindrop.Time(time.Now()),
-		Timeline:                 raindrop.String("user-conversation-2024"),
+		BodySessionID1: "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.QueryMemorySearchParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.QueryMemorySearchParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		Terms:            "user interface preferences",
+		BodyEndTime1:     raindrop.Time(time.Now()),
+		BodyEndTime2:     raindrop.Time(time.Now()),
+		BodyNMostRecent1: raindrop.Int(10),
+		BodyNMostRecent2: raindrop.Int(10),
+		BodySessionID2:   raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.QueryMemorySearchParamsSmartMemoryLocationUnion{
+			OfModuleID: &raindrop.QueryMemorySearchParamsSmartMemoryLocationModuleID{
+				ModuleID: "moduleId",
+			},
+		},
+		BodyStartTime1: raindrop.Time(time.Now()),
+		BodyStartTime2: raindrop.Time(time.Now()),
+		Timeline:       raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
