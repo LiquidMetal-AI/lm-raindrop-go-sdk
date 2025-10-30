@@ -62,7 +62,10 @@ func (r *StartSessionNewResponse) UnmarshalJSON(data []byte) error {
 
 type StartSessionNewParams struct {
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation StartSessionNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 StartSessionNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 StartSessionNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

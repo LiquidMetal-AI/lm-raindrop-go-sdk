@@ -72,13 +72,25 @@ func (r *SummarizeMemoryNewResponse) UnmarshalJSON(data []byte) error {
 
 type SummarizeMemoryNewParams struct {
 	// List of memory IDs to summarize
-	MemoryIDs []string `json:"memoryIds,omitzero,required"`
+	BodyMemoryIDs1 []string `json:"memoryIds,omitzero,required"`
 	// Unique session identifier for the working memory instance
-	SessionID string `json:"sessionId,required"`
+	BodySessionID1 string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation SummarizeMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 SummarizeMemoryNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// Optional custom system prompt for summarization (Alias: accepts both
+	// 'systemPrompt' and 'system_prompt')
+	BodySystemPrompt1 param.Opt[string] `json:"system_prompt,omitzero"`
 	// Optional custom system prompt for summarization
-	SystemPrompt param.Opt[string] `json:"systemPrompt,omitzero"`
+	BodySystemPrompt2 param.Opt[string] `json:"systemPrompt,omitzero"`
+	// Unique session identifier for the working memory instance (Alias: accepts both
+	// 'sessionId' and 'session_id')
+	BodySessionID2 param.Opt[string] `json:"session_id,omitzero"`
+	// List of memory IDs to summarize (Alias: accepts both 'memoryIds' and
+	// 'memory_ids')
+	BodyMemoryIDs2 []string `json:"memory_ids,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 SummarizeMemoryNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

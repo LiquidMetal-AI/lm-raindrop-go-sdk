@@ -65,11 +65,17 @@ type PutProcedureNewParams struct {
 	// Unique key to identify this procedure
 	Key string `json:"key,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation PutProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 PutProcedureNewParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// The procedure content (prompt, template, instructions, etc.)
 	Value string `json:"value,required"`
+	// Optional procedural memory ID to use for actor isolation (Alias: accepts both
+	// 'proceduralMemoryId' and 'procedural_memory_id')
+	BodyProceduralMemoryID1 param.Opt[string] `json:"procedural_memory_id,omitzero"`
 	// Optional procedural memory ID to use for actor isolation
-	ProceduralMemoryID param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	BodyProceduralMemoryID2 param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 PutProcedureNewParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

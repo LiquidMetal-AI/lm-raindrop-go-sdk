@@ -28,12 +28,14 @@ func TestPutMemoryNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PutMemory.New(context.TODO(), raindrop.PutMemoryNewParams{
-		Content:             "User prefers dark theme for the interface",
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.PutMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		Agent:               raindrop.String("assistant-v1"),
-		Key:                 raindrop.String("user-preference-theme"),
-		Timeline:            raindrop.String("user-conversation-2024"),
+		Content:                  "User prefers dark theme for the interface",
+		BodySessionID1:           "01jxanr45haeswhay4n0q8340y",
+		BodySmartMemoryLocation1: raindrop.PutMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		Agent:                    raindrop.String("assistant-v1"),
+		Key:                      raindrop.String("user-preference-theme"),
+		BodySessionID2:           raindrop.String("01jxanr45haeswhay4n0q8340y"),
+		BodySmartMemoryLocation2: raindrop.PutMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234"), ApplicationName: raindrop.String("demo")}},
+		Timeline:                 raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

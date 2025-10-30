@@ -172,15 +172,26 @@ func (r *QueryEpisodicMemorySearchResponsePagination) UnmarshalJSON(data []byte)
 
 type QueryEpisodicMemorySearchParams struct {
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation QueryEpisodicMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 QueryEpisodicMemorySearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// Natural language search query to find relevant episodic memory sessions
 	Terms string `json:"terms,required"`
+	// End time for temporal filtering (Alias: accepts both 'endTime' and 'end_time')
+	BodyEndTime1 param.Opt[time.Time] `json:"end_time,omitzero" format:"date-time"`
 	// End time for temporal filtering
-	EndTime param.Opt[time.Time] `json:"endTime,omitzero" format:"date-time"`
+	BodyEndTime2 param.Opt[time.Time] `json:"endTime,omitzero" format:"date-time"`
+	// Maximum number of most recent results to return (Alias: accepts both
+	// 'nMostRecent' and 'n_most_recent')
+	BodyNMostRecent1 param.Opt[int64] `json:"n_most_recent,omitzero"`
 	// Maximum number of most recent results to return
-	NMostRecent param.Opt[int64] `json:"nMostRecent,omitzero"`
+	BodyNMostRecent2 param.Opt[int64] `json:"nMostRecent,omitzero"`
+	// Start time for temporal filtering (Alias: accepts both 'startTime' and
+	// 'start_time')
+	BodyStartTime1 param.Opt[time.Time] `json:"start_time,omitzero" format:"date-time"`
 	// Start time for temporal filtering
-	StartTime param.Opt[time.Time] `json:"startTime,omitzero" format:"date-time"`
+	BodyStartTime2 param.Opt[time.Time] `json:"startTime,omitzero" format:"date-time"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 QueryEpisodicMemorySearchParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

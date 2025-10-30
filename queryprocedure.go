@@ -92,17 +92,32 @@ func (r *QueryProcedureSearchResponseProcedure) UnmarshalJSON(data []byte) error
 
 type QueryProcedureSearchParams struct {
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation QueryProcedureSearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 QueryProcedureSearchParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// Search terms to match against procedure keys and values
 	Terms string `json:"terms,required"`
+	// Maximum number of results to return (Alias: accepts both 'nMostRecent' and
+	// 'n_most_recent')
+	BodyNMostRecent1 param.Opt[int64] `json:"n_most_recent,omitzero"`
 	// Maximum number of results to return
-	NMostRecent param.Opt[int64] `json:"nMostRecent,omitzero"`
+	BodyNMostRecent2 param.Opt[int64] `json:"nMostRecent,omitzero"`
+	// Optional procedural memory ID to use for actor isolation (Alias: accepts both
+	// 'proceduralMemoryId' and 'procedural_memory_id')
+	BodyProceduralMemoryID1 param.Opt[string] `json:"procedural_memory_id,omitzero"`
 	// Optional procedural memory ID to use for actor isolation
-	ProceduralMemoryID param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	BodyProceduralMemoryID2 param.Opt[string] `json:"proceduralMemoryId,omitzero"`
+	// Whether to search in procedure keys (Alias: accepts both 'searchKeys' and
+	// 'search_keys')
+	BodySearchKeys1 param.Opt[bool] `json:"search_keys,omitzero"`
+	// Whether to search in procedure values (Alias: accepts both 'searchValues' and
+	// 'search_values')
+	BodySearchValues1 param.Opt[bool] `json:"search_values,omitzero"`
 	// Whether to search in procedure keys
-	SearchKeys param.Opt[bool] `json:"searchKeys,omitzero"`
+	BodySearchKeys2 param.Opt[bool] `json:"searchKeys,omitzero"`
 	// Whether to search in procedure values
-	SearchValues param.Opt[bool] `json:"searchValues,omitzero"`
+	BodySearchValues2 param.Opt[bool] `json:"searchValues,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 QueryProcedureSearchParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 

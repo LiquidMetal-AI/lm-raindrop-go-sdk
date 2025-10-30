@@ -70,11 +70,20 @@ func (r *RehydrateSessionRehydrateResponse) UnmarshalJSON(data []byte) error {
 
 type RehydrateSessionRehydrateParams struct {
 	// Session identifier to restore from episodic memory
-	SessionID string `json:"sessionId,required"`
+	BodySessionID1 string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	SmartMemoryLocation RehydrateSessionRehydrateParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	BodySmartMemoryLocation1 RehydrateSessionRehydrateParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
+	// If true, only restore a summary. If false, restore all memories (Alias: accepts
+	// both 'summaryOnly' and 'summary_only')
+	BodySummaryOnly1 param.Opt[bool] `json:"summary_only,omitzero"`
 	// If true, only restore a summary. If false, restore all memories
-	SummaryOnly param.Opt[bool] `json:"summaryOnly,omitzero"`
+	BodySummaryOnly2 param.Opt[bool] `json:"summaryOnly,omitzero"`
+	// Session identifier to restore from episodic memory (Alias: accepts both
+	// 'sessionId' and 'session_id')
+	BodySessionID2 param.Opt[string] `json:"session_id,omitzero"`
+	// Smart memory locator for targeting the correct smart memory instance (Alias:
+	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
+	BodySmartMemoryLocation2 RehydrateSessionRehydrateParamsSmartMemoryLocation `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 
