@@ -147,24 +147,15 @@ func (r *ExecuteQueryExecuteResponseJsonResults) UnmarshalJSON(data []byte) erro
 
 type ExecuteQueryExecuteParams struct {
 	// Smart SQL locator for targeting the correct smart SQL instance
-	BodySmartSqlLocation1 ExecuteQueryExecuteParamsSmartSqlLocationUnion `json:"smartSqlLocation,omitzero,required"`
-	// Direct SQL query to execute (mutually exclusive with text_query) (Alias: accepts
-	// both 'sqlQuery' and 'sql_query')
-	BodySqlQuery1 param.Opt[string] `json:"sql_query,omitzero"`
+	SmartSqlLocation ExecuteQueryExecuteParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
 	// Direct SQL query to execute (mutually exclusive with text_query)
-	BodySqlQuery2 param.Opt[string] `json:"sqlQuery,omitzero"`
+	SqlQuery param.Opt[string] `json:"sqlQuery,omitzero"`
 	// Natural language query to convert to SQL (mutually exclusive with sql_query)
-	// (Alias: accepts both 'textQuery' and 'text_query')
-	BodyTextQuery1 param.Opt[string] `json:"text_query,omitzero"`
-	// Natural language query to convert to SQL (mutually exclusive with sql_query)
-	BodyTextQuery2 param.Opt[string] `json:"textQuery,omitzero"`
+	TextQuery param.Opt[string] `json:"textQuery,omitzero"`
 	// Desired output format for query results
 	//
 	// Any of "OUTPUT_FORMAT_UNSPECIFIED", "OUTPUT_FORMAT_JSON", "OUTPUT_FORMAT_CSV".
 	Format ExecuteQueryExecuteParamsFormat `json:"format,omitzero"`
-	// Smart SQL locator for targeting the correct smart SQL instance (Alias: accepts
-	// both 'smartSqlLocation' and 'smart_sql_location')
-	BodySmartSqlLocation2 ExecuteQueryExecuteParamsSmartSqlLocationUnion `json:"smart_sql_location,omitzero"`
 	paramObj
 }
 
@@ -176,50 +167,31 @@ func (r *ExecuteQueryExecuteParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type ExecuteQueryExecuteParamsSmartSqlLocationUnion struct {
-	OfModuleID *ExecuteQueryExecuteParamsSmartSqlLocationModuleID `json:",omitzero,inline"`
-	OfSmartSql *ExecuteQueryExecuteParamsSmartSqlLocationSmartSql `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u ExecuteQueryExecuteParamsSmartSqlLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartSql)
-}
-func (u *ExecuteQueryExecuteParamsSmartSqlLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *ExecuteQueryExecuteParamsSmartSqlLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	} else if !param.IsOmitted(u.OfSmartSql) {
-		return u.OfSmartSql
-	}
-	return nil
-}
-
-// The property ModuleID is required.
-type ExecuteQueryExecuteParamsSmartSqlLocationModuleID struct {
-	// Direct module ID for smart SQL instance (fallback, prefer name-based resolution)
-	ModuleID string `json:"moduleId,required"`
+// The property SmartSql is required.
+type ExecuteQueryExecuteParamsSmartSqlLocation struct {
+	// Name-based smart SQL instance identifier (recommended)
+	SmartSql ExecuteQueryExecuteParamsSmartSqlLocationSmartSql `json:"smartSql,omitzero,required"`
 	paramObj
 }
 
-func (r ExecuteQueryExecuteParamsSmartSqlLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow ExecuteQueryExecuteParamsSmartSqlLocationModuleID
+func (r ExecuteQueryExecuteParamsSmartSqlLocation) MarshalJSON() (data []byte, err error) {
+	type shadow ExecuteQueryExecuteParamsSmartSqlLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *ExecuteQueryExecuteParamsSmartSqlLocationModuleID) UnmarshalJSON(data []byte) error {
+func (r *ExecuteQueryExecuteParamsSmartSqlLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The property SmartSql is required.
+// Name-based smart SQL instance identifier (recommended)
+//
+// The property Name is required.
 type ExecuteQueryExecuteParamsSmartSqlLocationSmartSql struct {
-	// Name-based smart SQL instance identifier (recommended)
-	SmartSql ExecuteQueryExecuteParamsSmartSqlLocationSmartSqlSmartSql `json:"smartSql,omitzero,required"`
+	// The name of the smart SQL instance
+	Name string `json:"name,required"`
+	// Optional application name that owns this smart SQL instance
+	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
+	// Optional version identifier for the smart SQL instance
+	Version param.Opt[string] `json:"version,omitzero"`
 	paramObj
 }
 
@@ -228,30 +200,6 @@ func (r ExecuteQueryExecuteParamsSmartSqlLocationSmartSql) MarshalJSON() (data [
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *ExecuteQueryExecuteParamsSmartSqlLocationSmartSql) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Name-based smart SQL instance identifier (recommended)
-//
-// The property Name is required.
-type ExecuteQueryExecuteParamsSmartSqlLocationSmartSqlSmartSql struct {
-	// The name of the smart SQL instance
-	Name string `json:"name,required"`
-	// Optional application name that owns this smart SQL instance (Alias: accepts both
-	// 'applicationName' and 'application_name')
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional application name that owns this smart SQL instance
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version identifier for the smart SQL instance
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r ExecuteQueryExecuteParamsSmartSqlLocationSmartSqlSmartSql) MarshalJSON() (data []byte, err error) {
-	type shadow ExecuteQueryExecuteParamsSmartSqlLocationSmartSqlSmartSql
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *ExecuteQueryExecuteParamsSmartSqlLocationSmartSqlSmartSql) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

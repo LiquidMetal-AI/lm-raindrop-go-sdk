@@ -11,6 +11,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestListProcedureNewWithOptionalParams(t *testing.T) {
@@ -27,18 +28,8 @@ func TestListProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ListProcedures.New(context.TODO(), raindrop.ListProcedureNewParams{
-		BodySmartMemoryLocation1: raindrop.ListProcedureNewParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.ListProcedureNewParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
-		BodyProceduralMemoryID1: raindrop.String("demo-smartmemory"),
-		BodyProceduralMemoryID2: raindrop.String("demo-smartmemory"),
-		BodySmartMemoryLocation2: raindrop.ListProcedureNewParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.ListProcedureNewParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
+		SmartMemoryLocation: raindrop.ListProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

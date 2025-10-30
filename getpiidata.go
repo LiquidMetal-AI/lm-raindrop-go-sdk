@@ -131,20 +131,11 @@ func (r *GetPiiDataGetResponsePiiDetectionEntity) UnmarshalJSON(data []byte) err
 
 type GetPiiDataGetParams struct {
 	// Smart SQL locator for targeting the correct smart SQL instance
-	BodySmartSqlLocation1 GetPiiDataGetParamsSmartSqlLocationUnion `json:"smartSqlLocation,omitzero,required"`
+	SmartSqlLocation GetPiiDataGetParamsSmartSqlLocation `json:"smartSqlLocation,omitzero,required"`
 	// Table name to retrieve PII data from
-	BodyTableName1 string `json:"tableName,required"`
-	// Optional record identifier to filter PII data (Alias: accepts both 'recordId'
-	// and 'record_id')
-	BodyRecordID1 param.Opt[string] `json:"record_id,omitzero"`
+	TableName string `json:"tableName,required"`
 	// Optional record identifier to filter PII data
-	BodyRecordID2 param.Opt[string] `json:"recordId,omitzero"`
-	// Table name to retrieve PII data from (Alias: accepts both 'tableName' and
-	// 'table_name')
-	BodyTableName2 param.Opt[string] `json:"table_name,omitzero"`
-	// Smart SQL locator for targeting the correct smart SQL instance (Alias: accepts
-	// both 'smartSqlLocation' and 'smart_sql_location')
-	BodySmartSqlLocation2 GetPiiDataGetParamsSmartSqlLocationUnion `json:"smart_sql_location,omitzero"`
+	RecordID param.Opt[string] `json:"recordId,omitzero"`
 	paramObj
 }
 
@@ -156,50 +147,31 @@ func (r *GetPiiDataGetParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type GetPiiDataGetParamsSmartSqlLocationUnion struct {
-	OfModuleID *GetPiiDataGetParamsSmartSqlLocationModuleID `json:",omitzero,inline"`
-	OfSmartSql *GetPiiDataGetParamsSmartSqlLocationSmartSql `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u GetPiiDataGetParamsSmartSqlLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartSql)
-}
-func (u *GetPiiDataGetParamsSmartSqlLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *GetPiiDataGetParamsSmartSqlLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	} else if !param.IsOmitted(u.OfSmartSql) {
-		return u.OfSmartSql
-	}
-	return nil
-}
-
-// The property ModuleID is required.
-type GetPiiDataGetParamsSmartSqlLocationModuleID struct {
-	// Direct module ID for smart SQL instance (fallback, prefer name-based resolution)
-	ModuleID string `json:"moduleId,required"`
+// The property SmartSql is required.
+type GetPiiDataGetParamsSmartSqlLocation struct {
+	// Name-based smart SQL instance identifier (recommended)
+	SmartSql GetPiiDataGetParamsSmartSqlLocationSmartSql `json:"smartSql,omitzero,required"`
 	paramObj
 }
 
-func (r GetPiiDataGetParamsSmartSqlLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow GetPiiDataGetParamsSmartSqlLocationModuleID
+func (r GetPiiDataGetParamsSmartSqlLocation) MarshalJSON() (data []byte, err error) {
+	type shadow GetPiiDataGetParamsSmartSqlLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *GetPiiDataGetParamsSmartSqlLocationModuleID) UnmarshalJSON(data []byte) error {
+func (r *GetPiiDataGetParamsSmartSqlLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// The property SmartSql is required.
+// Name-based smart SQL instance identifier (recommended)
+//
+// The property Name is required.
 type GetPiiDataGetParamsSmartSqlLocationSmartSql struct {
-	// Name-based smart SQL instance identifier (recommended)
-	SmartSql GetPiiDataGetParamsSmartSqlLocationSmartSqlSmartSql `json:"smartSql,omitzero,required"`
+	// The name of the smart SQL instance
+	Name string `json:"name,required"`
+	// Optional application name that owns this smart SQL instance
+	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
+	// Optional version identifier for the smart SQL instance
+	Version param.Opt[string] `json:"version,omitzero"`
 	paramObj
 }
 
@@ -208,29 +180,5 @@ func (r GetPiiDataGetParamsSmartSqlLocationSmartSql) MarshalJSON() (data []byte,
 	return param.MarshalObject(r, (*shadow)(&r))
 }
 func (r *GetPiiDataGetParamsSmartSqlLocationSmartSql) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-// Name-based smart SQL instance identifier (recommended)
-//
-// The property Name is required.
-type GetPiiDataGetParamsSmartSqlLocationSmartSqlSmartSql struct {
-	// The name of the smart SQL instance
-	Name string `json:"name,required"`
-	// Optional application name that owns this smart SQL instance (Alias: accepts both
-	// 'applicationName' and 'application_name')
-	ApplicationName param.Opt[string] `json:"application_name,omitzero"`
-	// Optional application name that owns this smart SQL instance
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version identifier for the smart SQL instance
-	Version param.Opt[string] `json:"version,omitzero"`
-	paramObj
-}
-
-func (r GetPiiDataGetParamsSmartSqlLocationSmartSqlSmartSql) MarshalJSON() (data []byte, err error) {
-	type shadow GetPiiDataGetParamsSmartSqlLocationSmartSqlSmartSql
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *GetPiiDataGetParamsSmartSqlLocationSmartSqlSmartSql) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

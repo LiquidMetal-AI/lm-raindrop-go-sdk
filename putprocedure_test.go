@@ -11,6 +11,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
+	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
 func TestPutProcedureNewWithOptionalParams(t *testing.T) {
@@ -27,20 +28,10 @@ func TestPutProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PutProcedure.New(context.TODO(), raindrop.PutProcedureNewParams{
-		Key: "TechnicalReportSystemPrompt",
-		BodySmartMemoryLocation1: raindrop.PutProcedureNewParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.PutProcedureNewParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
-		Value:                   "You are a technical documentation assistant...",
-		BodyProceduralMemoryID1: raindrop.String("demo-smartmemory"),
-		BodyProceduralMemoryID2: raindrop.String("demo-smartmemory"),
-		BodySmartMemoryLocation2: raindrop.PutProcedureNewParamsSmartMemoryLocationUnion{
-			OfModuleID: &raindrop.PutProcedureNewParamsSmartMemoryLocationModuleID{
-				ModuleID: "moduleId",
-			},
-		},
+		Key:                 "TechnicalReportSystemPrompt",
+		SmartMemoryLocation: raindrop.PutProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		Value:               "You are a technical documentation assistant...",
+		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
