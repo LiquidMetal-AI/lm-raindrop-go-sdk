@@ -65,15 +65,9 @@ func (r *DeleteSemanticMemoryDeleteResponse) UnmarshalJSON(data []byte) error {
 
 type DeleteSemanticMemoryDeleteParams struct {
 	// Unique object identifier of the document to delete
-	BodyObjectID1 string `json:"objectId,required"`
+	ObjectID string `json:"objectId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	BodySmartMemoryLocation1 DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
-	// Unique object identifier of the document to delete (Alias: accepts both
-	// 'objectId' and 'object_id')
-	BodyObjectID2 param.Opt[string] `json:"object_id,omitzero"`
-	// Smart memory locator for targeting the correct smart memory instance (Alias:
-	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
-	BodySmartMemoryLocation2 DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero"`
+	SmartMemoryLocation DeleteSemanticMemoryDeleteParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	paramObj
 }
 
@@ -85,58 +79,18 @@ func (r *DeleteSemanticMemoryDeleteParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion struct {
-	OfModuleID    *DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
-	OfSmartMemory *DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
-}
-func (u *DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *DeleteSemanticMemoryDeleteParamsSmartMemoryLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	} else if !param.IsOmitted(u.OfSmartMemory) {
-		return u.OfSmartMemory
-	}
-	return nil
-}
-
-// The property ModuleID is required.
-type DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID struct {
-	// **REQUIRED** FALSE
-	ModuleID string `json:"moduleId,required"`
-	paramObj
-}
-
-func (r DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *DeleteSemanticMemoryDeleteParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // The property SmartMemory is required.
-type DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory struct {
+type DeleteSemanticMemoryDeleteParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
 	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory
+func (r DeleteSemanticMemoryDeleteParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
+	type shadow DeleteSemanticMemoryDeleteParamsSmartMemoryLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *DeleteSemanticMemoryDeleteParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+func (r *DeleteSemanticMemoryDeleteParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

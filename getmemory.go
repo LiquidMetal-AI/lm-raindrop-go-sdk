@@ -112,33 +112,19 @@ func (r *GetMemoryGetResponseMemory) UnmarshalJSON(data []byte) error {
 
 type GetMemoryGetParams struct {
 	// Unique session identifier for the working memory instance
-	BodySessionID1 string `json:"sessionId,required"`
+	SessionID string `json:"sessionId,required"`
 	// Smart memory locator for targeting the correct smart memory instance
-	BodySmartMemoryLocation1 GetMemoryGetParamsSmartMemoryLocationUnion `json:"smartMemoryLocation,omitzero,required"`
-	// End time for temporal filtering (Alias: accepts both 'endTime' and 'end_time')
-	BodyEndTime1 param.Opt[time.Time] `json:"end_time,omitzero" format:"date-time"`
+	SmartMemoryLocation GetMemoryGetParamsSmartMemoryLocation `json:"smartMemoryLocation,omitzero,required"`
 	// End time for temporal filtering
-	BodyEndTime2 param.Opt[time.Time] `json:"endTime,omitzero" format:"date-time"`
+	EndTime param.Opt[time.Time] `json:"endTime,omitzero" format:"date-time"`
 	// Specific key to retrieve
 	Key param.Opt[string] `json:"key,omitzero"`
-	// Maximum number of most recent memories to return (Alias: accepts both
-	// 'nMostRecent' and 'n_most_recent')
-	BodyNMostRecent1 param.Opt[int64] `json:"n_most_recent,omitzero"`
 	// Maximum number of most recent memories to return
-	BodyNMostRecent2 param.Opt[int64] `json:"nMostRecent,omitzero"`
-	// Start time for temporal filtering (Alias: accepts both 'startTime' and
-	// 'start_time')
-	BodyStartTime1 param.Opt[time.Time] `json:"start_time,omitzero" format:"date-time"`
+	NMostRecent param.Opt[int64] `json:"nMostRecent,omitzero"`
 	// Start time for temporal filtering
-	BodyStartTime2 param.Opt[time.Time] `json:"startTime,omitzero" format:"date-time"`
+	StartTime param.Opt[time.Time] `json:"startTime,omitzero" format:"date-time"`
 	// Timeline to filter memories
 	Timeline param.Opt[string] `json:"timeline,omitzero"`
-	// Unique session identifier for the working memory instance (Alias: accepts both
-	// 'sessionId' and 'session_id')
-	BodySessionID2 param.Opt[string] `json:"session_id,omitzero"`
-	// Smart memory locator for targeting the correct smart memory instance (Alias:
-	// accepts both 'smartMemoryLocation' and 'smart_memory_location')
-	BodySmartMemoryLocation2 GetMemoryGetParamsSmartMemoryLocationUnion `json:"smart_memory_location,omitzero"`
 	paramObj
 }
 
@@ -150,58 +136,18 @@ func (r *GetMemoryGetParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// Only one field can be non-zero.
-//
-// Use [param.IsOmitted] to confirm if a field is set.
-type GetMemoryGetParamsSmartMemoryLocationUnion struct {
-	OfModuleID    *GetMemoryGetParamsSmartMemoryLocationModuleID    `json:",omitzero,inline"`
-	OfSmartMemory *GetMemoryGetParamsSmartMemoryLocationSmartMemory `json:",omitzero,inline"`
-	paramUnion
-}
-
-func (u GetMemoryGetParamsSmartMemoryLocationUnion) MarshalJSON() ([]byte, error) {
-	return param.MarshalUnion(u, u.OfModuleID, u.OfSmartMemory)
-}
-func (u *GetMemoryGetParamsSmartMemoryLocationUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, u)
-}
-
-func (u *GetMemoryGetParamsSmartMemoryLocationUnion) asAny() any {
-	if !param.IsOmitted(u.OfModuleID) {
-		return u.OfModuleID
-	} else if !param.IsOmitted(u.OfSmartMemory) {
-		return u.OfSmartMemory
-	}
-	return nil
-}
-
-// The property ModuleID is required.
-type GetMemoryGetParamsSmartMemoryLocationModuleID struct {
-	// **REQUIRED** FALSE
-	ModuleID string `json:"moduleId,required"`
-	paramObj
-}
-
-func (r GetMemoryGetParamsSmartMemoryLocationModuleID) MarshalJSON() (data []byte, err error) {
-	type shadow GetMemoryGetParamsSmartMemoryLocationModuleID
-	return param.MarshalObject(r, (*shadow)(&r))
-}
-func (r *GetMemoryGetParamsSmartMemoryLocationModuleID) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 // The property SmartMemory is required.
-type GetMemoryGetParamsSmartMemoryLocationSmartMemory struct {
+type GetMemoryGetParamsSmartMemoryLocation struct {
 	// **EXAMPLE** {"name":"memory-name","application_name":"demo","version":"1234"}
 	// **REQUIRED** FALSE
 	SmartMemory shared.LiquidmetalV1alpha1SmartMemoryNameParam `json:"smartMemory,omitzero,required"`
 	paramObj
 }
 
-func (r GetMemoryGetParamsSmartMemoryLocationSmartMemory) MarshalJSON() (data []byte, err error) {
-	type shadow GetMemoryGetParamsSmartMemoryLocationSmartMemory
+func (r GetMemoryGetParamsSmartMemoryLocation) MarshalJSON() (data []byte, err error) {
+	type shadow GetMemoryGetParamsSmartMemoryLocation
 	return param.MarshalObject(r, (*shadow)(&r))
 }
-func (r *GetMemoryGetParamsSmartMemoryLocationSmartMemory) UnmarshalJSON(data []byte) error {
+func (r *GetMemoryGetParamsSmartMemoryLocation) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
