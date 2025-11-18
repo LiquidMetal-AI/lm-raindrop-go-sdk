@@ -169,7 +169,8 @@ func (r *QueryService) SumarizePage(ctx context.Context, body QuerySumarizePageP
 
 // The property Bucket is required.
 type BucketLocatorParam struct {
-	// **EXAMPLE** { name: 'my-smartbucket' } **REQUIRED** FALSE
+	// **EXAMPLE** { name: 'my-smartbucket', version: '01jtryx2f2f61ryk06vd8mr91p',
+	// application_name: 'my-app' } **REQUIRED** FALSE
 	Bucket LiquidmetalV1alpha1BucketNameParam `json:"bucket,omitzero,required"`
 	paramObj
 }
@@ -182,17 +183,17 @@ func (r *BucketLocatorParam) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-// BucketName represents a bucket name with an optional version
+// BucketName represents a bucket name with version and application name
 //
-// The property Name is required.
+// The properties ApplicationName, Name, Version are required.
 type LiquidmetalV1alpha1BucketNameParam struct {
+	// The application name **EXAMPLE** "my-app" **REQUIRED** TRUE
+	ApplicationName string `json:"applicationName,required"`
 	// The name of the bucket **EXAMPLE** "my-bucket" **REQUIRED** TRUE
 	Name string `json:"name,required"`
-	// Optional Application **EXAMPLE** "my-app" **REQUIRED** FALSE
-	ApplicationName param.Opt[string] `json:"applicationName,omitzero"`
-	// Optional version of the bucket **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p"
-	// **REQUIRED** FALSE
-	Version param.Opt[string] `json:"version,omitzero"`
+	// The version of the bucket **EXAMPLE** "01jtryx2f2f61ryk06vd8mr91p" **REQUIRED**
+	// TRUE
+	Version string `json:"version,required"`
 	paramObj
 }
 
