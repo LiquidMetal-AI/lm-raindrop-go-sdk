@@ -27,7 +27,7 @@ func TestQueryChunkSearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.ChunkSearch(context.TODO(), raindrop.QueryChunkSearchParams{
-		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
+		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}}},
 		Input:           "Find documents about revenue in Q4 2023",
 		RequestID:       "<YOUR-REQUEST-ID>",
 		Partition:       raindrop.String("tenant-123"),
@@ -55,7 +55,7 @@ func TestQueryDocumentQueryWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
 		Input:          "What are the key points in this document?",
 		ObjectID:       "document.pdf",
 		RequestID:      "<YOUR-REQUEST-ID>",
@@ -112,7 +112,7 @@ func TestQuerySearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Search(context.TODO(), raindrop.QuerySearchParams{
-		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}}},
+		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}}},
 		Input:           "All my files",
 		RequestID:       "<YOUR-REQUEST-ID>",
 		Partition:       raindrop.String("tenant-123"),

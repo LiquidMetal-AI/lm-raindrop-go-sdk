@@ -4,6 +4,7 @@ package raindrop_test
 
 import (
 	"context"
+	"errors"
 	"os"
 	"testing"
 
@@ -12,7 +13,8 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestBucketByStatusListObjectsWithOptionalParams(t *testing.T) {
+	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -24,14 +26,18 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
+	_, err := client.Bucket.ByStatus.ListObjects(context.TODO(), raindrop.BucketByStatusListObjectsParams{
 		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		Statuses:       []string{"failed", "processing"},
+		Exclude:        raindrop.Bool(true),
+		Partition:      raindrop.String("default"),
+		Prefix:         raindrop.String("documents/"),
 	})
 	if err != nil {
+		var apierr *raindrop.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", response.Answer)
 }

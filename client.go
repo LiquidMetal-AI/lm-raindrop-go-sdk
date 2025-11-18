@@ -37,6 +37,8 @@ type Client struct {
 	GetMetadata          GetMetadataService
 	UpdateMetadata       UpdateMetadataService
 	GetPiiData           GetPiiDataService
+	DocumentStatus       DocumentStatusService
+	DocumentStatusBulk   DocumentStatusBulkService
 }
 
 // DefaultClientOptions read from the environment (RAINDROP_API_KEY,
@@ -81,6 +83,8 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.GetMetadata = NewGetMetadataService(opts...)
 	r.UpdateMetadata = NewUpdateMetadataService(opts...)
 	r.GetPiiData = NewGetPiiDataService(opts...)
+	r.DocumentStatus = NewDocumentStatusService(opts...)
+	r.DocumentStatusBulk = NewDocumentStatusBulkService(opts...)
 
 	return
 }
