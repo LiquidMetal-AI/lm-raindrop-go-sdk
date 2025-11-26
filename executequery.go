@@ -4,7 +4,6 @@ package raindrop
 
 import (
 	"context"
-	"encoding/json"
 	"net/http"
 	"slices"
 
@@ -46,67 +45,30 @@ func NewExecuteQueryService(opts ...option.RequestOption) (r ExecuteQueryService
 // - Automatic metadata tracking for schema changes
 // - PII detection for security
 // - Multiple output formats (JSON, CSV)
-func (r *ExecuteQueryService) Execute(ctx context.Context, body ExecuteQueryExecuteParams, opts ...option.RequestOption) (res *ExecuteQueryExecuteResponseUnion, err error) {
+func (r *ExecuteQueryService) Execute(ctx context.Context, body ExecuteQueryExecuteParams, opts ...option.RequestOption) (res *ExecuteQueryExecuteResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "v1/execute_query"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
-// ExecuteQueryExecuteResponseUnion contains all possible properties and values
-// from [ExecuteQueryExecuteResponseCsvResults],
-// [ExecuteQueryExecuteResponseJsonResults].
-//
-// Use the methods beginning with 'As' to cast the union to one of its variants.
-type ExecuteQueryExecuteResponseUnion struct {
-	// This field is from variant [ExecuteQueryExecuteResponseCsvResults].
-	CsvResults    string `json:"csvResults"`
-	AIReasoning   string `json:"aiReasoning"`
-	QueryExecuted string `json:"queryExecuted"`
-	Status        int64  `json:"status"`
-	// This field is from variant [ExecuteQueryExecuteResponseJsonResults].
-	JsonResults string `json:"jsonResults"`
-	JSON        struct {
-		CsvResults    respjson.Field
-		AIReasoning   respjson.Field
-		QueryExecuted respjson.Field
-		Status        respjson.Field
-		JsonResults   respjson.Field
-		raw           string
-	} `json:"-"`
-}
-
-func (u ExecuteQueryExecuteResponseUnion) AsCsvResults() (v ExecuteQueryExecuteResponseCsvResults) {
-	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
-	return
-}
-
-func (u ExecuteQueryExecuteResponseUnion) AsJsonResults() (v ExecuteQueryExecuteResponseJsonResults) {
-	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
-	return
-}
-
-// Returns the unmodified JSON received from the API
-func (u ExecuteQueryExecuteResponseUnion) RawJSON() string { return u.JSON.raw }
-
-func (r *ExecuteQueryExecuteResponseUnion) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type ExecuteQueryExecuteResponseCsvResults struct {
-	// CSV formatted results as a string
-	CsvResults string `json:"csvResults,required"`
+type ExecuteQueryExecuteResponse struct {
 	// AI reasoning for natural language queries (if applicable)
 	AIReasoning string `json:"aiReasoning,nullable"`
+	// Format of the results field
+	Format string `json:"format"`
 	// The actual SQL query that was executed
 	QueryExecuted string `json:"queryExecuted"`
+	// Query results as a string in the requested format (JSON or CSV)
+	Results string `json:"results"`
 	// HTTP status code for the operation
 	Status int64 `json:"status"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		CsvResults    respjson.Field
 		AIReasoning   respjson.Field
+		Format        respjson.Field
 		QueryExecuted respjson.Field
+		Results       respjson.Field
 		Status        respjson.Field
 		ExtraFields   map[string]respjson.Field
 		raw           string
@@ -114,34 +76,8 @@ type ExecuteQueryExecuteResponseCsvResults struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r ExecuteQueryExecuteResponseCsvResults) RawJSON() string { return r.JSON.raw }
-func (r *ExecuteQueryExecuteResponseCsvResults) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type ExecuteQueryExecuteResponseJsonResults struct {
-	// JSON formatted results as a string
-	JsonResults string `json:"jsonResults,required"`
-	// AI reasoning for natural language queries (if applicable)
-	AIReasoning string `json:"aiReasoning,nullable"`
-	// The actual SQL query that was executed
-	QueryExecuted string `json:"queryExecuted"`
-	// HTTP status code for the operation
-	Status int64 `json:"status"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		JsonResults   respjson.Field
-		AIReasoning   respjson.Field
-		QueryExecuted respjson.Field
-		Status        respjson.Field
-		ExtraFields   map[string]respjson.Field
-		raw           string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r ExecuteQueryExecuteResponseJsonResults) RawJSON() string { return r.JSON.raw }
-func (r *ExecuteQueryExecuteResponseJsonResults) UnmarshalJSON(data []byte) error {
+func (r ExecuteQueryExecuteResponse) RawJSON() string { return r.JSON.raw }
+func (r *ExecuteQueryExecuteResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
