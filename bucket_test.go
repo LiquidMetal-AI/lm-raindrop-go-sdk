@@ -28,6 +28,7 @@ func TestBucketListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Bucket.List(context.TODO(), raindrop.BucketListParams{
 		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
+		Partition:      raindrop.String("tenant-123"),
 		Prefix:         raindrop.String("documents/"),
 	})
 	if err != nil {
@@ -39,7 +40,7 @@ func TestBucketListWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestBucketDelete(t *testing.T) {
+func TestBucketDeleteWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -55,6 +56,7 @@ func TestBucketDelete(t *testing.T) {
 	_, err := client.Bucket.Delete(context.TODO(), raindrop.BucketDeleteParams{
 		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
 		Key:            "my-key",
+		Partition:      raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -65,7 +67,7 @@ func TestBucketDelete(t *testing.T) {
 	}
 }
 
-func TestBucketGet(t *testing.T) {
+func TestBucketGetWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -81,6 +83,7 @@ func TestBucketGet(t *testing.T) {
 	_, err := client.Bucket.Get(context.TODO(), raindrop.BucketGetParams{
 		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
 		Key:            "my-key",
+		Partition:      raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -91,7 +94,7 @@ func TestBucketGet(t *testing.T) {
 	}
 }
 
-func TestBucketPut(t *testing.T) {
+func TestBucketPutWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -109,6 +112,7 @@ func TestBucketPut(t *testing.T) {
 		Content:        "U3RhaW5sZXNzIHJvY2tz",
 		ContentType:    "application/pdf",
 		Key:            "my-key",
+		Partition:      raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
