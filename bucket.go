@@ -203,8 +203,6 @@ type BucketListParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
 	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
-	// Optional partition identifier for multi-tenant data isolation
-	Partition param.Opt[string] `json:"partition,omitzero"`
 	// Optional prefix to filter object keys (e.g., "documents/" to only list objects
 	// in documents folder)
 	Prefix param.Opt[string] `json:"prefix,omitzero"`
@@ -225,8 +223,6 @@ type BucketDeleteParams struct {
 	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
 	// Object key/path to delete
 	Key string `json:"key,required"`
-	// Optional partition identifier for multi-tenant data isolation
-	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
@@ -244,8 +240,6 @@ type BucketGetParams struct {
 	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
 	// Object key/path to download
 	Key string `json:"key,required"`
-	// Optional partition identifier for multi-tenant data isolation
-	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
@@ -267,8 +261,6 @@ type BucketPutParams struct {
 	ContentType string `json:"contentType,required"`
 	// Object key/path in the bucket
 	Key string `json:"key,required"`
-	// Optional partition identifier for multi-tenant data isolation
-	Partition param.Opt[string] `json:"partition,omitzero"`
 	paramObj
 }
 
