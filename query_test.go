@@ -31,6 +31,7 @@ func TestQueryChunkSearchWithOptionalParams(t *testing.T) {
 		Input:           "Find documents about revenue in Q4 2023",
 		RequestID:       "<YOUR-REQUEST-ID>",
 		Partition:       raindrop.String("tenant-123"),
+		SourceFilter:    raindrop.String("docs/animals/*.pdf"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -116,6 +117,7 @@ func TestQuerySearchWithOptionalParams(t *testing.T) {
 		Input:           "All my files",
 		RequestID:       "<YOUR-REQUEST-ID>",
 		Partition:       raindrop.String("tenant-123"),
+		SourceFilter:    raindrop.String("docs/animals/*.pdf"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
