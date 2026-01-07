@@ -27,11 +27,17 @@ func TestBucketByStatusListObjectsWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.ByStatus.ListObjects(context.TODO(), raindrop.BucketByStatusListObjectsParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
-		Statuses:       []string{"failed", "processing"},
-		Exclude:        raindrop.Bool(true),
-		Partition:      raindrop.String("default"),
-		Prefix:         raindrop.String("documents/"),
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Statuses:  []string{"failed", "processing"},
+		Exclude:   raindrop.Bool(true),
+		Partition: raindrop.String("default"),
+		Prefix:    raindrop.String("documents/"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

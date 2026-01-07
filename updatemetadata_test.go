@@ -28,7 +28,13 @@ func TestUpdateMetadataUpdateWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.UpdateMetadata.Update(context.TODO(), raindrop.UpdateMetadataUpdateParams{
-		SmartSqlLocation: raindrop.UpdateMetadataUpdateParamsSmartSqlLocation{SmartSql: raindrop.UpdateMetadataUpdateParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
+		SmartSqlLocation: raindrop.UpdateMetadataUpdateParamsSmartSqlLocation{
+			SmartSql: raindrop.UpdateMetadataUpdateParamsSmartSqlLocationSmartSql{
+				Name:            "analytics-sql",
+				ApplicationName: raindrop.String("data-analytics-app"),
+				Version:         raindrop.String("v1.2.0"),
+			},
+		},
 		Tables: []raindrop.UpdateMetadataUpdateParamsTable{{
 			Columns: []raindrop.UpdateMetadataUpdateParamsTableColumn{{
 				ColumnName:   raindrop.String("user_id"),

@@ -28,10 +28,16 @@ func TestPutProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PutProcedure.New(context.TODO(), raindrop.PutProcedureNewParams{
-		Key:                 "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.PutProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		Value:               "You are a technical documentation assistant...",
-		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
+		Key: "TechnicalReportSystemPrompt",
+		SmartMemoryLocation: raindrop.PutProcedureNewParamsSmartMemoryLocation{
+			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            "memory-name",
+				Version:         raindrop.String("1234"),
+			},
+		},
+		Value:              "You are a technical documentation assistant...",
+		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

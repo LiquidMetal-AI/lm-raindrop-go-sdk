@@ -29,13 +29,19 @@ func TestQueryMemorySearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Memory.Search(context.TODO(), raindrop.QueryMemorySearchParams{
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.QueryMemorySearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		Terms:               "user interface preferences",
-		EndTime:             raindrop.Time(time.Now()),
-		NMostRecent:         raindrop.Int(10),
-		StartTime:           raindrop.Time(time.Now()),
-		Timeline:            raindrop.String("user-conversation-2024"),
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.QueryMemorySearchParamsSmartMemoryLocation{
+			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            "memory-name",
+				Version:         raindrop.String("1234"),
+			},
+		},
+		Terms:       "user interface preferences",
+		EndTime:     raindrop.Time(time.Now()),
+		NMostRecent: raindrop.Int(10),
+		StartTime:   raindrop.Time(time.Now()),
+		Timeline:    raindrop.String("user-conversation-2024"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
