@@ -28,10 +28,16 @@ func TestEndSessionNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EndSession.New(context.TODO(), raindrop.EndSessionNewParams{
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.EndSessionNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		Flush:               raindrop.Bool(true),
-		SystemPrompt:        raindrop.String("Summarize the key decisions and action items from this session"),
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.EndSessionNewParamsSmartMemoryLocation{
+			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            "memory-name",
+				Version:         raindrop.String("1234"),
+			},
+		},
+		Flush:        raindrop.Bool(true),
+		SystemPrompt: raindrop.String("Summarize the key decisions and action items from this session"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

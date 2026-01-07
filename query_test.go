@@ -27,11 +27,17 @@ func TestQueryChunkSearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.ChunkSearch(context.TODO(), raindrop.QueryChunkSearchParams{
-		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}}},
-		Input:           "Find documents about revenue in Q4 2023",
-		RequestID:       "<YOUR-REQUEST-ID>",
-		Partition:       raindrop.String("tenant-123"),
-		SourceFilter:    raindrop.String("docs/animals/*.pdf"),
+		BucketLocations: []raindrop.BucketLocatorParam{{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		}},
+		Input:        "Find documents about revenue in Q4 2023",
+		RequestID:    "<YOUR-REQUEST-ID>",
+		Partition:    raindrop.String("tenant-123"),
+		SourceFilter: raindrop.String("docs/animals/*.pdf"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -56,11 +62,17 @@ func TestQueryDocumentQueryWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
-		Partition:      raindrop.String("tenant-123"),
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
+		Partition: raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -113,11 +125,17 @@ func TestQuerySearchWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.Search(context.TODO(), raindrop.QuerySearchParams{
-		BucketLocations: []raindrop.BucketLocatorParam{{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}}},
-		Input:           "All my files",
-		RequestID:       "<YOUR-REQUEST-ID>",
-		Partition:       raindrop.String("tenant-123"),
-		SourceFilter:    raindrop.String("docs/animals/*.pdf"),
+		BucketLocations: []raindrop.BucketLocatorParam{{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		}},
+		Input:        "All my files",
+		RequestID:    "<YOUR-REQUEST-ID>",
+		Partition:    raindrop.String("tenant-123"),
+		SourceFilter: raindrop.String("docs/animals/*.pdf"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

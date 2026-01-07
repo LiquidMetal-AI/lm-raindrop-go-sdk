@@ -28,9 +28,15 @@ func TestDeleteMemoryNew(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DeleteMemory.New(context.TODO(), raindrop.DeleteMemoryNewParams{
-		MemoryID:            "01jxanr45haeswhay4n0q8340y",
-		SessionID:           "01jxanr45haeswhay4n0q8340y",
-		SmartMemoryLocation: raindrop.DeleteMemoryNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		MemoryID:  "01jxanr45haeswhay4n0q8340y",
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.DeleteMemoryNewParamsSmartMemoryLocation{
+			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            "memory-name",
+				Version:         raindrop.String("1234"),
+			},
+		},
 	})
 	if err != nil {
 		var apierr *raindrop.Error

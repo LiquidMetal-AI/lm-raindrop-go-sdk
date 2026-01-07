@@ -27,9 +27,15 @@ func TestDocumentStatusGetStatusWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DocumentStatus.GetStatus(context.TODO(), raindrop.DocumentStatusGetStatusParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{ApplicationName: "my-app", Name: "my-bucket", Version: "01jtryx2f2f61ryk06vd8mr91p"}},
-		ObjectID:       "document.pdf",
-		Partition:      raindrop.String("tenant-123"),
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		ObjectID:  "document.pdf",
+		Partition: raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

@@ -28,9 +28,15 @@ func TestGetProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.GetProcedure.New(context.TODO(), raindrop.GetProcedureNewParams{
-		Key:                 "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.GetProcedureNewParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
-		ProceduralMemoryID:  raindrop.String("demo-smartmemory"),
+		Key: "TechnicalReportSystemPrompt",
+		SmartMemoryLocation: raindrop.GetProcedureNewParamsSmartMemoryLocation{
+			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            "memory-name",
+				Version:         raindrop.String("1234"),
+			},
+		},
+		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

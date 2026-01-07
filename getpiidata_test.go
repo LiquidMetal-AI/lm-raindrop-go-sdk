@@ -27,9 +27,15 @@ func TestGetPiiDataGetWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.GetPiiData.Get(context.TODO(), raindrop.GetPiiDataGetParams{
-		SmartSqlLocation: raindrop.GetPiiDataGetParamsSmartSqlLocation{SmartSql: raindrop.GetPiiDataGetParamsSmartSqlLocationSmartSql{Name: "analytics-sql", ApplicationName: raindrop.String("data-analytics-app"), Version: raindrop.String("v1.2.0")}},
-		TableName:        "users",
-		RecordID:         raindrop.String("user_123"),
+		SmartSqlLocation: raindrop.GetPiiDataGetParamsSmartSqlLocation{
+			SmartSql: raindrop.GetPiiDataGetParamsSmartSqlLocationSmartSql{
+				Name:            "analytics-sql",
+				ApplicationName: raindrop.String("data-analytics-app"),
+				Version:         raindrop.String("v1.2.0"),
+			},
+		},
+		TableName: "users",
+		RecordID:  raindrop.String("user_123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

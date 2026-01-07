@@ -28,8 +28,14 @@ func TestQuerySemanticMemorySearch(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Query.SemanticMemory.Search(context.TODO(), raindrop.QuerySemanticMemorySearchParams{
-		Needle:              "AI development best practices",
-		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocation{SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{ApplicationName: raindrop.String("my-app"), Name: "memory-name", Version: raindrop.String("1234")}},
+		Needle: "AI development best practices",
+		SmartMemoryLocation: raindrop.QuerySemanticMemorySearchParamsSmartMemoryLocation{
+			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            "memory-name",
+				Version:         raindrop.String("1234"),
+			},
+		},
 	})
 	if err != nil {
 		var apierr *raindrop.Error
