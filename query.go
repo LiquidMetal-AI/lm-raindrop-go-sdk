@@ -380,11 +380,6 @@ type QueryChunkSearchParams struct {
 	// Optional partition identifier for multi-tenant data isolation. Defaults to
 	// 'default' if not specified
 	Partition param.Opt[string] `json:"partition,omitzero"`
-	// Optional source filter to restrict vector search results by object key. Supports
-	// literal paths (e.g., "docs/file.pdf"), glob patterns (e.g., "docs/_.pdf"), or
-	// regex patterns (e.g., "/^docs\\/._\\.pdf$/"). Uses post-filtering with 5x
-	// oversampling to ensure good result diversity
-	SourceFilter param.Opt[string] `json:"sourceFilter,omitzero"`
 	paramObj
 }
 
@@ -458,11 +453,6 @@ type QuerySearchParams struct {
 	// Optional partition identifier for multi-tenant data isolation. Defaults to
 	// 'default' if not specified
 	Partition param.Opt[string] `json:"partition,omitzero"`
-	// Optional source filter to restrict vector search results by object key. Supports
-	// literal paths (e.g., "docs/file.pdf"), glob patterns (e.g., "docs/_.pdf"), or
-	// regex patterns (e.g., "/^docs\\/._\\.pdf$/"). Uses post-filtering with 5x
-	// oversampling to ensure good result diversity
-	SourceFilter param.Opt[string] `json:"sourceFilter,omitzero"`
 	paramObj
 }
 
