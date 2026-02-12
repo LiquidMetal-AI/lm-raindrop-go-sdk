@@ -34,10 +34,9 @@ func TestQueryChunkSearchWithOptionalParams(t *testing.T) {
 				Version:         "01jxanr45haeswhay4n0q8340y",
 			},
 		}},
-		Input:        "Find documents about revenue in Q4 2023",
-		RequestID:    "<YOUR-REQUEST-ID>",
-		Partition:    raindrop.String("tenant-123"),
-		SourceFilter: raindrop.String("docs/animals/*.pdf"),
+		Input:     "Find documents about revenue in Q4 2023",
+		RequestID: "<YOUR-REQUEST-ID>",
+		Partition: raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -132,10 +131,9 @@ func TestQuerySearchWithOptionalParams(t *testing.T) {
 				Version:         "01jxanr45haeswhay4n0q8340y",
 			},
 		}},
-		Input:        "All my files",
-		RequestID:    "<YOUR-REQUEST-ID>",
-		Partition:    raindrop.String("tenant-123"),
-		SourceFilter: raindrop.String("docs/animals/*.pdf"),
+		Input:     "All my files",
+		RequestID: "<YOUR-REQUEST-ID>",
+		Partition: raindrop.String("tenant-123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
