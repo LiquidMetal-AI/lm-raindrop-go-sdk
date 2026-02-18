@@ -39,7 +39,6 @@ type Client struct {
 	GetPiiData           GetPiiDataService
 	DocumentStatus       DocumentStatusService
 	DocumentStatusBulk   DocumentStatusBulkService
-	PutMemories          PutMemoryService
 	RehydrationStatus    RehydrationStatusService
 }
 
@@ -87,7 +86,6 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.GetPiiData = NewGetPiiDataService(opts...)
 	r.DocumentStatus = NewDocumentStatusService(opts...)
 	r.DocumentStatusBulk = NewDocumentStatusBulkService(opts...)
-	r.PutMemories = NewPutMemoryService(opts...)
 	r.RehydrationStatus = NewRehydrationStatusService(opts...)
 
 	return
