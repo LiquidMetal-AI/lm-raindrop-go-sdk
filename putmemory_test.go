@@ -49,3 +49,41 @@ func TestPutMemoryNewWithOptionalParams(t *testing.T) {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }
+
+func TestPutMemoryNewBatch(t *testing.T) {
+	t.Skip("Prism tests are disabled")
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := raindrop.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.PutMemory.NewBatch(context.TODO(), raindrop.PutMemoryNewBatchParams{
+		Entries: []raindrop.PutMemoryNewBatchParamsEntry{{
+			Content:  "User prefers dark theme for the interface",
+			Agent:    raindrop.String("assistant-v1"),
+			Key:      raindrop.String("user-preference-theme"),
+			Timeline: raindrop.String("user-conversation-2024"),
+		}},
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.PutMemoryNewBatchParamsSmartMemoryLocation{
+			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
+				ApplicationName: raindrop.String("my-app"),
+				Name:            "memory-name",
+				Version:         raindrop.String("1234"),
+			},
+		},
+	})
+	if err != nil {
+		var apierr *raindrop.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
