@@ -298,8 +298,6 @@ Methods:
 
 - <code title="post /v1/document_status_bulk">client.DocumentStatusBulk.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DocumentStatusBulkService.GetStatusBulk">GetStatusBulk</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DocumentStatusBulkGetStatusBulkParams">DocumentStatusBulkGetStatusBulkParams</a>) (\*<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk">raindrop</a>.<a href="https://pkg.go.dev/github.com/LiquidMetal-AI/lm-raindrop-go-sdk#DocumentStatusBulkGetStatusBulkResponse">DocumentStatusBulkGetStatusBulkResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
-# PutMemories
-
 # RehydrationStatus
 
 Response Types:
