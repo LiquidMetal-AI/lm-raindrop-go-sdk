@@ -28,7 +28,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.6.43'
+go get -u 'github.com/LiquidMetal-AI/lm-raindrop-go-sdk@v0.17.0'
 ```
 
 <!-- x-release-please-end -->
@@ -57,10 +57,16 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RAINDROP_API_KEY")
 	)
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	})
 	if err != nil {
 		panic(err.Error())
@@ -130,7 +136,7 @@ custom := param.Override[raindrop.FooParams](12)
 
 ### Request unions
 
-Unions are represented as a struct with fields prefixed by "Of" for each of it's variants,
+Unions are represented as a struct with fields prefixed by "Of" for each of its variants,
 only one field can be non-zero. The non-zero field will be serialized.
 
 Sub-properties of the union can be accessed via methods on the union struct.
@@ -336,10 +342,16 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
-	BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-	Input:          "What are the key points in this document?",
-	ObjectID:       "document.pdf",
-	RequestID:      "<YOUR-REQUEST-ID>",
+	BucketLocation: raindrop.BucketLocatorParam{
+		Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+			ApplicationName: "my-app",
+			Name:            "my-smartbucket",
+			Version:         "01jxanr45haeswhay4n0q8340y",
+		},
+	},
+	Input:     "What are the key points in this document?",
+	ObjectID:  "document.pdf",
+	RequestID: "<YOUR-REQUEST-ID>",
 })
 if err != nil {
 	var apierr *raindrop.Error
@@ -368,10 +380,16 @@ defer cancel()
 client.Query.DocumentQuery(
 	ctx,
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -409,10 +427,16 @@ client := raindrop.NewClient(
 client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	option.WithMaxRetries(5),
 )
@@ -429,10 +453,16 @@ var response *http.Response
 response, err := client.Query.DocumentQuery(
 	context.TODO(),
 	raindrop.QueryDocumentQueryParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Input:          "What are the key points in this document?",
-		ObjectID:       "document.pdf",
-		RequestID:      "<YOUR-REQUEST-ID>",
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Input:     "What are the key points in this document?",
+		ObjectID:  "document.pdf",
+		RequestID: "<YOUR-REQUEST-ID>",
 	},
 	option.WithResponseInto(&response),
 )

@@ -1,5 +1,55 @@
 # Changelog
 
+## 0.17.0 (2026-02-19)
+
+Full Changelog: [v0.6.43...v0.17.0](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.6.43...v0.17.0)
+
+### Features
+
+* **api:** manual updates ([88b473d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/88b473d27ce5035a41f37d7eacd933c0c8f0bb9f))
+* **api:** updating API spec with latest changes ([d5435fb](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/d5435fb8c28f1a655a939af23eb2521f61c3e1d1))
+* **api:** updating API spec with latest changes ([b88e2f6](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/b88e2f628e16426df9b0b46607216e07c8ccf595))
+* **api:** updating API spec with latest changes ([e3f1322](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/e3f13229d535727044d20159cac879cc8bb99258))
+* **api:** updating API spec with latest changes ([f7478b5](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/f7478b57323fc6bdd5874dddad1c8f436c1ca1e5))
+* **api:** updating API spec with latest changes ([f4999a2](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/f4999a2fafb22a1df852a7761bbe787ce9f8f94f))
+* **api:** updating API spec with latest changes ([60d8f16](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/60d8f1609882075e77785eea60894ada7f511ac9))
+* **api:** updating API spec with latest changes ([723b7c7](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/723b7c7d40ad8cf92cf7f6aee02f4c59b9f3a51e))
+* **api:** updating API spec with latest changes ([48f97b0](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/48f97b09bb647e9071e02bccf183888023c36a93))
+* **api:** updating API spec with latest changes ([8bac54e](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/8bac54e43b502144662cec4b4c7c18135fa79887))
+* **api:** updating API spec with latest changes ([229a909](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/229a909217bdb42525d55b25a601a85b59da5bd5))
+* **api:** updating API spec with latest changes ([4ceae05](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/4ceae05693ffb6a4ec40b9e4116279b491a3e28a))
+* **api:** updating API spec with latest changes ([d629406](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/d6294069b1439b379b6bfbff8b361f3233a6d991))
+* **api:** updating API spec with latest changes ([f33df2b](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/f33df2bea883d02e3eb6614594562211e1e0d45b))
+* **api:** updating API spec with latest changes ([a0b6073](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/a0b607381d31fba76f81e00f2356ab3423c020b4))
+* **api:** updating API spec with latest changes ([eae29ef](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/eae29ef11e77081f067d70e2a00a2afb70e76287))
+* **api:** updating API spec with latest changes ([20c3991](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/20c39916e22514606b17bc0c1a10f0b88a4273f7))
+* **api:** updating API spec with latest changes ([46be110](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/46be1101606bcde2f6c0bfff45c543083ea7648a))
+* **api:** updating API spec with latest changes ([8db7a64](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/8db7a6425fdd08d6ea9568be39d1fdafcc9f9e47))
+* **api:** updating API spec with latest changes ([18fe10b](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/18fe10b4613544f790eb6d1531c7487bd206547f))
+* **api:** updating API spec with latest changes ([4b5d757](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/4b5d7575d244feb3f915f14409e1596d632aba69))
+* **client:** add a convenient param.SetJSON helper ([b1c4f57](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/b1c4f57065313160c75839c08ecc4f0551d9598f))
+* **encoder:** support bracket encoding form-data object members ([7a7dd83](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/7a7dd83fe0981046bab438bcd6c59d061d846517))
+
+
+### Bug Fixes
+
+* **docs:** add missing pointer prefix to api.md return types ([48e452d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/48e452db080ee04dfc184a1b075a0aea3c0eb9f0))
+* **encoder:** correctly serialize NullStruct ([081d941](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/081d94155df223e83f50e5f8c38028edef491171))
+* **mcp:** correct code tool API endpoint ([2af984a](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/2af984ae59cd31f9f9e1587c2a4027e0c489a102))
+* rename param to avoid collision ([274621d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/274621d184c679b4fe2aec46ada08e8ab68c2d5e))
+* skip usage tests that don't work with Prism ([2ae4c1d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/2ae4c1d501c4e5ff2fa0dd3b8d69be39306567d2))
+
+
+### Chores
+
+* add float64 to valid types for RegisterFieldValidator ([a54295b](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/a54295b222300ff3a400568d1f9c58ff7fc030e0))
+* bump gjson version ([9ad244c](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/9ad244c3cd3f65b88a103761a7659739a7835487))
+* elide duplicate aliases ([2893a1e](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/2893a1ef8abc8bf57bf92134bfc7fc9bf1f8a76c))
+* **internal:** codegen related update ([a4d3c89](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/a4d3c891175a081f464cb9ddec9758774f255a07))
+* **internal:** grammar fix (it's -&gt; its) ([fdf44af](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/fdf44af74e06b371d21d983ff825dcaf4e52d877))
+* **internal:** update `actions/checkout` version ([d77c59d](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/d77c59deaf41193dc86d29de7c5f251b024edfbe))
+* **internal:** use different example values for some enums ([2a9f038](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/2a9f03842010d3197e4e0b3755c76f8b18d52bfc))
+
 ## 0.6.43 (2025-10-16)
 
 Full Changelog: [v0.6.42...v0.6.43](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.6.42...v0.6.43)

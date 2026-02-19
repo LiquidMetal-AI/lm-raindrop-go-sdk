@@ -24,7 +24,8 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewBucketService] method instead.
 type BucketService struct {
-	Options []option.RequestOption
+	Options  []option.RequestOption
+	ByStatus BucketByStatusService
 }
 
 // NewBucketService generates a new service that applies the given options to each
@@ -33,6 +34,7 @@ type BucketService struct {
 func NewBucketService(opts ...option.RequestOption) (r BucketService) {
 	r = BucketService{}
 	r.Options = opts
+	r.ByStatus = NewBucketByStatusService(opts...)
 	return
 }
 
@@ -201,6 +203,9 @@ type BucketListParams struct {
 	// The buckets to search. If provided, the search will only return results from
 	// these buckets
 	BucketLocation BucketLocatorParam `json:"bucketLocation,omitzero,required"`
+	// Optional prefix to filter object keys (e.g., "documents/" to only list objects
+	// in documents folder)
+	Prefix param.Opt[string] `json:"prefix,omitzero"`
 	paramObj
 }
 

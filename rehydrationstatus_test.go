@@ -14,7 +14,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
-func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
+func TestRehydrationStatusNew(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,16 +27,15 @@ func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DeleteProcedure.New(context.TODO(), raindrop.DeleteProcedureNewParams{
-		Key: "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.DeleteProcedureNewParamsSmartMemoryLocation{
+	_, err := client.RehydrationStatus.New(context.TODO(), raindrop.RehydrationStatusNewParams{
+		SessionID: "01jxanr45haeswhay4n0q8340y",
+		SmartMemoryLocation: raindrop.RehydrationStatusNewParamsSmartMemoryLocation{
 			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
 				ApplicationName: raindrop.String("my-app"),
 				Name:            "memory-name",
 				Version:         raindrop.String("1234"),
 			},
 		},
-		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

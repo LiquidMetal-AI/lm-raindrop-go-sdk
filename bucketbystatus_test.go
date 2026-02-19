@@ -11,10 +11,9 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
-func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
+func TestBucketByStatusListObjectsWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,16 +26,18 @@ func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DeleteProcedure.New(context.TODO(), raindrop.DeleteProcedureNewParams{
-		Key: "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.DeleteProcedureNewParamsSmartMemoryLocation{
-			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-				ApplicationName: raindrop.String("my-app"),
-				Name:            "memory-name",
-				Version:         raindrop.String("1234"),
+	_, err := client.Bucket.ByStatus.ListObjects(context.TODO(), raindrop.BucketByStatusListObjectsParams{
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
 			},
 		},
-		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
+		Statuses:  []string{"failed", "processing"},
+		Exclude:   raindrop.Bool(true),
+		Partition: raindrop.String("default"),
+		Prefix:    raindrop.String("documents/"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

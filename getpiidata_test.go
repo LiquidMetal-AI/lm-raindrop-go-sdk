@@ -11,10 +11,9 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/internal/testutil"
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
-	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/shared"
 )
 
-func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
+func TestGetPiiDataGetWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,16 +26,16 @@ func TestDeleteProcedureNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.DeleteProcedure.New(context.TODO(), raindrop.DeleteProcedureNewParams{
-		Key: "TechnicalReportSystemPrompt",
-		SmartMemoryLocation: raindrop.DeleteProcedureNewParamsSmartMemoryLocation{
-			SmartMemory: shared.LiquidmetalV1alpha1SmartMemoryNameParam{
-				ApplicationName: raindrop.String("my-app"),
-				Name:            "memory-name",
-				Version:         raindrop.String("1234"),
+	_, err := client.GetPiiData.Get(context.TODO(), raindrop.GetPiiDataGetParams{
+		SmartSqlLocation: raindrop.GetPiiDataGetParamsSmartSqlLocation{
+			SmartSql: raindrop.GetPiiDataGetParamsSmartSqlLocationSmartSql{
+				Name:            "analytics-sql",
+				ApplicationName: raindrop.String("data-analytics-app"),
+				Version:         raindrop.String("v1.2.0"),
 			},
 		},
-		ProceduralMemoryID: raindrop.String("demo-smartmemory"),
+		TableName: "users",
+		RecordID:  raindrop.String("user_123"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error

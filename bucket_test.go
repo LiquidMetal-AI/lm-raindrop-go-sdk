@@ -13,7 +13,7 @@ import (
 	"github.com/LiquidMetal-AI/lm-raindrop-go-sdk/option"
 )
 
-func TestBucketList(t *testing.T) {
+func TestBucketListWithOptionalParams(t *testing.T) {
 	t.Skip("Prism tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -27,7 +27,14 @@ func TestBucketList(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.List(context.TODO(), raindrop.BucketListParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Prefix: raindrop.String("documents/"),
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -52,8 +59,14 @@ func TestBucketDelete(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Delete(context.TODO(), raindrop.BucketDeleteParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Key:            "my-key",
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Key: "my-key",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -78,8 +91,14 @@ func TestBucketGet(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Get(context.TODO(), raindrop.BucketGetParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Key:            "my-key",
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Key: "my-key",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
@@ -104,10 +123,16 @@ func TestBucketPut(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Bucket.Put(context.TODO(), raindrop.BucketPutParams{
-		BucketLocation: raindrop.BucketLocatorParam{Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{Name: "my-bucket", ApplicationName: raindrop.String("my-app"), Version: raindrop.String("01jtryx2f2f61ryk06vd8mr91p")}},
-		Content:        "U3RhaW5sZXNzIHJvY2tz",
-		ContentType:    "application/pdf",
-		Key:            "my-key",
+		BucketLocation: raindrop.BucketLocatorParam{
+			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
+				ApplicationName: "my-app",
+				Name:            "my-smartbucket",
+				Version:         "01jxanr45haeswhay4n0q8340y",
+			},
+		},
+		Content:     "U3RhaW5sZXNzIHJvY2tz",
+		ContentType: "application/pdf",
+		Key:         "my-key",
 	})
 	if err != nil {
 		var apierr *raindrop.Error
