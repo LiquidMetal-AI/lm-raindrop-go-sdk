@@ -24,7 +24,7 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	response, err := client.Query.DocumentQuery(context.TODO(), raindrop.QueryDocumentQueryParams{
 		BucketLocation: raindrop.BucketLocatorParam{
 			Bucket: raindrop.LiquidmetalV1alpha1BucketNameParam{
