@@ -29,7 +29,7 @@ func TestAutoPagination(t *testing.T) {
 		PageSize:  raindrop.Int(10),
 		RequestID: "<YOUR-REQUEST-ID>",
 	})
-	// Prism mock isn't going to give us real pagination
+	// The mock server isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
 		query := iter.Current()
 		t.Logf("%+v\n", query.ChunkSignature)
