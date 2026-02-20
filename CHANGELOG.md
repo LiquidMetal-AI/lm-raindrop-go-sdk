@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.17.1 (2026-02-20)
+
+Full Changelog: [v0.17.0...v0.17.1](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.17.0...v0.17.1)
+
+### Bug Fixes
+
+* allow canceling a request while it is waiting to retry ([420b06f](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/420b06faace5b4231b193cdfa9bc21a7c255e27e))
+
+
+### Chores
+
+* **internal:** remove mock server code ([b133e2c](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/b133e2c2069290e32fa38711de68cd8441a54e55))
+* update mock server docs ([a1f9485](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/commit/a1f9485087fe783c534fa06b126aea1f87c0f680))
+
 ## 0.17.0 (2026-02-19)
 
 Full Changelog: [v0.6.43...v0.17.0](https://github.com/LiquidMetal-AI/lm-raindrop-go-sdk/compare/v0.6.43...v0.17.0)
